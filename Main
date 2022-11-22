@@ -25,7 +25,7 @@ local Window = Rayfield:CreateWindow({
 local home = Window:CreateTab("Home")
 local Player = Window:CreateTab("Player")
 local AimEsp = Window:CreateTab("Aimbot/esp")
-local scripts = Window:CreateTab("Scripts")
+local Scripts = Window:CreateTab("Scripts")
 
 local Paragraph = home:CreateParagraph({Title = "Pissware : remade", Content = "holy cow? pissware updating??? real, this is gonna be a update log ajhsdkahds"})
 
@@ -483,7 +483,36 @@ Scripts:CreateSection("scripts that only support games/1 game")
 local Button = Scripts:CreateButton({
 	Name = "Unfair Hub",
 	Callback = function()
+	Rayfield:Notify({
+    Title = "Notification",
+    Content = "Press F9 for the supported games",
+    Duration = 5,
+    
 		loadstring(game:HttpGet(('https://raw.githubusercontent.com/rblxscriptsnet/unfair/main/rblxhub.lua'),true))()
+    print("the unfair hub supported games")
+    print("doors")
+    print("pet sim x")
+    print("da hood")
+    print("custom duels")
+    print("Kat")
+    print("slap battles")
+    print("strucid [use alt]")
+    print("phantom forces")
+    print("aimblox beta [rare]")
+    print("evade")
+    print("race parkour")
+    print("YBA")
+    print("pls donate")
+    print("brookhaven")
+    print("bedwars")
+    print("zoぞ")
+    print("no scope arcade[usealt]"
+    print("BIG paintball")
+    print("bad business")
+    print("giant simulator")
+    print("zombie attack")
+    print("ro ghoul")
+    print("just join their discord dude for the supported games.")
         end,
 })
  
@@ -493,7 +522,7 @@ local Button = Scripts:CreateButton({
 		Rayfield:Notify({
     Title = "Notification",
     Content = "Press F9 for the supported games",
-    Duration = 6.5,
+    Duration = 5,
    
 print("arsenal")
 print("climb 1,000 stairs")
