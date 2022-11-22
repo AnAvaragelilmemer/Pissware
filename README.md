@@ -5,5 +5,11 @@ Pissware : Remade is a remade version of "Pissware" cause it was so unoriginal (
 ## Pissware : Remade loadstring
 
 ```bash
-coming soon!
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main"))()
+```
+
+## Old Pissware
+
+```bash
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main"))()
 ```
