@@ -11,5 +11,5 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pis
 ## Old Pissware
 
 ```bash
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/AnAvaragelilmemer/main/pissware"))()
 ```
