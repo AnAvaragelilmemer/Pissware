@@ -490,8 +490,11 @@ local Button = Scripts:CreateButton({
 local Button = Scripts:CreateButton({
 	Name = "Vg hub",
 	Callback = function()
-		sec:Button("V.G Hub", function()
-SolarisLib:Notification("Notification", "too much games, but i will print the supported games press f9")
+		Rayfield:Notify({
+    Title = "Notification",
+    Content = "Press F9 for the supported games",
+    Duration = 6.5,
+   
 print("arsenal")
 print("climb 1,000 stairs")
 print("survive the night")
