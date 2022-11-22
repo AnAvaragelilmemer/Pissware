@@ -25,6 +25,7 @@ local Window = Rayfield:CreateWindow({
 local home = Window:CreateTab("Home")
 local Player = Window:CreateTab("Player")
 local AimEsp = Window:CreateTab("Aimbot/esp")
+local scripts = Window:CreateTab("Scripts")
 
 local Paragraph = home:CreateParagraph({Title = "Pissware : remade", Content = "holy cow? pissware updating??? real, this is gonna be a update log ajhsdkahds"})
 
@@ -415,6 +416,219 @@ AimEsp:CreateToggle({
 --credits by kaoru, https://scriptblox.com/script/Universal-Script-FPS-Universal-7170
 
 
+Scripts:CreateSection("Universal")
+
+local Button = Scripts:CreateButton({
+	Name = "BetterBypasser",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/daddysyn/synergy/additional/betterbypasser",true))()
+	end,
+})
+
+-- why did i even add 3 dexs
+local Button = Scripts:CreateButton({
+	Name = "Dex v4",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/AnAvaragelilmemer/main/dexv4"))()
+	end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "Dex V3",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
+	end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "awsome explorr",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/wally-rblx/awesome-explorer/main/source.lua"))()
+	end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "universal slient aim",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Averiias/Universal-SilentAim/main/main.lua"))()
+	end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "Hitbox Expander",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/roburox/s1mple/main/scripts/hitboxexpand"))()
+        end,
+})
 
 
+Scripts:CreateSection("scripts that has universal and games support")
 
+local Button = Scripts:CreateButton({
+	Name = "parvus hub",
+	Callback = function()
+		loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AlexR32/Parvus/main/Loader.lua"))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "Vision hub",
+	Callback = function()
+		loadstring(game:HttpGetAsync('https://visionhub.dev/loader.lua'))()
+        end,
+})
+
+Scripts:CreateSection("scripts that only support games/1 game")
+
+local Button = Scripts:CreateButton({
+	Name = "Unfair Hub",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/rblxscriptsnet/unfair/main/rblxhub.lua'),true))()
+        end,
+})
+ 
+local Button = Scripts:CreateButton({
+	Name = "Vg hub",
+	Callback = function()
+		sec:Button("V.G Hub", function()
+SolarisLib:Notification("Notification", "too much games, but i will print the supported games press f9")
+print("arsenal")
+print("climb 1,000 stairs")
+print("survive the night")
+print("World//Zero")
+print("Vehicle Legends")
+print("build a boat for treasure")
+print("blox fruits")
+print("project XL")
+print("Magnet Simulator")
+print("Jailbreak")
+print("adopt me")
+print("tsunami survival")
+print("zombie rush")
+print("zombie uprising")
+print("Soda Legends")
+print("Bubble Gum Simulator")
+print("Knife Simulator")
+print("Ninja Legends")
+print("Ninja Legends 2")
+print("Dungeon Quest!")
+print("super bomb survival")
+print("shindo")
+print("mm2")
+print("natural disaster survival")
+print("elemental battlegrounds")
+print("field trip z")
+print("dragon adventures")
+print("vehicle simulator")
+print("little world")
+print("age of heros")
+print("zombies attack")
+print("muscle legends")
+print("cursed islands")
+print("KAT")
+print("Assassin")
+print("Ragdoll Engine")
+print("The floor is LAVA")
+print("Legends of speed")
+print("elemental legends")
+print("mega easy obby")
+print("taping-gods")
+print("break-in-story")
+print("the labyrinth")
+print("weaponry")
+print("SHOOT OUT!")
+print("Destruction Simulator")
+print("Trade Tower")
+print("The asylum")
+print("green vile")
+print("the maze")
+print("Tower of hell")
+print("Warrior Champions")
+print("be crushed by a speeding wall")
+print("survive the disasters! classic")
+print("Speed run 4")
+print("Timber!")
+print("demonfall")
+print("car crushers 2")
+print("da hood")
+print("wisteria")
+print("the final stand 2")
+print("pet simulator X")
+print("pet simulator")
+print("a universal time")
+print("dragon blox")
+print("Rise of nations")
+print("Specter")
+print("project-star")
+print("flee the facility")
+print("lumber tycoon 2")
+print("strongest punch simulator")
+print("meep city")
+print("counter blox")
+print("youtube simulato x")
+print("survive the killer!")
+print("your bizzare adventure")
+print("project baki 2")
+print("true piece")
+print("giant simulator")
+print("nerf strike")
+print("pet fighters simulator")
+print('super power fighting simulator')
+print('treasure quest')
+print("king legacy")
+print('legends re:written')
+print("anime simulator x")
+print("blackhawk rescue mission 5")
+print("anime dimensions simulator")
+print("the wild west")
+print("project hero")
+print("big brain simulator")
+print("tapping mania")
+print("unconventional")
+print("laundry simulator")
+print("color block")
+print("swordburst 2")
+print("pets-story")
+print("saitamania")
+print("jojo: crusaders' heaven")
+print("scp 3008")
+print("bee swarm simulator")
+print("military tycoon")
+print("base battles")
+print("fish sim")
+print("two piece")
+print("critical legends")
+print("critical legends 2")
+print("dbz adventures unleashed")
+print("rushpoint")
+print("anime cross world")
+print("demon slayer:moonrise")
+print("mimic")
+print("anime battlegrounds X")
+print("weapon fighting simulator")
+print("demon slayer burning ashes")
+print("blade quest")
+print("loomian legacy")
+print("PLS DONATE")
+print("DBZ FINAL REMASTERED")
+print("criminality")
+print(" driving empire")
+print("phantom forces")
+print("stand upright : rebooted")
+print("a hero's destiny")
+print("elemental awakening")
+print("soul war")
+print("rate my avatar")
+print("ability wars")
+print("bid battles")
+print("era of althea")
+print("tabing simulator")
+print("roblox unbreakable")
+print("evade")
+print("speed run simulator")
+print("bloxburg")
+print("anime story")
+loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub'))()
+
+        end,
+})
