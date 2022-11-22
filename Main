@@ -1,0 +1,68 @@
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+local Window = Rayfield:CreateWindow({
+	Name = "Pissware",
+	LoadingTitle = "Welcome to Pissware : Remade.",
+	LoadingSubtitle = "Made by drmr and nutshcak",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, -- Create a custom folder for your hub/game
+		FileName = "piswarheru"
+	},
+	KeySystem = true, -- Set this to true to use our key system
+	KeySettings = {
+		Title = "pissware pee system",
+		Subtitle = "shit keysys",
+		Note = "just type DRKpsEojgNhlr",
+
+		FileName = "pisswakey",
+		SaveKey = true,
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = "DRKpsEojgNhlr"
+	}
+})
+
+local home = Window:CreateTab("Home")
+local Player = Window:CreateTab("Player")
+
+local Paragraph = Tab:CreateParagraph({Title = "Pissware : remade", Content = "holy cow? pissware updating??? real, this is gonna be a update log ajhsdkahds"})
+
+local Slider = Tab:CreateSlider({
+	Name = "Speed",
+	Range = {1, 500},
+	Increment = 1,
+	Suffix = "Walkspeed",
+	CurrentValue = 16,
+	Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value -- The function that takes place when the slider changes
+    		-- The variable (Value) is a number which correlates to the value the slider is currently at
+	end,
+})
+
+local Slider = Tab:CreateSlider({
+	Name = "Jump",
+	Range = {0, 1000},
+	Increment = 1,
+	Suffix = "Jumppower",
+	CurrentValue = 50,
+	Flag = "Slider2", 
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+    		
+	end,
+})
+
+local Slider = Tab:CreateSlider({
+	Name = "Gravity
+	Range = {0, 1000},
+	Increment = 1,
+	Suffix = "Gravity
+	CurrentValue = 196,
+	Flag = "Slider3, 
+	Callback = function(Value)
+		game.Workspace.Gravity = Value
+    		
+	end,
+})
+
