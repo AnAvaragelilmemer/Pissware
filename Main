@@ -9,16 +9,16 @@ local Window = Rayfield:CreateWindow({
 		FolderName = nil, -- Create a custom folder for your hub/game
 		FileName = "piswarheru"
 	},
-	KeySystem = true, -- Set this to true to use our key system
+	KeySystem = true,
 	KeySettings = {
 		Title = "pissware pee system",
 		Subtitle = "shit keysys",
-		Note = "just type DRKpsEojgNhlr",
+		Note = "just type DRkpsEojgNhl",
 
 		FileName = "pisswakey",
 		SaveKey = true,
 		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-		Key = "DRKpsEojgNhlr"
+		Key = "DRKpsEojgNhl"
 	}
 })
 
@@ -28,6 +28,7 @@ local AimEsp = Window:CreateTab("Aimbot/esp")
 local Scripts = Window:CreateTab("Scripts")
 
 local Paragraph = home:CreateParagraph({Title = "Pissware : remade", Content = "holy cow? pissware updating??? real, this is gonna be a update log ajhsdkahds"})
+local Paragraph = home:CreateParagraph({Title = "returned", Content = "i have returned, to fix pissware, thanks for waiting for 3 days lol"})
 
 local Slider = Player:CreateSlider({
 	Name = "Speed",
@@ -416,7 +417,7 @@ AimEsp:CreateToggle({
 --credits by kaoru, https://scriptblox.com/script/Universal-Script-FPS-Universal-7170
 
 
-Scripts:CreateSection("Universal")
+Scripts:CreateSection("scripts")
 
 local Button = Scripts:CreateButton({
 	Name = "BetterBypasser",
@@ -448,9 +449,16 @@ local Button = Scripts:CreateButton({
 })
 
 local Button = Scripts:CreateButton({
-	Name = "universal slient aim",
+	Name = "infinite yield",
 	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/Averiias/Universal-SilentAim/main/main.lua"))()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+	end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "cmd x",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
 	end,
 })
 
@@ -461,25 +469,6 @@ local Button = Scripts:CreateButton({
         end,
 })
 
-
-Scripts:CreateSection("scripts that has universal and games support")
-
-local Button = Scripts:CreateButton({
-	Name = "parvus hub",
-	Callback = function()
-		loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AlexR32/Parvus/main/Loader.lua"))()
-        end,
-})
-
-local Button = Scripts:CreateButton({
-	Name = "Vision hub",
-	Callback = function()
-		loadstring(game:HttpGetAsync('https://visionhub.dev/loader.lua'))()
-        end,
-})
-
-Scripts:CreateSection("scripts that only support games/1 game")
-
 local Button = Scripts:CreateButton({
 	Name = "Unfair Hub",
 	Callback = function()
@@ -487,8 +476,8 @@ local Button = Scripts:CreateButton({
     Title = "Notification",
     Content = "Press F9 for the supported games",
     Duration = 5,
-    
-		loadstring(game:HttpGet(('https://raw.githubusercontent.com/rblxscriptsnet/unfair/main/rblxhub.lua'),true))()
+   })
+	loadstring(game:HttpGet(('https://raw.githubusercontent.com/rblxscriptsnet/unfair/main/rblxhub.lua'),true))()
     print("the unfair hub supported games")
     print("doors")
     print("pet sim x")
@@ -506,7 +495,7 @@ local Button = Scripts:CreateButton({
     print("brookhaven")
     print("bedwars")
     print("zoぞ")
-    print("no scope arcade[usealt]"
+    print("no scope arcade[usealt]")
     print("BIG paintball")
     print("bad business")
     print("giant simulator")
@@ -523,7 +512,7 @@ local Button = Scripts:CreateButton({
     Title = "Notification",
     Content = "Press F9 for the supported games",
     Duration = 5,
-   
+   })
 print("arsenal")
 print("climb 1,000 stairs")
 print("survive the night")
@@ -664,3 +653,84 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/
 
         end,
 })
+
+Scripts:CreateSection("Blox fruit scripts")
+
+local Button = Scripts:CreateButton({
+	Name = "Ripper hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/hajibeza/RIPPER-HUB/main/Bloxfruit"))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "Hoho hub",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "Table hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/AltsegoD/scripts/egoD/tablekhoc.lua"))()
+        end,
+})
+
+Scripts:CreateSection("bedwars scripts")
+
+local Button = Scripts:CreateButton({
+	Name = "Vape V4",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "rektsky",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/8pmX8/rektsky4roblox/main/mainscript.lua"))()
+        end,
+})
+
+Scripts:CreateSection("Decaying winter script")
+
+local Button = Scripts:CreateButton({
+	Name = "GOODWILL",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/Aidez/decaying_winter/main/GOODWILL_COMMAND_SCRIPT'),true))()
+        end,
+})
+
+Scripts:CreateSection("Prison life script")
+
+local Button = Scripts:CreateButton({
+	Name = "Septex",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/XTheMasterX/Scripts/Main/PrisonLife'),true))()
+        end,
+})
+
+Scripts:CreateSection("Aimbot/slientaim scripts")
+
+local Button = Scripts:CreateButton({
+	Name = "Universal Slient Aim",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Averiias/Universal-SilentAim/main/main.lua"))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "parvus hub",
+	Callback = function()
+		loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AlexR32/Parvus/main/Loader.lua"))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "Vision hub",
+	Callback = function()
+		loadstring(game:HttpGetAsync('https://visionhub.dev/loader.lua'))()
+        end,
+})
+
