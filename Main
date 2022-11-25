@@ -13,7 +13,7 @@ local Window = Rayfield:CreateWindow({
 	KeySettings = {
 		Title = "pissware pee system",
 		Subtitle = "shit keysys",
-		Note = "just type DRkpsEojgNhl",
+		Note = "just type DRKpsEojgNhl",
 
 		FileName = "pisswakey",
 		SaveKey = true,
