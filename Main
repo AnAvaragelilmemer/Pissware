@@ -414,7 +414,7 @@ AimEsp:CreateToggle({
     end,
 })
 
---credits by kaoru, https://scriptblox.com/script/Universal-Script-FPS-Universal-7170
+--made by kaoru, https://scriptblox.com/script/Universal-Script-FPS-Universal-7170 too awsome
 
 
 Scripts:CreateSection("scripts")
