@@ -29,6 +29,7 @@ local Scripts = Window:CreateTab("Scripts")
 
 local Paragraph = home:CreateParagraph({Title = "Pissware : remade", Content = "holy cow? pissware updating??? real, this is gonna be a update log ajhsdkahds"})
 local Paragraph = home:CreateParagraph({Title = "returned", Content = "i have returned, to fix pissware, thanks for waiting for 3 days lol"})
+local Paragraph = home:CreateParagraph({Title = "version 1.1", Content = "REMOVED AIMBOT/ESP, ADDED SCRIPTS FOR BLOX FRUITS, REMOVED REKTSKY."})
 
 local Slider = Player:CreateSlider({
 	Name = "Speed",
@@ -357,19 +358,26 @@ local Button = Scripts:CreateButton({
         end,
 })
 
+local Button = Scripts:CreateButton({
+        Namde = "Nub.xyz",
+	Callback = function()
+	        loadstring(game:HttpGet('https://rawscripts.net/raw/UPDATE-16-Blox-Fruits-Nub-V1-Hub-4583'))()
+	end,
+)}
+
+local Button = Scripts:CreateButton({
+        Namde = "playback x",
+	Callback = function() 
+               loadstring(game:HttpGet("https://raw.githubusercontent.com/NeaPchX2/Playback-X-HUB/main/Protected.lua.txt"))()
+	end,
+)}
+
 Scripts:CreateSection("bedwars scripts")
 
 local Button = Scripts:CreateButton({
 	Name = "Vape V4",
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
-        end,
-})
-
-local Button = Scripts:CreateButton({
-	Name = "rektsky",
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/8pmX8/rektsky4roblox/main/mainscript.lua"))()
         end,
 })
 
