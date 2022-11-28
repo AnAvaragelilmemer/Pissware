@@ -98,7 +98,7 @@ local Button = Player:CreateButton({
 })
 
 
-Scripts:CreateSection("scripts")
+Scripts:CreateSection("universal")
 
 local Button = Scripts:CreateButton({
 	Name = "BetterBypasser",
@@ -335,7 +335,7 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/
         end,
 })
 
-Scripts:CreateSection("Blox fruit scripts")
+Scripts:CreateSection("Blox fruit")
 
 local Button = Scripts:CreateButton({
 	Name = "Ripper hub",
@@ -372,7 +372,7 @@ local Button = Scripts:CreateButton({
 	end,
 )}
 
-Scripts:CreateSection("bedwars scripts")
+Scripts:CreateSection("bedwars")
 
 local Button = Scripts:CreateButton({
 	Name = "Vape V4",
@@ -381,7 +381,7 @@ local Button = Scripts:CreateButton({
         end,
 })
 
-Scripts:CreateSection("Decaying winter script")
+Scripts:CreateSection("Decaying winter")
 
 local Button = Scripts:CreateButton({
 	Name = "GOODWILL",
@@ -390,7 +390,7 @@ local Button = Scripts:CreateButton({
         end,
 })
 
-Scripts:CreateSection("Prison life script")
+Scripts:CreateSection("Prison life")
 
 local Button = Scripts:CreateButton({
 	Name = "Septex",
@@ -399,7 +399,24 @@ local Button = Scripts:CreateButton({
         end,
 })
 
+Scripts:CreateSection("Doors")
+
+local Button = Scripts:CreateButton({
+	Name = "Vynixius - doors",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Script.lua"))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "plamen6789rock's doors entity spawner gui",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/Darkrai-X/main/Games/Doors"))()
+        end,
+})
+
 Scripts:CreateSection("Aimbot/slientaim scripts")
+
 
 local Button = Scripts:CreateButton({
 	Name = "Universal Slient Aim",
@@ -421,4 +438,10 @@ local Button = Scripts:CreateButton({
 		loadstring(game:HttpGetAsync('https://visionhub.dev/loader.lua'))()
         end,
 })
+
+
+
+
+
+
 
