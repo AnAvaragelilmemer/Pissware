@@ -335,6 +335,13 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/
         end,
 })
 
+local Button = Scripts:CreateButton({
+	Name = "Quadra hub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/notxkid/Quadra/main/loader.lua"))()
+        end,
+})
+
 Scripts:CreateSection("Blox fruit")
 
 local Button = Scripts:CreateButton({
