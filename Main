@@ -363,14 +363,14 @@ local Button = Scripts:CreateButton({
 	Callback = function()
 	        loadstring(game:HttpGet('https://rawscripts.net/raw/UPDATE-16-Blox-Fruits-Nub-V1-Hub-4583'))()
 	end,
-)}
+})
 
 local Button = Scripts:CreateButton({
         Namde = "playback x",
 	Callback = function() 
                loadstring(game:HttpGet("https://raw.githubusercontent.com/NeaPchX2/Playback-X-HUB/main/Protected.lua.txt"))()
 	end,
-)}
+})
 
 Scripts:CreateSection("bedwars")
 
