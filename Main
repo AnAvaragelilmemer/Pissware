@@ -529,7 +529,18 @@ local Button = Scripts:CreateButton({
         end,
 })
 
---more coming soon udhsjdhkad
+local Button = Scripts:CreateButton({
+	Name = "Roware by scriptware",
+	Callback = function()
+	Rayfield:Notify({
+    Title = "Notification",
+    Content = "Copied to clipboard! https://script-ware.com/roware",
+    Duration = 5,
+   })
+		setclipboard("https://script-ware.com/roware")
+        end,
+})
+
 
 
 
