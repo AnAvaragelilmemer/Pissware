@@ -14,12 +14,12 @@ local Window = Rayfield:CreateWindow({
 
 local home = Window:CreateTab("Home")
 local Player = Window:CreateTab("Player")
-local AimEsp = Window:CreateTab("Aimbot/esp")
 local Scripts = Window:CreateTab("Scripts")
 
 local Paragraph = home:CreateParagraph({Title = "Pissware : remade", Content = "holy cow? pissware updating??? real, this is gonna be a update log ajhsdkahds"})
 local Paragraph = home:CreateParagraph({Title = "returned", Content = "i have returned, to fix pissware, thanks for waiting for 3 days lol"})
 local Paragraph = home:CreateParagraph({Title = "version 1.1", Content = "REMOVED AIMBOT/ESP, ADDED SCRIPTS FOR BLOX FRUITS, REMOVED REKTSKY."})
+local Paragraph = home:CreateParagraph({Title = "version 1.2", Content = "added some scripts."})
 
 local Slider = Player:CreateSlider({
 	Name = "Speed",
@@ -417,14 +417,14 @@ local Button = Scripts:CreateButton({
 })
 
 local Button = Scripts:CreateButton({
-        Namde = "Nub.xyz",
+        Name = "Nub.xyz",
 	Callback = function()
 	        loadstring(game:HttpGet('https://rawscripts.net/raw/UPDATE-16-Blox-Fruits-Nub-V1-Hub-4583'))()
 	end,
 })
 
 local Button = Scripts:CreateButton({
-        Namde = "playback x",
+        Name = "playback x",
 	Callback = function() 
                loadstring(game:HttpGet("https://raw.githubusercontent.com/NeaPchX2/Playback-X-HUB/main/Protected.lua.txt"))()
 	end,
