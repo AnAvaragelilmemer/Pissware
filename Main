@@ -9,17 +9,7 @@ local Window = Rayfield:CreateWindow({
 		FolderName = nil, -- Create a custom folder for your hub/game
 		FileName = "piswarheru"
 	},
-	KeySystem = true,
-	KeySettings = {
-		Title = "pissware pee system",
-		Subtitle = "shit keysys",
-		Note = "just type DRKpsEojgNhl",
-
-		FileName = "pisswakey",
-		SaveKey = true,
-		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-		Key = "DRKpsEojgNhl"
-	}
+	
 })
 
 local home = Window:CreateTab("Home")
@@ -149,6 +139,52 @@ local Button = Scripts:CreateButton({
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/roburox/s1mple/main/scripts/hitboxexpand"))()
         end,
 })
+
+local Button = Scripts:CreateButton({
+	Name = "turtle spy",
+	Callback = function()
+		loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU", true))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "orca",
+	Callback = function()
+		loadstring(
+  game:HttpGetAsync("https://raw.githubusercontent.com/richie0866/orca/master/public/latest.lua")
+)()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "Domain x",
+	Callback = function()
+              loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/DomainX/main/source',true))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "simplity v2",
+	Callback = function()
+              loadstring(game:HttpGet('https://raw.githubusercontent.com/HeyGyt/simplityv2/main/main',true))()
+        end,
+})
+
+
+
+local Button = Scripts:CreateButton({
+	Name = "Client information",
+	Callback = function()
+	Rayfield:Notify({
+    Title = "Notification",
+    Content = "Hold tab to open the gui and release it to not make it visible",
+    Duration = 5,
+   })
+		loadstring(game:HttpGet("https://soggy-ware.cf/Libs/ClientInformation.lua"))()
+        end,
+})
+
+Scripts:CreateSection("script hubs")
 
 local Button = Scripts:CreateButton({
 	Name = "Unfair Hub",
@@ -342,7 +378,22 @@ local Button = Scripts:CreateButton({
         end,
 })
 
-Scripts:CreateSection("Blox fruit")
+local Button = Scripts:CreateButton({
+	Name = "EZ hub (outdated, but still good.)",
+	Callback = function()
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/debug420/Ez-Industries-Launcher-Data/master/Launcher.lua'),true))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "VHub",
+	Callback = function()	
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Quan8008/V-Hub/Master/Launch-Screen.lua"))();
+        end,
+})
+
+
+Scripts:CreateSection("Blox fruits")
 
 local Button = Scripts:CreateButton({
 	Name = "Ripper hub",
@@ -418,7 +469,32 @@ local Button = Scripts:CreateButton({
 local Button = Scripts:CreateButton({
 	Name = "plamen6789rock's doors entity spawner gui",
 	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/Darkrai-X/main/Games/Doors"))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/plamen6789/DoorsEntitySummonerGUI/main/EntityGUI"))()
+        end,
+})
+
+Scripts:CreateSection("CHAOS")
+
+local Button = Scripts:CreateButton({
+	Name = "CHAOS script",
+	Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/1111-ssss/Chaos_Script/main/Chaos_script.txt'))()
+        end,
+})
+
+Scripts:CreateSection("Flood escape 2")
+
+local Button = Scripts:CreateButton({
+	Name = "Flood gui v3 (a lil outdated but still good)",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/ImMejor35/Flood-GUI/main/Flood%20GUI%20v3"))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "dothub",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/random/main/.x.vr.e.hi/loader.lua"))()
         end,
 })
 
@@ -445,6 +521,14 @@ local Button = Scripts:CreateButton({
 		loadstring(game:HttpGetAsync('https://visionhub.dev/loader.lua'))()
         end,
 })
+
+local Button = Scripts:CreateButton({
+	Name = "unnamed esp",
+	Callback = function()
+		pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))() end)
+        end,
+})
+
 
 
 
