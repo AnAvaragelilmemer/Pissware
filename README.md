@@ -1,6 +1,6 @@
 # Pissware : Remade
 
-Pissware : Remade is a remade version of "Pissware" cause it was so unoriginal (still is doe,) so i made a remade version
+Pissware : Remade, a decent script hub that uses the rayfield ui libary
 
 ## Pissware : Remade loadstring
 
