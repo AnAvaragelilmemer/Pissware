@@ -446,7 +446,7 @@ local Button = Scripts:CreateButton({
 })
 
 local Button = Scripts:CreateButton({
-	Name = "EZ hub (outdated, but still good.)",
+	Name = "EZ hub",
 	Callback = function()
 		loadstring(game:HttpGet(('https://raw.githubusercontent.com/debug420/Ez-Industries-Launcher-Data/master/Launcher.lua'),true))()
         end,
