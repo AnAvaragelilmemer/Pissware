@@ -184,6 +184,49 @@ local Button = Scripts:CreateButton({
         end,
 })
 
+Scripts:CreateSection("Animation hubs")
+
+local Button = Scripts:CreateButton({
+	Name = "Pendulum hub v5",
+	Callback = function()
+              loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Tescalus/Pendulum-Hubs-Source/main/Pendulum%20Hub%20V5.lua"))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "Syntax V3",
+	Callback = function()
+	Rayfield:Notify({
+    Title = "Notification",
+    Content = "The key is copied on clipboard",
+    Duration = 5,
+   })
+              shared.colors = {
+    Icons = Color3.fromRGB(0,255,149),
+    Version = Color3.fromRGB(0,255,149),
+    Text = Color3.fromRGB(255,255,255),
+    Description = Color3.fromRGB(125,125,125),
+    TabList = Color3.fromRGB(30,30,30),
+    Scripts = Color3.fromRGB(30,30,30),
+    Back = Color3.fromRGB(25,25,25),
+    Glow = Color3.fromRGB(0,0,0),
+}
+shared.transparency = {
+    Version = 0,
+    Text = 0,
+    Description = 0,
+    Icons = 0,
+    Back = 0,
+    Glow = 0.5,
+    TabList = 0,
+    Scripts = 1,
+}
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Memeboiyot/Syntax-V3-Free/main/Syntax%20v3", true))()
+setclipboard("SyntaxV3Free")
+        end,
+})
+
 Scripts:CreateSection("script hubs")
 
 local Button = Scripts:CreateButton({
