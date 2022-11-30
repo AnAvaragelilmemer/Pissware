@@ -170,7 +170,19 @@ local Button = Scripts:CreateButton({
         end,
 })
 
+local Button = Scripts:CreateButton({
+	Name = "Universal fe hub",
+	Callback = function()
+              loadstring(game:HttpGet("https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script"))()
+        end,
+})
 
+local Button = Scripts:CreateButton({
+	Name = "xxHub",
+	Callback = function()
+              loadstring(game:HttpGet("https://raw.githubusercontent.com/roburox/s1mple/main/scripts/xxhub"))()
+        end,
+})
 
 local Button = Scripts:CreateButton({
 	Name = "Client information",
@@ -190,6 +202,18 @@ local Button = Scripts:CreateButton({
 	Name = "Pendulum hub v5",
 	Callback = function()
               loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Tescalus/Pendulum-Hubs-Source/main/Pendulum%20Hub%20V5.lua"))()
+        end,
+})
+
+local Button = Scripts:CreateButton({
+	Name = "ConvertWare",
+	Callback = function()
+	Rayfield:Notify({
+    Title = "Notification",
+    Content = "Left alt to open gui",
+    Duration = 5,
+   })
+              loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/specowos/CONVERTWARE/main/UI/main.lua"))()
         end,
 })
 
