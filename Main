@@ -12,9 +12,9 @@ local Window = Rayfield:CreateWindow({
 	
 })
 
-local home = Window:CreateTab("Update Logs", 10802202968)
-local Player = Window:CreateTab("LocalPlayer", 6961018899)
-local Scripts = Window:CreateTab("Scripts", 3610247202)
+local home = Window:CreateTab("Update Logs")
+local Player = Window:CreateTab("LocalPlayer")
+local Scripts = Window:CreateTab("Scripts")
 
 local Paragraph = home:CreateParagraph({Title = "Pissware : remade", Content = "holy cow? pissware updating??? real, this is gonna be a update log ajhsdkahds"})
 local Paragraph = home:CreateParagraph({Title = "returned", Content = "i have returned, to fix pissware, thanks for waiting for 3 days lol"})
