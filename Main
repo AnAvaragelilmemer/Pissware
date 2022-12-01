@@ -549,7 +549,7 @@ local Button = Scripts:CreateButton({
 local Button = Scripts:CreateButton({
 	Name = "Doors v4",
 	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/OminousVibes-Exploit/Scripts/main/doors/main.lua"))(
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/OminousVibes-Exploit/Scripts/main/doors/main.lua"))()
         end,
 })
 
