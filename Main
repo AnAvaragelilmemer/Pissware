@@ -1,3 +1,4 @@
+getgenv().SecureMode = true
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
 
 local Window = Rayfield:CreateWindow({
@@ -195,6 +196,7 @@ local Button = Scripts:CreateButton({
 		loadstring(game:HttpGet("https://soggy-ware.cf/Libs/ClientInformation.lua"))()
         end,
 })
+
 
 Scripts:CreateSection("Animation hubs")
 
