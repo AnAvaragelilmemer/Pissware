@@ -1,0 +1,29 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Pissware", IntroIcon = "rbxassetid://6031094686", IntroText = "Pissware : remade", HidePremium = true, SaveConfig = false, ConfigFolder = "Orionse"})
+
+local update = Window:MakeTab({
+	Name = "Updates",
+	Icon = "rbxassetid://6022668946",
+	PremiumOnly = false
+})
+
+update:AddParagraph("Version nil","nil")
+
+local user = Window:MakeTab({
+	Name = "localuser",
+	Icon = "rbxassetid://6022668898",
+	PremiumOnly = false
+})
+
+user:AddSlider({
+	Name = "Walkspeed",
+	Min = 1,
+	Max = 500,
+	Default = 16,
+	Color = Color3.fromRGB(255,87,51),
+	Increment = 1,
+	ValueName = "bananas",
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end    
+})
