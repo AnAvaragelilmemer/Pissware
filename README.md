@@ -1,11 +1,16 @@
 # Pissware : Remade
 
-Pissware : Remade, a decent script hub that uses the rayfield ui libary
+Pissware : Remade, a decent script hub that uses the rayfield/orion ui libary
 
-## Pissware : Remade loadstring
+## Old Pissware : Remade loadstring
 
 ```bash
-loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main"))()
+loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/OldMain"))()
+```
+
+## New Pissware : Remade loadstring
+```bash
+loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/newmain"))()
 ```
 
 ## Old Pissware
