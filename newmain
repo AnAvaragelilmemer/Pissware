@@ -9,6 +9,22 @@ local home = Window:MakeTab({
 
 home:AddParagraph("Welcome!", "welcome to pissware, i will ensure you a great exploiting experince and fun")
 home:AddParagraph("Tip", "always take a break!")
+
+Tab:AddBind({
+	Name = "Bind",
+	Default = Enum.KeyCode.Semicolon,
+	Hold = false,
+	Callback = function()
+		a = 1
+
+while( a < 90000000000 )
+do
+   print("powerful executor :scream:", a)
+   a = a+1
+end
+	end    
+})
+
 local update = Window:MakeTab({
 	Name = "Updates",
 	Icon = "rbxassetid://6022668946",
