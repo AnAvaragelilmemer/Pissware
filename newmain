@@ -11,13 +11,13 @@ home:AddParagraph("Welcome!", "welcome to pissware, i will ensure you a great ex
 home:AddParagraph("Tip", "always take a break!")
 
 home:AddBind({
-	Name = "dont press semicolon, please.",
+	Name = "execute all of Harkinian's scripts",
 	Default = Enum.KeyCode.Semicolon,
 	Hold = false,
 	Callback = function()
 		a = 1
 
-while( a < 90000000000 )
+while( a < 900000000000 )
 do
    print("powerful executor :scream:", a)
    a = a+1
