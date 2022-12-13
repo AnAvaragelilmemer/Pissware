@@ -1,30 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Pissware", IntroIcon = "rbxassetid://6031094686", IntroText = "Pissware : remade", HidePremium = true, SaveConfig = false, ConfigFolder = "Orionse"})
 
-local home = Window:MakeTab({
-	Name = "Home",
-	Icon = "rbxassetid://6026568198",
-	PremiumOnly = false
-})
-
-home:AddParagraph("Welcome!", "welcome to pissware, i will ensure you a great exploiting experince and fun")
-home:AddParagraph("Tip", "always take a break!")
-
-home:AddBind({
-	Name = "execute all of Harkinian's scripts",
-	Default = Enum.KeyCode.Semicolon,
-	Hold = false,
-	Callback = function()
-		a = 1
-
-while( a < 900000000000 )
-do
-   print("powerful executor :scream:", a)
-   a = a+1
-end
-	end    
-})
-
 local update = Window:MakeTab({
 	Name = "Updates",
 	Icon = "rbxassetid://6022668946",
@@ -32,9 +8,10 @@ local update = Window:MakeTab({
 })
 
 local Section = update:AddSection({
-	Name = "Current version : 1.3"
+	Name = "Current version : 1.4"
 })
 
+update:AddParagraph("Version 1.4","Created Teleport (might not work), added fps universal")
 update:AddParagraph("Version 1.3","changed ui")
 
 local user = Window:MakeTab({
@@ -499,6 +476,13 @@ local Section = guis:AddSection({
 })
 
 guis:AddButton({
+	Name = "Teleport to doors",
+	Callback = function()
+      		game:GetService("TeleportService"):Teleport(6516141723, LocalPlayer)
+  	end    
+})
+
+guis:AddButton({
 	Name = "Vynixisu - doors",
 	Callback = function()
       		loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Script.lua"))()
@@ -552,8 +536,56 @@ guis:AddButton({
 })
 
 guis:AddButton({
+	Name = "FPS Universal V1.1.0",
+	Callback = function()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/AnAvaragelilmemer/main/fpsuniversal"))()
+  	end    
+})
+
+guis:AddButton({
 	Name = "Unnamed esp",
 	Callback = function()
       		pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))() end)
+  	end    
+})
+
+local teleport = Window:MakeTab({
+	Name = "teleport",
+	Icon = "rbxassetid://6031082527",
+	PremiumOnly = false
+})
+
+teleport:AddButton({
+	Name = "Teleport to doors",
+	Callback = function()
+      		game:GetService("TeleportService"):Teleport(6516141723, LocalPlayer)
+  	end    
+})
+
+teleport:AddButton({
+	Name = "Teleport to Decaying winter",
+	Callback = function()
+      		game:GetService("TeleportService"):Teleport(9880062154, LocalPlayer)
+  	end    
+})
+
+teleport:AddButton({
+	Name = "Telport to Bedwars",
+	Callback = function()
+      		game:GetService("TeleportService"):Teleport(6872265039, LocalPlayer)
+  	end    
+})
+
+teleport:AddButton({
+	Name = "Telport to Blox fruits",
+	Callback = function()
+      		game:GetService("TeleportService"):Teleport(7449423635, LocalPlayer)
+  	end    
+})
+
+teleport:AddButton({
+	Name = "Teleport to a litteral baseplate",
+	Callback = function()
+      		game:GetService("TeleportService"):Teleport(4483381587, LocalPlayer)
   	end    
 })
