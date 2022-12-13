@@ -476,13 +476,6 @@ local Section = guis:AddSection({
 })
 
 guis:AddButton({
-	Name = "Teleport to doors",
-	Callback = function()
-      		game:GetService("TeleportService"):Teleport(6516141723, LocalPlayer)
-  	end    
-})
-
-guis:AddButton({
 	Name = "Vynixisu - doors",
 	Callback = function()
       		loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Script.lua"))()
