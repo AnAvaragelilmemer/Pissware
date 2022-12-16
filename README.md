@@ -18,3 +18,6 @@ loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmeme
 ```bash
 loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/AnAvaragelilmemer/main/pissware"))()
 ```
+
+##  
+this thing will not get any updates now
