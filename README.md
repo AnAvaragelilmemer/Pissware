@@ -20,4 +20,4 @@ loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmeme
 ```
 
 ##  
-this thing will not get any updates now
+back on devoloping it
