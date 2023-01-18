@@ -14,4 +14,22 @@ its not yet completed yet, i will add it to pissware : REMADE soon once its done
 + infinite snow
 + 1 million rebirths
 + auto farm
+# pissware : Prison life loadstring
+```
+local notifLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sw1ndlerScripts/RobloxScripts/main/Notification%20Library/main.lua"))()
+
+if game.PlaceId == 155615604 then
+    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/prison%20life.lua"))() 
+else
+    notifLib:CreatePromptNotif({
+ TweenSpeed = 1,
+ Title = "Hey there!",
+ Text = "you seem lost, teleport to prison life?",
+ Duration = 900,
+ Callback = function(Value)
+  game:GetService('TeleportService'):Teleport(155615604)
+ end
+})
+end
+```
 ## More will come soon, stay tuned!
