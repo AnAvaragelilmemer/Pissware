@@ -15,11 +15,11 @@ if game.PlaceId == 11701792069 then
  -- game not supported
  end
  if game.PlaceId == 815405518 then
- loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/floorislava")
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/floorislava"))()
  else
  --not supported 
  end
- if game.PlaceId == not 5702593762 or 11701792069 or 155615604 then 
+ if game.PlaceId == not 5702593762 or 11701792069 or 155615604 or 815405518 then 
  notifLib:CreatePromptNotif({
  TweenSpeed = 1,
  Title = "Hey there!",
