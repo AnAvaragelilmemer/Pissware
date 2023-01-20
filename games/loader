@@ -1,0 +1,27 @@
+local notifLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sw1ndlerScripts/RobloxScripts/main/Notification%20Library/main.lua"))()
+if game.PlaceId == 155615604 then
+    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/prison%20life.lua"))() 
+else
+-- game not supported
+end
+if game.PlaceId == 11701792069 then
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/snowplowsim.lua"))()
+ else
+ -- game not supported
+ end
+ if game.PlaceId == 5702593762 then
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/climb1000stairs"))()
+ else
+ -- game not supported
+ end
+ if game.PlaceId == not 5702593762 or 11701792069 or 155615604 then 
+ notifLib:CreatePromptNotif({
+ TweenSpeed = 1,
+ Title = "Hey there!",
+ Text = "you went to a unsupported game, go to a supported game?",
+ Duration = 900,
+ Callback = function(Value)
+  game:GetService('TeleportService'):Teleport(155615604)
+ end
+})
+end
