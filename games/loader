@@ -1,4 +1,10 @@
 local notifLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sw1ndlerScripts/RobloxScripts/main/Notification%20Library/main.lua"))()
+notifLib:CreateDefaultNotif({
+ TweenSpeed = 1,
+ Title = "Hello!",
+ Text = "Please use this script on correct games or it wont work.",
+ Duration = 10
+})
 if game.PlaceId == 155615604 then
     loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/prison%20life.lua"))() 
 else
@@ -17,16 +23,7 @@ if game.PlaceId == 11701792069 then
  if game.PlaceId == 815405518 then
  loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/floorislava"))()
  else
- --not supported 
+ -- game not supported 
  end
- if game.PlaceId == not 5702593762 or 11701792069 or 155615604 or 815405518 then 
- notifLib:CreatePromptNotif({
- TweenSpeed = 1,
- Title = "Hey there!",
- Text = "you went to a unsupported game, go to a supported game?",
- Duration = 900,
- Callback = function(Value)
-  game:GetService('TeleportService'):Teleport(155615604)
- end
-})
-end
+ 
+ --removed game teleportation cause it bugs
