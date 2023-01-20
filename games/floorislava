@@ -1,0 +1,82 @@
+--not obfuscated cause its easy to do
+getgenv().autofarm = nil
+function autowin()
+while autofarm == true do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-7.509079933166504, 60.87794494628906, -230.4903564453125)
+wait()
+end
+end
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Pissware : the floor is lava",
+   LoadingTitle = "welcome to pissware.",
+   LoadingSubtitle = "by drmr",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "pissware"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "ABCD", -- The Discord invite code, do not include discord.gg/
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Sirius Hub",
+      Subtitle = "Key System",
+      Note = "Join the discord (discord.gg/sirius)",
+      FileName = "SiriusKey",
+      SaveKey = true,
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = "Hello"
+   }
+})
+
+local Tab = Window:CreateTab("Main")
+
+local Section = Tab:CreateSection("farming")
+
+local Toggle = Tab:CreateToggle({
+   Name = "Auto win",
+   CurrentValue = false,
+   Flag = "Toggle1", 
+   Callback = function(Value)
+   autofarm = Value 
+   autowin()
+   end,
+})
+
+local Section = Tab:CreateSection("Misc")
+
+local Button = Tab:CreateButton({
+   Name = "Inf jump",
+   Callback = function()
+   game:GetService("UserInputService").JumpRequest:connect(function()
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")		
+	end)
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "tp tool",
+   Callback = function()
+   local plr = game:GetService("Players").LocalPlayer
+local mouse = plr:GetMouse()
+
+local tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click Teleport"
+
+tool.Activated:Connect(function()
+local root = plr.Character.HumanoidRootPart
+local pos = mouse.Hit.Position+Vector3.new(0,2.5,0)
+local offset = pos-root.Position
+root.CFrame = root.CFrame+offset
+end)
+
+tool.Parent = plr.Backpack
+   end,
+})
+
