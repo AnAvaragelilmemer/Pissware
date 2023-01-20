@@ -14,6 +14,14 @@ its not yet completed yet, i will add it to pissware : REMADE soon once its done
 + infinite snow
 + 1 million rebirths
 + auto farm
+
+## Features of Pissware : climb 1000 stairs
++ auto farm
++ instant winner
+## features of Pissware : The floor is LAVA
++ auto win
++ click tp
++ inf jump
 # pissware loadstring
 ```
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/loader"))()
