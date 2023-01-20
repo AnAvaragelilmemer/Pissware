@@ -1,0 +1,72 @@
+--open sourced cause its bad
+
+getgenv().autofarm = nil
+
+function autofarmer()
+while getgenv().autofarm == true do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12.03357219696045, 4.952912330627441, 95.53643798828125)
+wait(1)
+tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(0.9, Enum.EasingStyle.Linear)
+tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(53.775291442871094, 46.19806671142578, 96.74864959716797)}):Play()
+wait(0.9)
+tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(0.9, Enum.EasingStyle.Linear)
+tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(217.53204345703125, 209.99806213378906, 92.87692260742188)}):Play()
+wait(0.9)
+tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(0.9, Enum.EasingStyle.Linear)
+tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(443.6134033203125, 436.1980895996094, 88.58057403564453)}):Play()
+wait(0.9)
+tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(0.9, Enum.EasingStyle.Linear)
+tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(1010.822265625, 1003.3980712890625, 99.88367462158203)}):Play()
+wait(0.2)
+end
+end
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Pissware : climb 1000 stairs",
+   LoadingTitle = "welcome to pissware, "..game.Players.LocalPlayer.DisplayName,
+   LoadingSubtitle = "by drmr",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Big Hub"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "ABCD", -- The Discord invite code, do not include discord.gg/
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Sirius Hub",
+      Subtitle = "Key System",
+      Note = "Join the discord (discord.gg/sirius)",
+      FileName = "SiriusKey",
+      SaveKey = true,
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = "Hello"
+   }
+})
+
+local Tab = Window:CreateTab("Main") 
+
+
+
+local Toggle = Tab:CreateToggle({
+   Name = "auto farm",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(bool)
+   getgenv().autofarm = bool
+   autofarmer()-- The variable (Value) is a boolean on whether the toggle is true or false
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "become winner",
+   Callback = function()
+   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1016.66357421875, 1006.0478515625, 97.2916259765625)-- The function that takes place when the button is pressed
+   end,
+})
+
