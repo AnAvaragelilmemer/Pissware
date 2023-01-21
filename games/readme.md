@@ -8,7 +8,7 @@ its not yet completed yet, i will add it to pissware : REMADE soon once its done
 + inf ammo + 0 firerate
 + able to change teams
 + able to remove doors
-+ ESP (coming soon!)
++ ESP (Once i learned Drawing lib)
 + blatant (kill all, one tap punch, crash server)
 ## features of pissware : Snow plow simulator
 + infinite snow
@@ -22,7 +22,7 @@ its not yet completed yet, i will add it to pissware : REMADE soon once its done
 + auto win
 + click tp
 + inf jump
-# pissware loadstring
+## pissware loadstring 
 ```
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/loader"))()
 ```
