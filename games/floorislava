@@ -2,7 +2,7 @@
 getgenv().autofarm = nil
 function autowin()
 while autofarm == true do
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1.00943922996521, 125.20867919921875, 5.549428939819336)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 63, -145)
 wait()
 end
 end
