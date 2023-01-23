@@ -1,0 +1,40 @@
+_G.autowin = nil
+
+function autowin()
+while _G.autowin == true do
+    local epiclydone = game.Players.LocalPlayer.leaderstats.Stage.Value + 1
+    if game.Workspace.Checkpoints:FindFirstChild(tostring(epiclydone)) then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+            game.Workspace.Checkpoints:FindFirstChild(tostring(epiclydone)).CFrame
+    end
+	game:GetService("ReplicatedStorage").Events.prestige:FireServer()
+	task.wait()
+end
+end
+
+repeat task.wait() until game:IsLoaded()
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Pissware : Mega Easy Obby",
+   LoadingTitle = "Welcome to Pissware",
+   LoadingSubtitle = "by drmr",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "pissware"
+   },
+   
+})
+
+local Tab = Window:CreateTab("Main")
+
+local Toggle = Tab:CreateToggle({
+   Name = "auto farm",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   _G.autowin = Value 
+   autowin()
+   end,
+})
