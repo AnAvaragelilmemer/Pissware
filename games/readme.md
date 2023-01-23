@@ -24,6 +24,6 @@ its not yet completed yet, i will add it to pissware : REMADE soon once its done
 + inf jump
 ## pissware loadstring 
 ```
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/loader"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/guiloader"))()
 ```
 ## More will come soon, stay tuned!
