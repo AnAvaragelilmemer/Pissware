@@ -1,7 +1,7 @@
 ## Pissware : Piss on others
 The script hub that gurantees you satifaction after pissing on others
 ## so uh, what do i do here?
-its not yet completed yet, i will add it to pissware : REMADE soon once its done.
+yknow, try my scripts or sum
 ## feature of pissware : Prison life
 + aimbot
 + teleport
@@ -22,6 +22,8 @@ its not yet completed yet, i will add it to pissware : REMADE soon once its done
 + auto win
 + click tp
 + inf jump
+## features of Pissware : Mega Easy Obby
++ auto win
 ## pissware loadstring 
 ```
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/guiloader"))()
