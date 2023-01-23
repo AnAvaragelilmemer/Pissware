@@ -21,7 +21,7 @@ local Window = Rayfield:CreateWindow({
 
 local Tab = Window:CreateTab("Home")
 
-local Section = Tab:CreateSection("Current games : 4")
+local Section = Tab:CreateSection("Current games : 5")
 local Section = Tab:CreateSection("Current version : V2")
 
 local Button = Tab:CreateButton({
@@ -29,7 +29,31 @@ local Button = Tab:CreateButton({
    Callback = function()
    wait(1)
    Rayfield:Destroy()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/loader"))()
+   if game.PlaceId == 155615604 then
+    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/prison%20life.lua"))() 
+else
+-- game not supported
+end
+if game.PlaceId == 11701792069 then
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/snowplowsim.lua"))()
+ else
+ -- game not supported
+ end
+ if game.PlaceId == 5702593762 then
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/climb1000stairs"))()
+ else
+ -- game not supported
+ end
+ if game.PlaceId == 815405518 then
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/floorislava"))()
+ else
+ -- game not supported 
+ end
+if game.PlaceId == 3587619225 then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/megaeasyobby"))()
+else
+--game not supported
+end
    end,
 })
 
@@ -40,5 +64,5 @@ local Button = Tab:CreateButton({
    loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/OldMain"))()
    end,
 })
-
+local Paragraph = Tab:CreateParagraph({Title = "added new game", Content = "added mega easy obby"})
 local Paragraph = Tab:CreateParagraph({Title = "Updated loader!", Content = "I have updated the loader, i hope you find this useful!"})
