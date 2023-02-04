@@ -54,6 +54,8 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pis
 else
 --game not supported
 end
+if game.PlaceId == 3268556893 then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/tsunami%20survival"))()
    end,
 })
 
