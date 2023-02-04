@@ -188,4 +188,4 @@ local Button = Main:CreateButton({
 local Section = Tab:CreateSection("update logs")
 local Paragraph = Tab:CreateParagraph({Title = "New script", Content = "Added utility mode"})
 local Paragraph = Tab:CreateParagraph({Title = "added new game", Content = "added mega easy obby"})
-local Paragraph = Tab:CreateParagraph({Title = "Updated loader!", Content = "I have updated the loader, i hope you find this useful!"})
+local Paragraph = Tab:CreateParagraph({Title = "Updated loader!", Content = "I have updated the loader, i hope you find this useful!"}) 
