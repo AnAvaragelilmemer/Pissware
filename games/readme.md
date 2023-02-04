@@ -24,6 +24,8 @@ yknow, try my scripts or sum
 + inf jump
 ## features of Pissware : Mega Easy Obby
 + auto win
+## features of Pissware : Tsunami surival
++ 3 auto farm methods
 ## pissware loadstring 
 ```
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/guiloader"))()
