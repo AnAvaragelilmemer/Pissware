@@ -42,7 +42,7 @@ user:NewDropdown("info for your roblox account", "didnt i said it.", {"Name: "..
     print(currentOption)
 end);
 
-user:NewDropdown("Misc", "Additional information", {"executor: "..executor, "Ping: "..lplr.GetNetworkPing() * (1000)}, function(currentOption)
+user:NewDropdown("Misc", "Additional information", {"executor: "..executor, "Ping: "..lplr:GetNetworkPing() * (1000)}, function(currentOption)
     print(currentOption)
 end)
 
