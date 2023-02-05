@@ -37,12 +37,13 @@ local home = Window:NewTab("Home");
 --home inspired by Vision hub
 
 local user = home:NewSection("Hello, "..lplr.DisplayName.."!");
+local user = home:NewSection("Version : V1");
 
-user:NewDropdown("info for your roblox account", "didnt i said it.", {"Name: "..lplr.DisplayName, "ID: "..lplr.UserId, "Language: "..lplr.LocaleId}, function(currentOption)
+user:NewDropdown("info for your roblox account", "didnt i said it.", {"Name: "..lplr.DisplayName, "ID: "..lplr.UserId, "Country: "..game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(lplr)}, function(currentOption)
     print(currentOption)
 end);
 
-user:NewDropdown("Misc", "Additional information", {"executor: "..executor, "Ping: "..lplr:GetNetworkPing() * (1000)}, function(currentOption)
+user:NewDropdown("Misc", "Additional information", {"Executor: "..executor}, function(currentOption)
     print(currentOption)
 end)
 
