@@ -1,29 +1,48 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Pissware", IntroIcon = "rbxassetid://6031094686", IntroText = "Pissware : remade", HidePremium = true, SaveConfig = false, ConfigFolder = "Orionse"})
+--IN TESTING.
+--pissware mobile using kavo's ui, shit ui but ok
 
-local update = Window:MakeTab({
-	Name = "Updates",
-	Icon = "rbxassetid://6022668946",
-	PremiumOnly = false
-})
+repeat task.wait() until game:IsLoaded();
+wait(2); --double check
 
-update:AddParagraph("Version nil","nil")
+--make sure the user is a mobile user
 
-local user = Window:MakeTab({
-	Name = "localuser",
-	Icon = "rbxassetid://6022668898",
-	PremiumOnly = false
-})
+local UserInputService = game:GetService("UserInputService") 
+ local dev = 'Device';
+  
+ if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then 
+     warn(dev.." : Mobile!");
+     
+elseif not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then 
+         --wanted to do this in a painful way
+r = 10
+while( r < math.huge)
+do
+print("while true do ", r)
+r = r+1
+end
+ end;
 
-user:AddSlider({
-	Name = "Walkspeed",
-	Min = 1,
-	Max = 500,
-	Default = 16,
-	Color = Color3.fromRGB(255,87,51),
-	Increment = 1,
-	ValueName = "bananas",
-	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-	end    
-})
+local lplr = game.Players.LocalPlayer
+local workspace = game.Workspace
+local chlplr = lplr.Character.Humanoid
+local speed = chlplr.WalkSpeed
+local jump = chlplr.JumpPower
+local gravity = workspace.Gravity
+local executor = identifyexecutor()
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))();
+local Window = library.CreateLib("pissware : MOBILE", "Synapse");
+local home = Window:NewTab("Home");
+
+--home inspired by Vision hub
+
+local user = home:NewSection("Hello, "..lplr.DisplayName.."!");
+
+user:NewDropdown("info for your roblox account", "didnt i said it.", {"Name: "..lplr.DisplayName, "ID: "..lplr.UserId, "Language: "..lplr.LocaleId}, function(currentOption)
+    print(currentOption)
+end);
+
+user:NewDropdown("Misc", "Additional information", {"executor: "..executor, "Ping: "..lplr.GetNetworkPing() * (1000)}, function(currentOption)
+    print(currentOption)
+end)
+
