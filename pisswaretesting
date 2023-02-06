@@ -3,24 +3,17 @@
 --pissware mobile using kavo's ui, shit ui but ok
 
 repeat task.wait() until game:IsLoaded();
-wait(2); --double check
 
 --make sure the user is a mobile user
 
 local UserInputService = game:GetService("UserInputService") 
- local dev = 'Device';
+ local dev = 'Device'
   
  if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then 
-     warn(dev.." : Mobile!");
+     warn(dev.." : Mobile!")
      
 elseif not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then 
-         --wanted to do this in a painful way
-r = 10
-while( r < math.huge)
-do
-print("while true do ", r)
-r = r+1
-end
+     warn("dev.." : PC!")
  end;
 
 local lplr = game.Players.LocalPlayer
