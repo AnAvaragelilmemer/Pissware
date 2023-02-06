@@ -87,7 +87,7 @@ local pos = mouse.Hit.Position+Vector3.new(0,2.5,0)
 local offset = pos-root.Position
 root.CFrame = root.CFrame+offset
 end)
-
+end)
 tool.Parent = plr.Backpack
 end)
 Section:NewButton("Fps boost", "boosts your fps.", function()
