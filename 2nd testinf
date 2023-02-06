@@ -74,7 +74,6 @@ end)
 end)
 
 Section:NewButton("tptool") ("i hate explaining tptool.", fucntion()
-Code:
 local plr = game:GetService("Players").LocalPlayer
 local mouse = plr:GetMouse()
 
