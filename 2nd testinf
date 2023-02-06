@@ -71,6 +71,14 @@ Section:NewButton("Fps boost", "boosts your fps.", function()
 loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/scripts/main/fpsboost"))()
 end)
 
+local Section = scripts:NewSection("Scripts")
+
+ Section:NewButton("Keyboard", "Replicates a keyboard for PC scripts", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()
+end)
+  
+
+
 
 
 
