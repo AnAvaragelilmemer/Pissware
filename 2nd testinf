@@ -64,11 +64,13 @@ Section:NewButton("Leave game", "self explaining", function()
  end)
  
  Section:NewButton("Unlock fps", "self explaing", function()
-    setfpscap(360)
+ setfpscap(360)
 end)
 
 Section:NewButton("Infinite jump", "self explaing.", function()
-
+game:GetService("UserInputService").JumpRequest:connect(function()
+game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")		
+end)
 end)
 
 Section:NewButton("Fps boost", "boosts your fps.", function()
