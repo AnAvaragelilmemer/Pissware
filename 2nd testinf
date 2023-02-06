@@ -67,6 +67,10 @@ Section:NewButton("Leave game", "self explaining", function()
     setfpscap(360)
 end)
 
+Section:NewButton("Infinite jump", "self explaing.", function()
+
+end)
+
 Section:NewButton("Fps boost", "boosts your fps.", function()
 loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/scripts/main/fpsboost"))()
 end)
