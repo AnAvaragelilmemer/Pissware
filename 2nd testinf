@@ -13,11 +13,9 @@ repeat task.wait() until game:IsLoaded()
   
  local home = Window:NewTab("Home"); 
  local lp = Window:NewTab("LocalPlayer"); 
- local as = Window:NewTab("Animation scripts");
- local scripts = Window:NewTab("Scripts")
+ local scripts = Window:NewTab("Scripts");
  --home inspired by Vision hub 
   
-  local comingsoon = as:NewSection("Coming soon!")
  local user = home:NewSection("Hello, "..lplr.DisplayName.."!"); 
  local user = home:NewSection("Version : V1"); 
   
