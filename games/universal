@@ -1,6 +1,23 @@
---in testing
+--i code this bad
+local lplr = game.Players.LocalPlayer
+local name = lplr.Name
+local dname = lplr.DisplayName
+local workspace = game.Workspace
+local chlplr = lplr.Character.Humanoid
+local executor = identifyexecutor()
+local id = lplr.UserId
+local req = http_request or request or (syn and syn.request)
+local HS = game:GetService("HttpService")
+local response = HS:JSONDecode(
+    req({
+    Url = "https://users.roblox.com/v1/users/"..game.Players.LocalPlayer.UserId
+})
+.Body)
+local country = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(lplr)
+
+
 getgenv().SecureMode = true
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
 
 local Window = Rayfield:CreateWindow({
    Name = "Pissware : Universal",
@@ -13,12 +30,22 @@ local Window = Rayfield:CreateWindow({
    },
 })   
 
-local Tab = Window:CreateTab("Home")
-
-local Label = Tab:CreateLabel("                                Info for your roblox account")
-
+local Tab = Window:CreateTab("Home", 6026568198)
+local Label = Tab:CreateLabel(""..os.date("%A, %B %d, %I:%M:%S %p", os.time()))
+spawn(function()
+while task.wait() do
+Label:Set(""..os.date("%A, %B %d, %I:%M:%S %p", os.time()))
+end
+end)
 local Section = Tab:CreateSection(" ")
+local Label = Tab:CreateLabel("                                Info for your roblox account")
+local Label = Tab:CreateLabel("Name: "..name)
+local Label = Tab:CreateLabel("Display Name: "..dname)
+local Label = Tab:CreateLabel("User ID "..id)
+local Label = Tab:CreateLabel("Account creation date: "..response.created)
+local Section = Tab:CreateSection(" ")
+local Label = Tab:CreateLabel("                                                  Misc")
+local Label = Tab:CreateLabel("Executor: "..executor)
+local Label = Tab:CreateLabel("Country: "..country)
 
-local Label = Tab:CreateLabel("Name: "..game.Players.LocalPlayer.Name)
-local Label = Tab:CreateLabel("Display Name: "..game.Players.LocalPlayer.DisplayName)
-local Label = Tab:CreateLabel("User ID "..game.Players.LocalPlayer.UserId)
+
