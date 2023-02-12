@@ -155,6 +155,19 @@ local Button = Tab:CreateButton({
    end,
 })
 
+local Input = Tab:CreateInput({
+   Name = "teleport",
+   Info = "make sure you put its name instead of display name", -- Speaks for itself, Remove if none.
+   PlaceholderText = "player name",
+   NumbersOnly = false, 
+   CharacterLimit = 30, --max character limit. Remove if none.
+   OnEnter = true, -- Will callback only if the user pressed ENTER while being focused.
+   RemoveTextAfterFocusLost = false,
+   Callback = function(value)
+   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
+   end,
+})
+
 local Tab = Window:CreateTab("Scripts", 6022668883)
 
 local Section = Tab:CreateSection(" ")
