@@ -155,24 +155,6 @@ local Button = Tab:CreateButton({
    end,
 })
 
-local Section = Tab:CreateSection("Playerlist")
-
-local plist = {}
-
-for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-    table.insert(plist,v.Name)
-end
-
-local Dropdown = Tab:CreateDropdown({
-   Name = "Teleport to Player",
-   Options = plist,
-   CurrentOption = "select player",
-   Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(player)
-lplr.Character.HumanoidRootPart.CFrame =  game.Players[player].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
-   end,
-})
-
 local Tab = Window:CreateTab("Scripts", 6022668883)
 
 local Section = Tab:CreateSection(" ")
