@@ -14,7 +14,7 @@ local response = HS:JSONDecode(
 })
 .Body)
 local country = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(lplr)
-local version = "2.5"
+local version = "2.6"
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local FPS = 0
