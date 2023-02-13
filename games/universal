@@ -1,5 +1,4 @@
 --i code this bad
-repeat task.wait() until game:IsLoaded();
 local lplr = game.Players.LocalPlayer
 local name = lplr.Name
 local dname = lplr.DisplayName
@@ -16,12 +15,22 @@ local response = HS:JSONDecode(
 .Body)
 local country = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(lplr)
 local version = "2.5"
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local FPS = 0
+local function updateFPS()
+	FPS += 1
+end
+RunService.RenderStepped:Connect(updateFPS)
+
+
 getgenv().SecureMode = true
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+local espLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Sirius/main/library/esp/esp.lua"))()
 
 local Window = Rayfield:CreateWindow({
    Name = "Pissware : Universal",
-   LoadingTitle = "Thank you for using Pissware!",
+   LoadingTitle = "Hello, "..name.."!",
    LoadingSubtitle = "made by drmr",
    ConfigurationSaving = {
       Enabled = true,
@@ -30,11 +39,26 @@ local Window = Rayfield:CreateWindow({
    },
 })   
 
+
 local Tab = Window:CreateTab("Home", 6026568198)
 local time = Tab:CreateLabel(""..os.date("%A, %B %d, %I:%M:%S %p", os.time()))
 spawn(function()
 while task.wait() do
 time:Set(""..os.date("%A, %B %d, %I:%M:%S %p", os.time()))
+end
+end)
+
+local Label = Tab:CreateLabel("FPS: "..workspace:GetRealPhysicsFPS())
+spawn(function()
+while wait(1) do
+	Label:Set("FPS: "..FPS)
+	FPS = 0
+end
+end)
+local Label = Tab:CreateLabel("Current players: "..#Players:GetPlayers().."/"..Players.MaxPlayers)
+spawn(function()
+while task.wait() do
+Label:Set("Current players: "..#Players:GetPlayers().."/"..Players.MaxPlayers)
 end
 end)
 local Section = Tab:CreateSection(" ")
@@ -97,7 +121,7 @@ local Button = Tab:CreateButton({
    Info = "Refreshes your character",
    Interact = '',
    Callback = function()
-   chlplr.Health = 0
+   repeat chlplr.Health = 0 task.wait() until chlplr.Health ~= 0
    end,
 })
 
@@ -116,15 +140,6 @@ local Button = Tab:CreateButton({
    Interact = '',
    Callback = function()
    game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService('Players').LocalPlayer)
-   if syn then 
-   syn.queue_on_teleport([[
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/universal"))()
-]])
-else
-   queue_on_teleport([[
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/universal"))()
-]])
-   end
    end,
 })
 
@@ -155,6 +170,18 @@ local Button = Tab:CreateButton({
    end,
 })
 
+local Button = Tab:CreateButton({
+   Name = "lock fps",
+   Info = "locks your fps.",
+   Interact = '',
+   Callback = function()
+   setfpscap(60)
+   end,
+})
+
+local Section = Tab:CreateSection("Playerlist")
+
+
 local Input = Tab:CreateInput({
    Name = "teleport",
    Info = "make sure you put its name instead of display name", -- Speaks for itself, Remove if none.
@@ -167,6 +194,207 @@ local Input = Tab:CreateInput({
    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
    end,
 })
+
+local Tab = Window:CreateTab("ESP", 6031075931)
+
+local Section = Tab:CreateSection(" ")
+
+local Toggle = Tab:CreateToggle({
+   Name = "Enable",
+   CurrentValue = false,
+   Flag = "enable", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   espLibrary.options.enabled = Value
+   end,
+})
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Box",
+   CurrentValue = false,
+   Flag = "box", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+   espLibrary.options.boxes = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Filled box",
+   CurrentValue = false,
+   Flag = "filledbox", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+   espLibrary.options.boxFill = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Health bar",
+   CurrentValue = false,
+   Flag = "hpbar", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+   espLibrary.options.healthBars = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Health Text",
+   CurrentValue = false,
+   Flag = "hptext", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+    espLibrary.options.healthText = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Names",
+   CurrentValue = false,
+   Flag = "name", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+    espLibrary.options.names = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "distance",
+   CurrentValue = false,
+   Flag = "distance", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+    espLibrary.options.distance = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Chams",
+   CurrentValue = false,
+   Flag = "chams", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+    espLibrary.options.chams = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Tracers",
+   CurrentValue = false,
+   Flag = "tracers", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+    espLibrary.options.tracers = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "OOF arrows",
+   CurrentValue = false,
+   Flag = "oofarrows", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+    espLibrary.options.outOfViewArrows = value
+    espLibrary.options.outOfViewArrowsOutline = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Section = Tab:CreateSection("Settings",false)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Use Team's color",
+   CurrentValue = false,
+   Flag = "uts", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+   espLibrary.options.teamColor = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+local Toggle = Tab:CreateToggle({
+   Name = "Team check",
+   CurrentValue = false,
+   Flag = "tc", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(value)
+   espLibrary.options.teamCheck = value
+   end,
+})
+
+spawn(function()
+task.wait()
+Toggle:Set(true)
+task.wait()
+Toggle:Set(false)
+end)
+
+
+local Section = Tab:CreateSection("due to color pickers on arrayfield are not out yet, please wait!",false)
 
 local Tab = Window:CreateTab("Scripts", 6022668883)
 
@@ -468,3 +696,49 @@ local Button = Tab:CreateButton({
    end,
 })
 
+
+local Button = Tab:CreateButton({
+   Name = "Ui libarys link",
+   Callback = function()
+   setclipboard("https://github.com/drillygzzly/Roblox-UI-Libs")
+	Rayfield:Notify({
+    Title = "Notification",
+    Content = "Sucessfully copied link, paste it into google.",
+    Duration = 5,
+   })
+   end,
+})
+
+local Tab = Window:CreateTab("Settings", 6031280882)
+
+local Section = Tab:CreateSection(" ")
+
+local Button = Tab:CreateButton({
+   Name = "destroy gui",
+   Interact = '',
+   Callback = function()
+   Rayfield:Destroy()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "reload Pissware : Universal",
+   Interact = '',
+   Callback = function()
+   espLibrary:Unload()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/universal"))()
+   end,
+})
+
+
+
+espLibrary:Load()
+if syn then 
+syn.queue_on_teleport([[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/universal"))()
+]])
+else
+   queue_on_teleport([[
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/universal"))()
+]])
+end
