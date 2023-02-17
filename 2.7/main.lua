@@ -575,7 +575,12 @@ local Section = guis:AddSection({
 guis:AddButton({
 	Name = "Vhub",
 	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/Quan8008/V-Hub/Master/Launch-Screen.lua"))();
+      		--https://discord.gg/3NN5zTW7h2
+--veincx#5315 on discord
+--itsyaboivincentt on roblox
+--https://sites.google.com/view/vhubsoftware
+
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/Veincx5315/Created/VHub/Simple'),true))()
   	end    
 })
 
