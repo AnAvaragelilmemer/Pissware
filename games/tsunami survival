@@ -23,8 +23,8 @@ end
 end;
 function method2()
 while _G.autofarm2 == true do
-	lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-175.8529052734375, 131.57736206054688, -26.59061622619629)
-	task.wait()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-226.11282348632812, 155.23736572265625, -82.92378234863281)
+	wait()
 end
 end;
 function method3()
