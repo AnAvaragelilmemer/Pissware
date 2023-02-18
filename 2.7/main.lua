@@ -1,4 +1,5 @@
-repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer.Character
+
 local lplr = game.Players.LocalPlayer
 local name = lplr.Name
 local dname = lplr.DisplayName
@@ -27,9 +28,21 @@ local dev = 'Device'
 local load = tick()	
 local load2 = tick()
 
-repeat wait() until game.ContentProvider.RequestQueueSize == 0
-
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+_G.bhop = nil;
+
+function bhop()
+while _G.bhop do 
+	wait(0.01)
+	chlplr.Jump = true
+	if chlplr.Health < 0.1 then
+		Orion:MakeNotification({Name = "Broken BHOP", Content = "Universal BHOP is broken due to resetting or died", Image = "rbxassetid://6022668916", Time = 5})
+		break
+	end
+end
+end
+	
+
 local espLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Sirius/main/library/esp/esp.lua"))()
 
 
@@ -72,55 +85,59 @@ home:AddParagraph("Info for your roblox account","Name: "..name.."              
 if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then
 home:AddParagraph("Misc","Executor: "..executor.."                                                                                       Device: Mobile")
 elseif not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then
-home:AddParagraph("Misc","Executor: "..executor.."                                                                                       Device: PC")
+local miscpc home:AddParagraph("Misc","Executor: "..executor.."                                                                                       Device: PC".."                                                                                       ")
 end
 
 local Section = home:AddSection({
 	Name = "Update Logs"
 })
-
+home:AddParagraph("Minor Update","LocalPlayer:                                                                                       [+] Added Universal BHOP, may not work on some games and will not work if you resetted with it toggled                                                                                              [+] Changed Speed/Jump/Gravity's sliders to textboxs                                                                                                                            [+] You can now Reset Speed, Jump, Gravity with a button!                                                                                       Aimbot:                                                                                                                            [+] Improved Aimbot (Larger FOV Ring).                                                                                                       Settings:                                                                                           [+]Added Settings, More will be added soon                                                                ESP:                                                                                                 [+]Added Limit Distance, Maxium Distance, Font size on ESP                                                                Note:                                                                                                [!]I will be taking a break for a week.")
 home:AddParagraph("Updated to Version 2.7","[+] Switched UI Libary to Orion                                                                  [+] Organized script section.                                                                 [+]Added Aimbot, no i will not add an wall check :)                         ")
-
 local user = window:MakeTab({Name = "LocalPlayer", Icon = "rbxassetid://6022668898"})
 
-user:AddSlider({
-	Name = "Walkspeed",
-	Min = 1,
-	Max = 500,
-	Default = 16,
-	Color = Color3.fromRGB(255,87,51),
-	Increment = 1,
-	ValueName = "Walkspeed",
-	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-	end    
+user:AddTextbox({
+	Name = "Speed",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(v)
+		chlplr.WalkSpeed = v
+	end	  
 })
 
-user:AddSlider({
-	Name = "Jumppower",
-	Min = 1,
-	Max = 1000,
-	Default = 50,
-	Color = Color3.fromRGB(255,87,51),
-	Increment = 1,
-	ValueName = "Jumppower",
-	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
-	end    
+user:AddTextbox({
+	Name = "jump",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(v)
+		chlplr.JumpPower = v
+	end	  
 })
 
-user:AddSlider({
+user:AddTextbox({
 	Name = "Gravity",
-	Min = 1,
-	Max = 1000,
-	Default = 196,
-	Color = Color3.fromRGB(255,87,51),
-	Increment = 1,
-	ValueName = "Gravity",
-	Callback = function(Value)
-		game.Workspace.Gravity = Value
-	end    
+	Default = "",
+	TextDisappear = true,
+	Callback = function(v)
+		game.Workspace.Gravity = v
+	end	  
 })
+
+
+user:AddButton({
+	Name = "Reset Speed, Jump, Gravity.",
+	Callback = function()
+      		chlplr.WalkSpeed = 16
+			  chlplr.JumpPower = 50
+			  game.Workspace.Gravity = 196
+			  Orion:MakeNotification({
+	Name = "Notification",
+	Content = "Resetted everything!",
+	Image = "rbxassetid://4483345998",
+	Time = 2
+})
+  	end    
+})
+
 
 local Section = user:AddSection({
 	Name = "PLAYER ACTIONS"
@@ -168,7 +185,14 @@ user:AddButton({
   	end    
 })
 
-
+user:AddToggle({
+	Name = "Universal BHOP",
+	Default = false,
+	Callback = function(v)
+		_G.bhop = v
+		bhop()
+	end    
+})
 
 local esp = window:MakeTab({Name = "ESP", Icon = "rbxassetid://6031075931"})
 
@@ -359,7 +383,40 @@ esp:AddToggle({
 	end    
 })
 
+esp:AddToggle({
+	Name = "Limit distance",
+	Default = false,
+	Callback = function(value)
+		espLibrary.options.limitDistance = value
+	end    
+})
 
+esp:AddSlider({
+	Name = "Maxium distance",
+	Min = 40,
+	Max = 1000,
+	Default = 50,
+	Color = Color3.fromRGB(255,0,0),
+	Increment = 10,
+	ValueName = " ",
+	Callback = function(value)
+		espLibrary.options.maxDistance = value
+	end    
+})
+
+
+esp:AddSlider({
+	Name = "font size",
+	Min = 5,
+	Max = 25,
+	Default = 13,
+	Color = Color3.fromRGB(255,0,0),
+	Increment = 1,
+	ValueName = " ",
+	Callback = function(value)
+		 espLibrary.options.fontSize = value
+	end    
+})
 
 local aimbot = window:MakeTab({Name = "Aimbot", Icon = "rbxassetid://4483345998"})
 
@@ -456,8 +513,8 @@ aimbot:AddSlider({
 aimbot:AddSlider({
 	Name = "Fov ring",
 	Min = 10,
-	Max = 100,
-	Default = 150,
+	Max = 1000,
+	Default = 100,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	ValueName = " ",
@@ -480,7 +537,7 @@ local guis = window:MakeTab({
 	PremiumOnly = false
 })
 
-guis:AddLabel("Current GUIS")
+guis:AddLabel("Current GUIS: 32")
 local Section = guis:AddSection({
 	Name = "Universal"
 })
@@ -575,11 +632,6 @@ local Section = guis:AddSection({
 guis:AddButton({
 	Name = "Vhub",
 	Callback = function()
-      		--https://discord.gg/3NN5zTW7h2
---veincx#5315 on discord
---itsyaboivincentt on roblox
---https://sites.google.com/view/vhubsoftware
-
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/Veincx5315/Created/VHub/Simple'),true))()
   	end    
 })
@@ -713,7 +765,7 @@ guis:AddButton({
 guis:AddButton({
 	Name = "plamen6789rock's doors enti spawner gui",
 	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/plamen6789/DoorsEntitySummonerGUI/main/EntityGUI"))()
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/plamen6789/DoorsEntitySpawner/main/EntitySpawner"))()
   	end    
 })
 
@@ -803,6 +855,16 @@ local tweentime = utilies:AddSlider({
 tweentime:Set(9)
 wait()
 tweentime:Set(10)
+
+local settings = window:MakeTab({Name = "Settings", Icon = "rbxassetid://6031280882"})
+
+settings:AddButton({
+	Name = "Destroy GUI",
+	Callback = function()
+    Orion:Destroy()
+   end
+})
+
 
 espLibrary:Load()
 Orion:Init()
