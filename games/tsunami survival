@@ -80,7 +80,7 @@ local Toggle = Tab:CreateToggle({
 local Button = Tab:CreateButton({
    Name = "finish obby (get badge)",
    Callback = function()
-  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-247.8746795654297, 169.7237548828125, 42.27207946777344)
+  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Badge.CFrame
    end,
 });
 
