@@ -1,4 +1,4 @@
-repeat task.wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer.Character
+repeat task.wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer.Character;
 
 local lplr = game.Players.LocalPlayer
 local name = lplr.Name
@@ -25,8 +25,6 @@ end
 RunService.RenderStepped:Connect(updateFPS)
 local UserInputService = game:GetService("UserInputService")
 local dev = 'Device'
-local load = tick()	
-local load2 = tick()
 
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 _G.bhop = nil;
@@ -60,7 +58,7 @@ local window = Orion:MakeWindow({
     IntroIcon = "rbxassetid://6031094686",
     HidePremium = true, 
     SaveConfig = true,
-    ConfigFolder = "PisswareV2dot7"
+    ConfigFolder = "pissedon"
 })
 
 local home = window:MakeTab({Name = "Home", Icon = "rbxassetid://6026568198"})
@@ -85,7 +83,7 @@ home:AddParagraph("Info for your roblox account","Name: "..name.."              
 if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then
 home:AddParagraph("Misc","Executor: "..executor.."                                                                                       Device: Mobile")
 elseif not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then
-local miscpc home:AddParagraph("Misc","Executor: "..executor.."                                                                                       Device: PC".."                                                                                       ")
+home:AddParagraph("Misc","Executor: "..executor.."                                                                                       Device: PC".."                                                                                       ")
 end
 
 local Section = home:AddSection({
@@ -442,7 +440,7 @@ Orion:MakeNotification({
        _G.FOVring.Position = workspace.CurrentCamera.ViewportSize/2
    end)
        
-       local RunService = game:GetService("RunService")
+      
        
        local function getClosest(cframe)
           local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
