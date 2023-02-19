@@ -1,11 +1,14 @@
 # Pissware : Remade
 
-Pissware : least original script hub that uses the rayfield/orion ui libary
+Pissware the least original script hub that uses the rayfield/orion ui libary
 
 ## Pissware : Remade loadstring
 ```bash
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/recentversion"))()
+local raw = "https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/"
+local version = "2.7/"
+local main = "main.lua"
+loadstring(game:HttpGet(raw..version..main))()
 ```
 
 ##  
-back on devoloping it
+Current version : 2.7
