@@ -43,15 +43,6 @@ end
 
 local espLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Sirius/main/library/esp/esp.lua"))()
 
-
-if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then
-Orion:MakeNotification({
-	Name = "Hey There!",
-	Content = "I see your using a mobile device, i recommend using this script with a high minium width",
-	Image = "rbxassetid://4483345998",
-	Time = 20
-})
-end
 local window = Orion:MakeWindow({
     Name = "Pisswareぞ V"..version,
     IntroText = "Welcome to Pissware V"..version..", "..dname.."!",
@@ -80,11 +71,8 @@ end)
 
 home:AddParagraph("Info for your roblox account","Name: "..name.."                                                                      Display Name: "..dname.."                                                                       User Id: "..id.."                                                                           Account creation date: "..response.created)
 
-if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then
-home:AddParagraph("Misc","Executor: "..executor.."                                                                                       Device: Mobile")
-elseif not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then
-home:AddParagraph("Misc","Executor: "..executor.."                                                                                       Device: PC".."                                                                                       ")
-end
+home:AddParagraph("Misc","Executor: "..executor.."                                                                                       ")
+
 
 local Section = home:AddSection({
 	Name = "Update Logs"
