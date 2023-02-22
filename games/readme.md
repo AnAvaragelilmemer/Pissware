@@ -3,17 +3,7 @@ The script hub that gurantees you satifaction after pissing on others
 ## so uh, what do i do here?
 yknow, try my scripts or sum
 ## feature of pissware : Prison life
-+ aimbot
-+ teleport
-+ inf ammo + 0 firerate
-+ able to change teams
-+ able to remove doors
-+ ESP (Once i learned Drawing lib)
-+ blatant (kill all, one tap punch, crash server)
-## features of pissware : Snow plow simulator
-+ infinite snow
-+ 1 million rebirths
-+ auto farm
++ Since the game updated and the script is patched, i will be remaking this next week.
 
 ## Features of Pissware : climb 1000 stairs
 + auto farm
