@@ -18,6 +18,6 @@ yknow, try my scripts or sum
 + 3 auto farm methods
 ## pissware loadstring 
 ```
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/games/guiloader"))()
+--bored.
 ```
 ## More will come soon, stay tuned!
