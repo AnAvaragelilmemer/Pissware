@@ -11,4 +11,4 @@ loadstring(game:HttpGet(github..file..main))()
 ```
 
 ##  
-Current version : 2.7
+Pissware not gonna get updates anymore
