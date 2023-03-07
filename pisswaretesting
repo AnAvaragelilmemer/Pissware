@@ -1,79 +1,282 @@
 
---IN TESTING.
---pissware mobile using kavo's ui, shit ui but ok
+    repeat task.wait() until game:IsLoaded() and game.ContentProvider.RequestQueueSize == 0;
+local time = os.time()
 
-repeat task.wait() until game:IsLoaded();
-
---make sure the user is a mobile user
-
-local UserInputService = game:GetService("UserInputService") 
- local dev = 'Device'
-  
- if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then 
-     warn(dev.." : Mobile!")
-     
-elseif not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then 
-     warn("dev.." : PC!")
- end;
-
-local lplr = game.Players.LocalPlayer
+if getgenv().isloaded then
+    game.StarterGui:SetCore("SendNotification", {
+Title = "Notification",
+Text = "Impact is already loaded!",
+Duration = 5,
+})
+return
+end
+getgenv().isloaded = true
+local loadtime = os.time()
+local lplr = game:GetService("Players").LocalPlayer
+local chlplr = lplr.Character.Humanoid
 local name = lplr.Name
 local dname = lplr.DisplayName
-local workspace = game.Workspace
-local chlplr = lplr.Character.Humanoid
---local speed = chlplr.WalkSpeed 
---local jump = chlplr.JumpPower
-local gravity = workspace.Gravity
-local executor = identifyexecutor()
-local library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))(); --draggable kavo
-local Window = library.CreateLib("pissware : MOBILE", "Synapse");
-
-local home = Window:NewTab("Home");
-local lp = Window:NewTab("LocalPlayer");
-
---home inspired by Vision hub
-
-local user = home:NewSection("Hello, "..lplr.DisplayName.."!");
-local user = home:NewSection("Version : V1");
-
-user:NewDropdown("info for your roblox account", "didnt i said it.", {"Name: "..name, "Display name: "..dname, "ID: "..lplr.UserId, "Account creation in days: "..lplr.AccountAge, "Country: "..game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(lplr)},  function(currentOption)
-    print(currentOption)
-end);
-
-user:NewDropdown("Misc", "Additional information", {"Executor: "..executor}, function(currentOption)
-    print(currentOption)
+local userid = lplr.UserId 
+local version = "V3.0.0"
+local light = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
+local NetworkClient = game:GetService("NetworkClient")
+local xray = {}
+local ambient
+getgenv().ambientcolor = Color3.fromRGB(138,43,226)
+RunService.Stepped:Connect(function()
+        if ambient then
+        light.Ambient = getgenv().ambientcolor
+        else
+            light.Ambient = Color3.fromRGB(0,0,0)
+        end
+end)
+local noclip 
+game:GetService("RunService").Stepped:Connect(function()
+    if noclip then
+        for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+            if v and v:IsA("BasePart") then
+                v.CanCollide = false
+            end
+        end
+    end
 end)
 
-local Section = lp:NewSection("LocalPlayer")
+getgenv().run = nil
+function run()
+while getgenv().run do
+    wait()
+    lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position+workspace.Camera.CFrame.lookVector*100)
+    if getgenv().run == false then
+        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position)
+    end
+end
+end
 
-Section:NewSlider("Speed", "makes you more faster", 500, 16, function(v)
-    chlplr.WalkSpeed = v
+            
+getgenv().fps = nil;
+function fpss()
+if getgenv().fps then
+    setfpscap(999)
+    else
+        setfpscap(60)
+end
+end
+getgenv().headless = nil
+function headless()
+if getgenv().headless then
+    lplr.Character.Head.Transparency = 1
+   lplr.Character.Head.face.Transparency = 1
+  else
+      lplr.Character.Head.Transparency = 0 
+      lplr.Character.Head.face.Transparency = 0
+end
+end
+getgenv().norender = nil
+function norender()
+if getgenv().norender then
+    RunService:Set3dRenderingEnabled(false)
+    else
+            RunService:Set3dRenderingEnabled(true)
+end
+end
+	getgenv().jetpack = nil; 
+	function jetpack() 
+	        game:GetService("UserInputService").JumpRequest:connect(function()
+	    if getgenv().jetpack then
+	        		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+end
+end)
+end
+
+getgenv().spinbot = nil;
+getgenv().spinspeed = math.rad(50)
+function spin()
+while getgenv().spinbot do
+task.wait()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, getgenv().spinspeed, 0)
+end
+end
+
+getgenv().antiafk = nil;
+function antiafk() 
+    while task.wait() and getgenv().antiafk do
+        if true then
+            lplr.Idled:connect(function()
+                game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+            end)
+        end
+    end
+end
+
+
+getgenv().spamchat = nil;
+getgenv().spamchatmessage = nil
+function spamchat()
+while getgenv().spamchatmessage do
+    wait(1)
+    local chat = getgenv().spamchatmessage or "impact on top" 
+    local towhom = "All"
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(chat, towhom)
+        wait(1)
+    end
+end
+
+local espLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/scripts/main/esp/main.lua"))()
+
+local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/Vape.txt")()
+
+local win = lib:Window("Impact "..version,Color3.fromRGB(138,43,226), Enum.KeyCode.RightControl)
+
+local combat = win:Tab("combat")
+local movement = win:Tab("movement")
+local render = win:Tab("render")
+local misc = win:Tab("misc")
+
+combat:Button("Aimbot", function()
+lib:Notification("Notification", "Press ; to destroy the aimbot!", "ok!")
+--draw fov ring
+       getgenv().FOVring = Drawing.new("Circle")
+       --loop fov ring properties
+       game:GetService"RunService".RenderStepped:Connect(function()
+        getgenv().FOVring.Visible = true
+       getgenv().FOVring.Thickness = 2
+       getgenv().FOVring.Radius = getgenv().fovringslider
+       getgenv().FOVring.Transparency = 1
+       getgenv().FOVring.Color = getgenv().fovColorPicker
+       getgenv().FOVring.Position = workspace.CurrentCamera.ViewportSize/2
+   end)
+       
+      
+       
+       local function getClosest(cframe)
+          local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
+          
+          local target = nil
+          local mag = math.huge
+          
+          for i,v in pairs(game.Players:GetPlayers()) do
+              if v.Character and v.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer and (v.Team ~= game.Players.LocalPlayer.Team or (not getgenv().tcToggle)) then
+                  local magBuf = (v.Character.Head.Position - ray:ClosestPoint(v.Character.Head.Position)).Magnitude
+                  
+                  if magBuf < mag then
+                      mag = magBuf
+                      target = v
+                  end
+              end
+          end
+          
+          return target
+       end
+       
+       loop = RunService.RenderStepped:Connect(function()
+          local UserInputService = game:GetService("UserInputService")
+          local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+          local localPlay = game.Players.localPlayer.Character
+          local cam = workspace.CurrentCamera
+          local zz = workspace.CurrentCamera.ViewportSize/2
+          
+          if pressed then
+              local Line = Drawing.new("Line")
+              local curTar = getClosest(cam.CFrame)
+              local ssHeadPoint = cam:WorldToScreenPoint(curTar.Character.Head.Position)
+              ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
+              if (ssHeadPoint - zz).Magnitude < getgenv().fovringslider then
+                  workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, curTar.Character.Head.Position), getgenv().smoothingslider)
+              end
+          end
+          
+          if UserInputService:IsKeyDown(Enum.KeyCode.Semicolon) then
+              loop:Disconnect()
+              getgenv().FOVring:Destroy()
+          end
+       end)
 end)
 
-Section:NewSlider("Jump", "makes you jump alot higher", 1000, 50, function(v)
-    chlplr.JumpPower = v
+combat:Toggle("Team check",false, function(v) 
+    getgenv().tcToggle = v
+ end)
+
+combat:Slider("Smoothing",0,1,0.10, function(v) 
+  getgenv().smoothingslider = v  
+ end)
+
+combat:Slider("Fov ring size",10,1000,100, function(v) 
+  getgenv().smoothingslider = v  
+ end)
+
+combat:Colorpicker("Fov ring color",Color3.fromRGB(44,120,224),function(v) 
+    getgenv().fovColorPicker = v
+ end)
+
+movement:Toggle("Spinbot",false, function(v) 
+getgenv().spinbot = v
+spin()
 end)
 
-Section:NewSlider("Gravity", "defy gravity.", 1000, 196, function(v)
-    workspace.Gravity = v
+movement:Textbox("Spinbot speed",true, function(v)
+getgenv().spinspeed = math.rad(v)
 end)
 
-Section:NewButton("Reset speed", "Reverts your speed to 16", function()
-    chlplr.WalkSpeed = 16
+movement:Textbox("Speed",true, function(v)
+    TargetWalkspeed = v
 end)
 
-Section:NewButton("Reset Jump", "Reverts your jump to 50", function()
-    chlplr.JumpPower = 50
+movement:Toggle("Phase",false, function(v) 
+noclip = v
 end)
 
-Section:NewButton("Reset Gravity", "Reverts your gravity to 196", function()
-    workspace.Gravity = 196
+movement:Toggle("Jetpack",false, function(v) 
+getgenv().jetpack = v 
+jetpack() 
 end)
 
-local Section = lp:NewSection("Misc")
+movement:Toggle("AlwaysMove",false, function(v) 
+    getgenv().run = v
+    run()
+ end)
 
-Section:NewButton("Rejoin", "self explaining", function()
-                    game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService('Players').LocalPlayer)
+render:Toggle("Ambient",false, function(v) 
+    ambient = v
+ end)
+
+render:Colorpicker("Ambient color",Color3.fromRGB(0,255,0),function(v) 
+    getgenv().ambientcolor = v
+ end)
+
+render:Toggle("NoRender",false, function(v) 
+    getgenv().norender = v
+    norender()
+ end)
+
+--[[
+render:Toggle("HealthTags",false, function(v) 
+    norender = v
+ end)
+
+render:Toggle("NameTags",false, function(v) 
+    norender = v
+ end)
+
+render:Toggle("PlayerESP",false, function(v) 
+    norender = v
 end)
 
+render:Toggle("Tracers",false, function(v) 
+    norender = v
+end)
+]]
 
+
+
+
+game:GetService("RunService").RenderStepped:Connect(function() 
+pcall(function() 
+ if game.Players.LocalPlayer.Character.Humanoid.MoveDirection.Magnitude > 0 then 
+game.Players.LocalPlayer.Character:TranslateBy(game.Players.LocalPlayer.Character.Humanoid.MoveDirection * TargetWalkspeed/50) 
+ end 
+ end) 
+ end)
+
+
+lib:Notification("Notification", "Impact "..version.." Loaded in "..os.time()-time.." Seconds", "Ok!")
