@@ -122,92 +122,22 @@ while getgenv().spamchatmessage do
     end
 end
 
-local espLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/scripts/main/esp/main.lua"))()
-
+local espLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/scripts/main/esp/main.lua"))()
 local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/Vape.txt")()
-
+espLibrary.options.chams = false
+	espLibrary.options.boxes = false
+	 espLibrary.options.healthText = false
+	  espLibrary.options.distance = false
+	  espLibrary.options.healthBars = false
+espLibrary.options.names = false
+espLibrary.options.distance = false
+ espLibrary.options.outOfViewArrows = false
+                espLibrary.options.outOfViewArrowsOutline = false
 local win = lib:Window("Impact "..version,Color3.fromRGB(138,43,226), Enum.KeyCode.RightControl)
 
-local combat = win:Tab("combat")
 local movement = win:Tab("movement")
 local render = win:Tab("render")
 local misc = win:Tab("misc")
-
-combat:Button("Aimbot", function()
-lib:Notification("Notification", "Press ; to destroy the aimbot!", "ok!")
---draw fov ring
-       getgenv().FOVring = Drawing.new("Circle")
-       --loop fov ring properties
-       game:GetService"RunService".RenderStepped:Connect(function()
-        getgenv().FOVring.Visible = true
-       getgenv().FOVring.Thickness = 2
-       getgenv().FOVring.Radius = getgenv().fovringslider
-       getgenv().FOVring.Transparency = 1
-       getgenv().FOVring.Color = getgenv().fovColorPicker
-       getgenv().FOVring.Position = workspace.CurrentCamera.ViewportSize/2
-   end)
-       
-      
-       
-       local function getClosest(cframe)
-          local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
-          
-          local target = nil
-          local mag = math.huge
-          
-          for i,v in pairs(game.Players:GetPlayers()) do
-              if v.Character and v.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer and (v.Team ~= game.Players.LocalPlayer.Team or (not getgenv().tcToggle)) then
-                  local magBuf = (v.Character.Head.Position - ray:ClosestPoint(v.Character.Head.Position)).Magnitude
-                  
-                  if magBuf < mag then
-                      mag = magBuf
-                      target = v
-                  end
-              end
-          end
-          
-          return target
-       end
-       
-       loop = RunService.RenderStepped:Connect(function()
-          local UserInputService = game:GetService("UserInputService")
-          local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
-          local localPlay = game.Players.localPlayer.Character
-          local cam = workspace.CurrentCamera
-          local zz = workspace.CurrentCamera.ViewportSize/2
-          
-          if pressed then
-              local Line = Drawing.new("Line")
-              local curTar = getClosest(cam.CFrame)
-              local ssHeadPoint = cam:WorldToScreenPoint(curTar.Character.Head.Position)
-              ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
-              if (ssHeadPoint - zz).Magnitude < getgenv().fovringslider then
-                  workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, curTar.Character.Head.Position), getgenv().smoothingslider)
-              end
-          end
-          
-          if UserInputService:IsKeyDown(Enum.KeyCode.Semicolon) then
-              loop:Disconnect()
-              getgenv().FOVring:Destroy()
-          end
-       end)
-end)
-
-combat:Toggle("Team check",false, function(v) 
-    getgenv().tcToggle = v
- end)
-
-combat:Slider("Smoothing",0,1,0.10, function(v) 
-  getgenv().smoothingslider = v  
- end)
-
-combat:Slider("Fov ring size",10,1000,100, function(v) 
-  getgenv().smoothingslider = v  
- end)
-
-combat:Colorpicker("Fov ring color",Color3.fromRGB(44,120,224),function(v) 
-    getgenv().fovColorPicker = v
- end)
 
 movement:Toggle("Spinbot",false, function(v) 
 getgenv().spinbot = v
@@ -249,25 +179,88 @@ render:Toggle("NoRender",false, function(v)
     norender()
  end)
 
---[[
-render:Toggle("HealthTags",false, function(v) 
-    norender = v
+render:Toggle("Enable ESP",false, function(v) 
+    espLibrary.options.enabled = v
+	espLibrary.options.chams = false
+	espLibrary.options.boxes = false
+	 espLibrary.options.healthText = false
+ end)
+
+render:Toggle("HealthBar",false, function(v) 
+    espLibrary.options.healthBars = v
+ end)
+
+render:Colorpicker("HealthBar color",Color3.fromRGB(255,255,255),function(v) 
+    espLibrary.options.healthBarsColor = v
  end)
 
 render:Toggle("NameTags",false, function(v) 
-    norender = v
+     espLibrary.options.names = v
  end)
 
+render:Colorpicker("NameTags color",Color3.fromRGB(255,255,255),function(v) 
+     espLibrary.options.nameColor = v
+ end)
+
+
 render:Toggle("PlayerESP",false, function(v) 
-    norender = v
+    espLibrary.options.boxFill = v
 end)
+
+render:Colorpicker("PlayerESP color",Color3.fromRGB(255,255,255),function(v) 
+    espLibrary.options.boxFillColor = v
+ end)
+
 
 render:Toggle("Tracers",false, function(v) 
-    norender = v
+   espLibrary.options.tracers = v
 end)
-]]
+
+render:Colorpicker("Tracer color",Color3.fromRGB(255,255,255),function(v) 
+     espLibrary.options.tracerColor = v
+ end)
 
 
+render:Toggle("Distance",false, function(v) 
+     espLibrary.options.distance = v
+end)
+
+render:Colorpicker("Distance color",Color3.fromRGB(255,255,255),function(v) 
+    espLibrary.options.distanceColor = v
+end)
+
+render:Toggle("Filled Arrows",false, function(v) 
+      espLibrary.options.outOfViewArrows = v
+end)
+
+render:Colorpicker("Filled Arrow color",Color3.fromRGB(255,255,255),function(v) 
+    espLibrary.options.outOfViewArrowsColor = v
+ end)
+
+render:Toggle("Arrows",false, function(v) 
+      espLibrary.options.outOfViewArrowsOutline = v
+end)
+
+render:Colorpicker("Arrow color",Color3.fromRGB(255,255,255),function(v) 
+     espLibrary.options.outOfViewArrowsOutlineColor = v
+ end)
+
+render:Label("ESP Global settings")
+
+render:Toggle("Visible check",false, function(v)
+espLibrary.options.visibleOnly = v
+end)
+
+render:Toggle("Team check",false, function(v)
+espLibrary.options.teamCheck = v
+end)
+
+render:Toggle("Limit distance",false, function(v)
+espLibrary.options.limitDistance = v
+end)
+render:Slider("Max Distance",0,2000,1000, function(v)
+ espLibrary.options.maxDistance = v
+end)
 
 
 game:GetService("RunService").RenderStepped:Connect(function() 
@@ -278,5 +271,5 @@ game.Players.LocalPlayer.Character:TranslateBy(game.Players.LocalPlayer.Characte
  end) 
  end)
 
-
+espLibrary:Load()
 lib:Notification("Notification", "Impact "..version.." Loaded in "..os.time()-time.." Seconds", "Ok!")
