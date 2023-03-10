@@ -239,6 +239,7 @@ render:AddColorpicker({ Name = "Tracer color", Default = Color3.new(1,1,1), Save
 
 render:AddToggle({ Name = "HealthBar", Default = false, Save = true, Flag = "render_esp_hpbar", Callback = function(v)
     espLib.options.healthBars = v
+end
 })
 
 render:AddColorpicker({ Name = "HealthBar color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_hpbar_color", Callback = function(v)
