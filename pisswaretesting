@@ -158,11 +158,6 @@ getgenv().timesilder = 14
 RunService.Stepped:Connect(function()
 if time then lighting.ClockTime = timesilder end
 end)
-local Outdoor
-getgenv().outdoorambientcolor = Color3.fromRGB(127,127,127)
-RunService.Stepped:Connect(function()
-if outdoor then lighting.OutdoorAmbient = outdoorambientcolor end
-end)
 render:AddToggle({ Name = "Ambient", Default = false, Save = true, Flag = "render_ambientcheck", Callback = function(v)
     ambient = v
             end
@@ -194,14 +189,6 @@ render:AddToggle({ Name = "Global shadow", Default = false, Save = true, Flag = 
             end
 })
 
-render:AddToggle({ Name = "Outdoor ambient", Default = false, Save = true, Flag = "render_oa", Callback = function(v)
-    outdoor = v
-            end
-})
-render:AddColorpicker({ Name = "OutdoorAmbient color", Default = Color3.new(127,127,127), Save = true, Flag = "render_oa_color", Callback = function(v)
-    ambientcolor = v
-            end
-})
 local esp = render:AddSection({
 	Name = "ESP"
 })
