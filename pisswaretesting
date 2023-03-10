@@ -1,561 +1,311 @@
 repeat task.wait() until game:IsLoaded() and game.ContentProvider.RequestQueueSize == 0;
-
 local logservice = game:GetService("LogService")
-
 local scriptcontext = game:GetService("ScriptContext")
-
 local RunService = game:GetService("RunService")
-
 local lighting = game:GetService("Lighting")
-
 local defaultambient = lighting.Ambient
-
 local lplr = game:GetService("Players").LocalPlayer
-
 --disables printing
-
 for i,v in pairs(getconnections(logservice.MessageOut)) do
-
     v:Disable()
-
 end
-
 for i,v in pairs(getconnections(scriptcontext.Error)) do
-
     v:Disable()
-
 end
-
 --fe2
-
 pcall(function()
-
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
-
-	return {}end
-
-end)
-
-local version = "GX"
-
-local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
-
-local function chat(msg)
-
-    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
-
+	return {}
 end
-
+end)
+local version = "GX"
+local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
+local function chat(msg)
+    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
+end
 local function kick(msg)
-
     if msg then
-
         lplr:Kick(msg)
-
         else
-
             lplr:Kick()
-
     end
-
 end
 
 local function exit()
-
     game:Shutdown()
-
 end
 
 local function copy(msg)
-
     setclipboard(msg)
-
 end
-
 --draggable for mobile
-
 local Orion = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Orion-mobile/main/source.lua"))()
-
 local function notif(msg)
-
     Orion:MakeNotification({
-
 	Name = "Pissware",
-
 	Content = msg,
-
 	Image = "rbxassetid://4483345998",
-
 	Time = 5
-
 }) 	
-
 end
-
 local random = {
-
     "hello, "..lplr.DisplayName.."!",
-
     "Welcome to pissware GX, "..lplr.DisplayName..".",
-
     "hi there, "..lplr.DisplayName..".",
-
     "Thanks for using pissware GX, "..lplr.DisplayName.."!",
-
     "whats up, "..lplr.DisplayName.."!"
-
     }
-
     local welcome = random[math.random(1,#random)]
-
 local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = welcome,IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "wareconfig"})
-
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
-
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
-
 local move = Window:MakeTab({Name = "movement", Icon = "rbxassetid://7743870731", PremiumOnly = false})
-
 local misc = Window:MakeTab({Name = "misc", Icon = "rbxassetid://7743878358", PremiumOnly = false})
-
 local beta = Window:MakeTab({Name = " ", Icon = " ",PremiumOnly = false})
-
 combat:AddButton({
-
 	Name = "Aimbot",
-
 	Callback = function()
-
 	    notif("Press ; to destroy the aimbot!")
-
 _G.FOVring = Drawing.new("Circle")
-
        game:GetService"RunService".RenderStepped:Connect(function()
-
        _G.FOVring.Visible = true
-
        _G.FOVring.Thickness = 2
-
        _G.FOVring.Radius = _G.fovringslider
-
        _G.FOVring.Transparency = 1
-
        _G.FOVring.Color = _G.fovColorPicker
-
        _G.FOVring.Position = workspace.CurrentCamera.ViewportSize/2
-
    end)
-
        
-
       
-
        
-
        local function getClosest(cframe)
-
           local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
-
           
-
           local target = nil
-
           local mag = math.huge
-
           
-
           for i,v in pairs(game.Players:GetPlayers()) do
-
               if v.Character and v.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") and v ~= game.Players.LocalPlayer and (v.Team ~= game.Players.LocalPlayer.Team or (not _G.tcToggle)) then
-
                   local magBuf = (v.Character.Head.Position - ray:ClosestPoint(v.Character.Head.Position)).Magnitude
-
                   
-
                   if magBuf < mag then
-
                       mag = magBuf
-
                       target = v
-
                   end
-
               end
-
           end
-
           
-
           return target
-
        end
-
        
-
        loop = RunService.RenderStepped:Connect(function()
-
           local UserInputService = game:GetService("UserInputService")
-
           local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
-
           local localPlay = game.Players.localPlayer.Character
-
           local cam = workspace.CurrentCamera
-
           local zz = workspace.CurrentCamera.ViewportSize/2
-
           
-
           if pressed then
-
               local Line = Drawing.new("Line")
-
               local curTar = getClosest(cam.CFrame)
-
               local ssHeadPoint = cam:WorldToScreenPoint(curTar.Character.Head.Position)
-
               ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
-
               if (ssHeadPoint - zz).Magnitude < _G.fovringslider then
-
                   workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, curTar.Character.Head.Position), _G.smoothingslider)
-
               end
-
           end
-
           
-
           if UserInputService:IsKeyDown(Enum.KeyCode.Semicolon) then
-
               loop:Disconnect()
-
               _G.FOVring:Remove()
-
           end
-
        end)
-
   	end    
-
 })
 
+
 combat:AddToggle({ Name = "team check", Default = true, Save = true, Flag = "aimbot_teamcheck", Callback = function(v)
-
     _G.tcToggle = v
-
             end
-
 })
 
 combat:AddSlider({ Name = "smoothing", Default = 0.25, Min = 0, Max = 1, ValueName = "smoothness", Save = true, Flag = "aimbot_smoothness", Callback = function(v)
-
     _G.smoothingslider = v
-
             end 
-
     
-
 })
 
 combat:AddSlider({ Name = "fov ring size", Default = 100, Min = 0, Max = 1000, ValueName = "smoothness", Save = true, Flag = "aimbot_fovringsize", Callback = function(v)
-
     _G.fovringslider = v
-
             end 
-
 })
 
 combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Save = true, Flag = "aimbot_fovringcolor", Callback = function(v)
-
     _G.fovColorPicker = v
-
             end
-
 })
-
 local ambient 
-
 getgenv().ambientcolor = Color3.fromRGB(0,255,0)
-
 RunService.Stepped:Connect(function()
-
 if ambient then
-
     lighting.Ambient = ambientcolor
-
     elseif ambient == false then
-
         lighting.Ambient = defaultambient 
-
 end
-
 end)
-
 local time 
-
 getgenv().timesilder = 14
-
 RunService.Stepped:Connect(function()
-
 if time then lighting.ClockTime = timesilder end
-
 end)
-
 local Outdoor
-
 getgenv().outdoorambientcolor = Color3.fromRGB(127,127,127)
-
 RunService.Stepped:Connect(function()
-
 if outdoor then lighting.OutdoorAmbient = outdoorambientcolor end
-
 end)
-
 render:AddToggle({ Name = "Ambient", Default = false, Save = true, Flag = "render_ambientcheck", Callback = function(v)
-
     ambient = v
-
             end
-
 })
-
 render:AddColorpicker({ Name = "Ambient color", Default = Color3.new(1,1,1), Save = true, Flag = "render_ambientcheck_ambientcolor", Callback = function(v)
-
     ambientcolor = v
-
             end
-
 })
-
 render:AddToggle({ Name = "NoRender", Default = false, Save = true, Flag = "render_norender", Callback = function(v)
-
     if v then
-
         RunService:Set3dRenderingEnabled(false)
-
     else
-
             RunService:Set3dRenderingEnabled(true)
-
 end
-
             end
-
 })
-
 render:AddToggle({ Name = "Time", Default = false, Save = true, Flag = "render_time", Callback = function(v)
-
     time = v
-
             end
-
 })
-
 render:AddSlider({ Name = "Time value", Default = 1, Min = 0, Max = 24, ValueName = "time", Save = true, Flag = "render_time_value", Callback = function(v)
-
     timesilder = v
-
             end 
-
     
-
 })
 
 render:AddToggle({ Name = "Global shadow", Default = false, Save = true, Flag = "render_globalsh", Callback = function(v)
-
     lighting.GlobalShadows = v
-
             end
-
 })
 
 render:AddToggle({ Name = "Outdoor ambient", Default = false, Save = true, Flag = "render_oa", Callback = function(v)
-
     outdoor = v
-
             end
-
 })
-
 render:AddColorpicker({ Name = "OutdoorAmbient color", Default = Color3.new(127,127,127), Save = true, Flag = "render_oa_color", Callback = function(v)
-
     ambientcolor = v
-
             end
-
 })
-
 local esp = render:AddSection({
-
 	Name = "ESP"
-
 })
-
 local espLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Sirius/request/library/esp/esp.lua'),true))()
-
 espLib:Load()
-
 --settings
-
 espLib.options.outOfViewArrows = false
-
 espLib.options.boxes = false
-
 espLib.options.chams = false
 
 render:AddToggle({ Name = "Enable ESP", Default = false, Save = true, Flag = "render_esp_enabled", Callback = function(v)
-
     espLib.options.enabled = v
-
             end
-
 })
 
 render:AddToggle({ Name = "box", Default = false, Save = true, Flag = "render_esp_box", Callback = function(v)
-
     espLib.options.boxFill = v
-
 end
-
 })
 
 render:AddColorpicker({ Name = "Box color", Default = Color3.new(1,1,1), Save = true, Flag =  "render_esp_box_color", Callback = function(v)
-
     espLib.options.boxFillColor = v
-
 end
-
 })
 
 render:AddToggle({ Name = "tracers", Default = false, Save = true, Flag = "render_esp_tracer", Callback = function(v)
-
     espLib.options.tracers = v
-
 end
-
 })
 
 render:AddColorpicker({ Name = "Tracer color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_tracer_color", Callback = function(v)
-
     espLib.options.tracerColor = v
-
             end
-
 })
 
 render:AddToggle({ Name = "HealthBar", Default = false, Save = true, Flag = "render_esp_hpbar", Callback = function(v)
-
     espLib.options.healthBars = v
-
 })
 
 render:AddColorpicker({ Name = "HealthBar color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_hpbar_color", Callback = function(v)
-
     espLib.options.healthBarsColor = v
-
             end
-
 })
 
 render:AddToggle({ Name = "HealthText", Default = false, Save = true, Flag = "render_esp_healthtext", Callback = function(v)
-
     espLib.options.healthText = v
-
 end
-
 })
 
 render:AddColorpicker({ Name = "HealthText color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_healthtext_color", Callback = function(v)
-
     espLib.options.healthTextColor = v
-
             end
-
 })
 
 render:AddToggle({ Name = "distance", Default = false, Save = true, Flag = "render_esp_distance", Callback = function(v)
-
     espLib.options.distance = v
-
 end
-
 })
 
 render:AddColorpicker({ Name = "Distance color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_distance_color", Callback = function(v)
-
      espLib.options.distanceColor = v
-
 end
-
 })
 
 render:AddToggle({ Name = "Out of view arrows", Default = false, Save = true, Flag = "render_esp_oof", Callback = function(v)
-
     espLib.options.outOfViewArrowsOutline = v
-
 end
-
 })
 
 render:AddColorpicker({ Name = "Out of view color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_oof_color", Callback = function(v)
-
     espLib.options.outOfViewArrowsOutlineColor = v
-
             end
-
 })
 
 render:AddToggle({ Name = "NameTags", Default = false, Save = true, Flag = "render_esp_tags", Callback = function(v)
-
     espLib.options.names = true
-
 end
-
 })
 
 render:AddColorpicker({ Name = "NameTags color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_tags_color", Callback = function(v)
-
     espLib.options.nameColor = v
-
             end
-
 })
 
 local espsettings = render:AddSection({
-
 	Name = "ESP Global settings"
-
 })
 
 espsettings:AddToggle({ Name = "Team check", Default = true, Save = true, Flag = "render_esp_teamcheck", Callback = function(v)
-
     espLib.options.teamCheck = v
-
 end
-
 })
 
 espsettings:AddToggle({ Name = "Visible check", Default = false, Save = true, Flag = "render_esp_visiblecheck", Callback = function(v)
-
     espLib.options.visibleOnly = v
-
 end
-
 })
 
 espsettings:AddToggle({ Name = "Use team color", Default = false, Save = true, Flag = "render_esp_teamcolor", Callback = function(v)
-
     espLib.options.teamColor = v
-
 end
-
 })
 
 espsettings:AddSlider({ Name = "Font size", Default = 14, Min = 5, Max = 25, ValueName = "font dize", Save = true, Flag = "render_esp_fontsize", Callback = function(v)
-
     espLib.options.fontSize = v
-
             end 
-
 })
