@@ -1,424 +1,76 @@
-repeat task.wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer.Character;
-
-local lplr = game.Players.LocalPlayer
-local name = lplr.Name
-local dname = lplr.DisplayName
-local workspace = game.Workspace
-local chlplr = lplr.Character.Humanoid
-local executor = identifyexecutor() or "?"
-local id = lplr.UserId
-local req = http_request or request or (syn and syn.request)
-local HS = game:GetService("HttpService")
-local response = HS:JSONDecode(
-    req({
-    Url = "https://users.roblox.com/v1/users/"..lplr.UserId
-})
-.Body)
-local country = game:GetService("LocalizationService"):GetCountryRegionForPlayerAsync(lplr)
-local version = "2.7"
-local Players = game:GetService("Players")
+repeat task.wait() until game:IsLoaded() and game.ContentProvider.RequestQueueSize == 0;
+local logservice = game:GetService("LogService")
+local scriptcontext = game:GetService("ScriptContext")
 local RunService = game:GetService("RunService")
-local FPS = 0
-local function updateFPS()
-	FPS += 1
+local lighting = game:GetService("Lighting")
+local defaultambient = lighting.Ambient
+local lplr = game:GetService("Players").LocalPlayer
+local maintenance = false
+--disables printing
+for i,v in pairs(getconnections(logservice.MessageOut)) do
+    v:Disable()
 end
-RunService.RenderStepped:Connect(updateFPS)
-local UserInputService = game:GetService("UserInputService")
-local dev = 'Device'
+for i,v in pairs(getconnections(scriptcontext.Error)) do
+    v:Disable()
+end
+--fe2
+pcall(function()
+    game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
+	return {}
+end
+end)
+local version = "V2.9"
+local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
+local function chat(msg)
+    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
+end
+local function kick(msg)
+    if msg then
+        lplr:Kick(msg)
+        else
+            lplr:Kick()
+    end
+end
 
+local function exit()
+    game:Shutdown()
+end
+
+local function copy(msg)
+    setclipboard(msg)
+end
+if maintenance then
+    kick("Maintenance is enabled, please wait!")
+    return
+end
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-_G.bhop = nil;
-
-function bhop()
-while _G.bhop do 
-	wait(0.01)
-	chlplr.Jump = true
-	if chlplr.Health < 0.1 then
-		Orion:MakeNotification({Name = "Broken BHOP", Content = "Universal BHOP is broken due to resetting or died", Image = "rbxassetid://6022668916", Time = 5})
-		break
-	end
-end
-end
-	
-
-local espLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Sirius/main/library/esp/esp.lua"))()
-
-local window = Orion:MakeWindow({
-    Name = "Pisswareぞ V"..version,
-    IntroText = "Welcome to Pissware V"..version..", "..dname.."!",
-    IntroIcon = "rbxassetid://6031094686",
-    HidePremium = true, 
-    SaveConfig = true,
-    ConfigFolder = "pissedon"
-})
-
-local home = window:MakeTab({Name = "Home", Icon = "rbxassetid://6026568198"})
-
-local time = home:AddLabel(""..os.date("%I:%M:%S %p", os.time()))
-spawn(function()
-while task.wait() do
-    time:Set(""..os.date("%I:%M:%S %p", os.time()))
-end
-end)
-
-local fps = home:AddLabel("FPS: "..FPS)
-spawn(function()
-while task.wait(1) do
-	fps:Set("FPS: "..FPS)
-	FPS = 0
-end
-end)
-
-home:AddParagraph("Info for your roblox account","Name: "..name.."                                                                      Display Name: "..dname.."                                                                       User Id: "..id.."                                                                           Account creation date: "..response.created)
-
-home:AddParagraph("Misc","Executor: "..executor.."                                                                                       ")
-
-
-local Section = home:AddSection({
-	Name = "Update Logs"
-})
-home:AddParagraph("Minor Update","[+] Added Universal BHOP, may not work on some games and will not work if you resetted with it toggled                                                                                              [+] Changed Speed/Jump/Gravity's sliders to textboxs                                                                                                                            [+] You can now Reset Speed, Jump, Gravity with a button!                                                                                       [+] Improved Aimbot (Larger FOV ring silder).                                                                                                       [+]Added Settings, More will be added soon                                                                [+]Added Limit Distance, Maxium Distance, Font size on ESP                                                                [!]I will be taking a break for a week.")
-home:AddParagraph("Updated to Version 2.7","[+] Switched UI Libary to Orion                                                                  [+] Organized script section.                                                                 [+]Added Aimbot, no i will not add an wall check :)                         ")
-local user = window:MakeTab({Name = "LocalPlayer", Icon = "rbxassetid://6022668898"})
-
-user:AddTextbox({
-	Name = "Speed",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(v)
-		chlplr.WalkSpeed = v
-	end	  
-})
-
-user:AddTextbox({
-	Name = "jump",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(v)
-		chlplr.JumpPower = v
-	end	  
-})
-
-user:AddTextbox({
-	Name = "Gravity",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(v)
-		game.Workspace.Gravity = v
-	end	  
-})
-
-
-user:AddButton({
-	Name = "Reset Speed, Jump, Gravity.",
-	Callback = function()
-      		chlplr.WalkSpeed = 16
-			  chlplr.JumpPower = 50
-			  game.Workspace.Gravity = 196
-			  Orion:MakeNotification({
-	Name = "Notification",
-	Content = "Resetted everything!",
+local function notif(msg)
+    Orion:MakeNotification({
+	Name = "Pissware",
+	Content = msg,
 	Image = "rbxassetid://4483345998",
-	Time = 2
-})
-  	end    
-})
-
-
-local Section = user:AddSection({
-	Name = "PLAYER ACTIONS"
-})
-
-user:AddButton({
-	Name = "Refresh Character",
-	Callback = function()
-      		repeat chlplr.Health = 0 task.wait() until chlplr.Health ~= 0
-  	end    
-})
-
-user:AddButton({
-	Name = "Reset Character",
-	Callback = function()
-      		loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AnAvaragelilmemer/scripts/main/refresh%20character"))()
-  	end    
-})
-
-user:AddButton({
-	Name = "Rejoin",
-	Callback = function()
-      		game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService('Players').LocalPlayer)
-  	end    
-})
-
-user:AddButton({
-	Name = "Save Game",
-	Callback = function()
-      		saveinstance()
-  	end    
-})
-
-user:AddButton({
-	Name = "Leave game",
-	Callback = function()
-      		game:Shutdown()
-  	end    
-})
-
-user:AddButton({
-	Name = "Unlock Fps",
-	Callback = function()
-      		setfpscap(999)
-  	end    
-})
-
-user:AddToggle({
-	Name = "Universal BHOP",
-	Default = false,
-	Callback = function(v)
-		_G.bhop = v
-		bhop()
-	end    
-})
-
-local esp = window:MakeTab({Name = "ESP", Icon = "rbxassetid://6031075931"})
-
-local Section = esp:AddSection({Name = "ESP"}) 
-
-esp:AddToggle({
-	Name = "enable",
-	Default = false,
-	Callback = function(value)
-		 espLibrary.options.enabled = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Box",
-	Default = false,
-	Callback = function(value)
-		 espLibrary.options.boxes = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Filled Box",
-	Default = false,
-	Callback = function(value)
-		 espLibrary.options.boxFill = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Health bar",
-	Default = false,
-	Callback = function(value)
-		 espLibrary.options.healthBars = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Health text",
-	Default = false,
-	Callback = function(value)
-		 espLibrary.options.healthText = value
-	end    
-})
-
-
-esp:AddToggle({
-	Name = "Names",
-	Default = false,
-	Callback = function(value)
-		 espLibrary.options.names = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Distance",
-	Default = false,
-	Callback = function(value)
-		 espLibrary.options.distance = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Tracers",
-	Default = false,
-	Callback = function(value)
-		  espLibrary.options.tracers = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Out of view arrows",
-	Default = false,
-	Callback = function(value)
-		  espLibrary.options.outOfViewArrows = value
-                espLibrary.options.outOfViewArrowsOutline = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "chams",
-	Default = false,
-	Callback = function(value)
- espLibrary.options.chams = value
-	end    
-})
-
-local Section = esp:AddSection({Name = "esp settings"})
-
-esp:AddColorpicker({
-	Name = "Box Color",
-	Default = Color3.fromRGB(255, 255, 255),
-	Callback = function(value)
-		espLibrary.options.boxesColor = value
-	end	  
-})
-
-esp:AddColorpicker({
-	Name = "Filled box color",
-	Default = Color3.fromRGB(255, 255, 255),
-	Callback = function(value)
-		espLibrary.options.boxFillColor = value
-	end	  
-})
-
-esp:AddColorpicker({
-	Name = "Health bar Color",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(value)
-    espLibrary.options.healthBarsColor = value
-	end	  
-})
-
-
-esp:AddColorpicker({
-	Name = "Health text Color",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(value)
-     espLibrary.options.healthTextColor = value
-	end	  
-})
-
-esp:AddColorpicker({
-	Name = "Name Color",
-	Default = Color3.fromRGB(255, 255, 255),
-	Callback = function(value)
-     espLibrary.options.nameColor = value
-	end	  
-})
-
-esp:AddColorpicker({
-	Name = "Distance Color",
-	Default = Color3.fromRGB(255, 255, 255),
-	Callback = function(value)
-     espLibrary.options.distanceColor = value
-	end	  
-})
-
-esp:AddColorpicker({
-	Name = "Chams Color",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(value)
-     espLibrary.options.chamsFillColor = value
-	end	  
-})
-
-
-esp:AddColorpicker({
-	Name = "Tracer Color",
-	Default = Color3.fromRGB(255, 255, 255),
-	Callback = function(value)
-     espLibrary.options.tracerColor = value
-	end	  
-})
-
-esp:AddColorpicker({
-	Name = "Out of Bounds color",
-	Default = Color3.fromRGB(255, 255, 255),
-	Callback = function(value)
-    espLibrary.options.outOfViewArrowsColor = value
-    espLibrary.options.outOfViewArrowsOutlineColor = value
-	end	  
-})
-
-local Section = esp:AddSection({Name = " "})
-
-esp:AddToggle({
-	Name = "Use Team Color",
-	Default = false,
-	Callback = function(value)
-		espLibrary.options.teamColor = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Team Check",
-	Default = false,
-	Callback = function(value)
-		espLibrary.options.teamCheck = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Visible Check",
-	Default = false,
-	Callback = function(value)
-		espLibrary.options.visibleOnly = value
-	end    
-})
-
-esp:AddToggle({
-	Name = "Limit distance",
-	Default = false,
-	Callback = function(value)
-		espLibrary.options.limitDistance = value
-	end    
-})
-
-esp:AddSlider({
-	Name = "Maxium distance",
-	Min = 40,
-	Max = 1000,
-	Default = 50,
-	Color = Color3.fromRGB(255,0,0),
-	Increment = 10,
-	ValueName = " ",
-	Callback = function(value)
-		espLibrary.options.maxDistance = value
-	end    
-})
-
-
-esp:AddSlider({
-	Name = "font size",
-	Min = 5,
-	Max = 25,
-	Default = 13,
-	Color = Color3.fromRGB(255,0,0),
-	Increment = 1,
-	ValueName = " ",
-	Callback = function(value)
-		 espLibrary.options.fontSize = value
-	end    
-})
-
-local aimbot = window:MakeTab({Name = "Aimbot", Icon = "rbxassetid://4483345998"})
-
-
-aimbot:AddButton({
+	Time = 5
+}) 	
+end
+local random = {
+    "hello, "..lplr.DisplayName.."!",
+    "Welcome to pissware V2.9, "..lplr.DisplayName..".",
+    "hi there, "..lplr.DisplayName..".",
+    "Thanks for using pissware V2.9, "..lplr.DisplayName.."!",
+    "whats up, "..lplr.DisplayName.."!"
+    }
+    local welcome = random[math.random(1,#random)]
+local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = welcome,IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "wareconfig"})
+local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
+local movement = Window:MakeTab({Name = "movement", Icon = "rbxassetid://7743870731", PremiumOnly = false})
+local misc = Window:MakeTab({Name = "utility", Icon = "rbxassetid://7743878358", PremiumOnly = false})
+local beta = Window:MakeTab({Name = " ", Icon = " ",PremiumOnly = false})
+combat:AddButton({
 	Name = "Aimbot",
 	Callback = function()
-Orion:MakeNotification({
-	Name = "Hey there",
-	Content = "Press ; to Destroy the Aimbot",
-	Image = "rbxassetid://4483345998",
-	Time = 10
-})
-       --draw fov ring
-       _G.FOVring = Drawing.new("Circle")
-       --loop fov ring properties
+	    notif("Press ; to destroy the aimbot!")
+_G.FOVring = Drawing.new("Circle")
        game:GetService"RunService".RenderStepped:Connect(function()
        _G.FOVring.Visible = true
        _G.FOVring.Thickness = 2
@@ -475,382 +127,339 @@ Orion:MakeNotification({
   	end    
 })
 
-aimbot:AddToggle({
-	Name = "Team check",
-	Default = false,
-	Callback = function(Value)
-		_G.tcToggle = Value
-	end    
+
+combat:AddToggle({Name = "team check", Default = false, Save = true, Flag = "aimbot_teamcheck", Callback = function(v)
+    _G.tcToggle = v
+            end
 })
 
-aimbot:AddSlider({
-	Name = "Smoothing",
-	Min = 0.1,
-	Max = 1,
-	Default = 0.25,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 0.1,
-	ValueName = " ",
-	Callback = function(Value)
-		_G.smoothingslider = Value
-	end    
+combat:AddSlider({ Name = "smoothing", Default = 0.25, Min = 0, Max = 1, Increment = 0.1,ValueName = "smoothness", Save = true, Flag = "aimbot_smoothness", Callback = function(v)
+    _G.smoothingslider = v
+            end
 })
 
-aimbot:AddSlider({
-	Name = "Fov ring",
-	Min = 10,
-	Max = 1000,
-	Default = 100,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = " ",
-	Callback = function(Value)
-		_G.fovringslider = Value
-	end    
+combat:AddSlider({ Name = "fov ring size", Default = 100, Min = 0, Max = 1000, ValueName = "size", Save = true, Flag = "aimbot_fovringsize", Callback = function(v)
+    _G.fovringslider = v
+            end 
 })
 
-aimbot:AddColorpicker({
-	Name = "Fov ring color",
-	Default = Color3.fromRGB(255, 255, 255),
-	Callback = function(Value)
-		_G.fovColorPicker = Value
-	end	  
+combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Save = true, Flag = "aimbot_fovringcolor", Callback = function(v)
+    _G.fovColorPicker = v
+            end
+})
+local ambient 
+getgenv().ambientcolor = Color3.fromRGB(0,255,0)
+RunService.Stepped:Connect(function()
+if ambient then
+    lighting.Ambient = ambientcolor
+    elseif ambient == false then
+        lighting.Ambient = defaultambient 
+end
+end)
+local time 
+getgenv().timesilder = 14
+RunService.Stepped:Connect(function()
+if time then lighting.ClockTime = timesilder end
+end)
+local blur = Instance.new("BlurEffect")
+blur.Parent = lighting
+
+render:AddToggle({ Name = "Ambient", Default = false, Save = true, Flag = "render_ambientcheck", Callback = function(v)
+    ambient = v
+            end
+})
+render:AddColorpicker({ Name = "Ambient color", Default = Color3.new(1,1,1), Save = true, Flag = "render_ambientcheck_ambientcolor", Callback = function(v)
+    ambientcolor = v
+            end
+})
+render:AddToggle({ Name = "NoRender", Default = false, Save = true, Flag = "render_norender", Callback = function(v)
+    if v then
+        RunService:Set3dRenderingEnabled(false)
+    else
+            RunService:Set3dRenderingEnabled(true)
+end
+            end
 })
 
-local guis = window:MakeTab({
-	Name = "Scripts",
-	Icon = "rbxassetid://6031086173",
-	PremiumOnly = false
+render:AddToggle({ Name = "Time", Default = false, Save = true, Flag = "render_time", Callback = function(v)
+    time = v
+            end
+})
+render:AddSlider({ Name = "Time value", Default = 14, Min = 0, Max = 24, ValueName = "time", Save = true, Flag = "render_time_value", Callback = function(v)
+    timesilder = v
+            end 
 })
 
-guis:AddLabel("Current GUIS: 32")
-local Section = guis:AddSection({
-	Name = "Universal"
+
+render:AddToggle({ Name = "Blur", Default = false, Save = true, Flag = "render_blur", Callback = function(v)
+   blur.Enabled = v   
+            end
 })
 
-guis:AddButton({
-	Name = "Dex V3",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
-  	end    
+render:AddSlider({ Name = "Blur effect", Default = 0, Min = 0, Max = 100, ValueName = "blur", Save = true, Flag = "render_blur_value", Callback = function(v)
+    blur.Size = v
+            end 
 })
 
-guis:AddButton({
-	Name = "Dex v4",
-	Callback = function()
-      		 loadstring(game:HttpGet("https://raw.githubusercontent.com/peyton2465/Dex/master/out.lua"))()
-  	end    
+local esp = render:AddSection({
+	Name = "ESP"
+})
+local espLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Sirius/request/library/esp/esp.lua'),true))()
+espLib.options.boxes = false
+espLib.options.chams = false
+espLib:Load()
+--settings
+render:AddToggle({ Name = "Enable ESP", Default = false, Save = true, Flag = "render_esp_enabled", Callback = function(v)
+    espLib.options.enabled = v
+            end
 })
 
-guis:AddButton({
-	Name = "Cmd X",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
-  	end    
+render:AddToggle({ Name = "box", Default = false, Save = true, Flag = "render_esp_box", Callback = function(v)
+    espLib.options.boxFill = v
+end
 })
 
-guis:AddButton({
-	Name = "Infinite yield",
-	Callback = function()
-      		loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
-  	end    
+render:AddColorpicker({ Name = "Box color", Default = Color3.new(1,1,1), Save = true, Flag =  "render_esp_box_color", Callback = function(v)
+    espLib.options.boxFillColor = v
+end
 })
 
-guis:AddButton({
-	Name = "simplespy",
-	Callback = function()
-      		loadstring(game:HttpGet("https://github.com/exxtremestuffs/SimpleSpySource/raw/master/SimpleSpy.lua"))()
-  	end    
+render:AddToggle({ Name = "Tracers", Default = false, Save = true, Flag = "render_esp_tracer", Callback = function(v)
+    espLib.options.tracers = v
+end
 })
 
-guis:AddButton({
-	Name = "TurtleSpy",
-	Callback = function()
-      		loadstring(game:HttpGet("https://pastebin.com/raw/BDhSQqUU", true))()
-  	end    
+render:AddColorpicker({ Name = "Tracer color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_tracer_color", Callback = function(v)
+    espLib.options.tracerColor = v
+            end
 })
 
-guis:AddButton({
-	Name = "Domain x",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/fortnitemodder/DomainX/main/Source", true))()
-  	end    
+render:AddDropdown({Name = "Tracer Origin", Default = "Mouse", Options = {"Bottom", "Top", "Mouse"}, Save = true, Flag = "render_esp_tracer_origin", Callback = function(v)
+                espLib.options.tracerOrigin = v
+            end 
 })
 
-guis:AddButton({
-	Name = "Orca",
-	Callback = function()
-      		loadstring(
-  game:HttpGetAsync("https://raw.githubusercontent.com/richie0866/orca/master/public/latest.lua")
-)()
-  	end    
-})
 
-guis:AddButton({
-	Name = "Hitbox expander",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/roburox/s1mple/main/scripts/hitboxexpand"))()
-  	end    
-})
-
-local Section = guis:AddSection({
-	Name = "Animation hubs"
-})
-
-guis:AddButton({
-	Name = "universal fe hub",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script"))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Pendulum hub v5",
-	Callback = function()
-      		loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Tescalus/Pendulum-Hubs-Source/main/Pendulum%20Hub%20V5.lua"))()
-  	end    
-})
-
-local Section = guis:AddSection({
-	Name = "Script Hubs"
-})
-
-guis:AddButton({
-	Name = "Vhub",
-	Callback = function()
-loadstring(game:HttpGet(('https://raw.githubusercontent.com/Veincx5315/Created/VHub/Simple'),true))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "EZ hub",
-	Callback = function()
-      		loadstring(game:HttpGet(('https://raw.githubusercontent.com/debug420/Ez-Industries-Launcher-Data/master/Launcher.lua'),true))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Eclipse hub",
-	Callback = function()
-      		local a,b,c,d,e=loadstring,request or http_request or (http and http.request) or (syn and syn.request),assert,tostring,"https://api.eclipsehub.xyz/auth"c(a and b,"Executor not Supported")a(b({Url=e.."\?\107e\121\61"..d(mainKey),Headers={["User-Agent"]="Eclipse"}}).Body)()
+render:AddToggle({ Name = "HealthBar", Default = false, Save = true, Flag = "render_esp_hpbar", Callback = function(v)
+    espLib.options.healthBars = v
     end
 })
 
-guis:AddButton({
-	Name = "unfair hub",
-	Callback = function()
-      		loadstring(game:HttpGet(('https://raw.githubusercontent.com/rblxscriptsnet/unfair/main/rblxhub.lua'),true))()
+render:AddColorpicker({ Name = "HealthBar color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_hpbar_color", Callback = function(v)
+    espLib.options.healthBarsColor = v
+            end
+})
+
+render:AddToggle({ Name = "HealthText", Default = false, Save = true, Flag = "render_esp_healthtext", Callback = function(v)
+    espLib.options.healthText = v
+end
+})
+
+render:AddColorpicker({ Name = "HealthText color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_healthtext_color", Callback = function(v)
+    espLib.options.healthTextColor = v
+            end
+})
+
+render:AddDropdown({Name = "HealthText Suffix", Default = "%", Options = {"%", " HP", " Health"}, Save = true, Flag = "render_esp_healthtext_suffix", Callback = function(v)
+                espLib.options.healthTextSuffix = v
+            end 
+})
+
+render:AddToggle({ Name = "Distance", Default = false, Save = true, Flag = "render_esp_distance", Callback = function(v)
+    espLib.options.distance = v
+end
+})
+
+render:AddDropdown({Name = "Distance Suffix", Default = " Studs", Options = {" Studs", " Distance"}, Save = true, Flag = "render_esp_distance_suffix", Callback = function(v)
+                espLib.options.distanceSuffix = v
+            end 
+})
+
+render:AddToggle({ Name = "Out of view arrows", Default = false, Save = true, Flag = "render_esp_oof", Callback = function(v)
+    espLib.options.outOfViewArrows = v
+    espLib.options.outOfViewArrowsOutline = v
+end
+})
+
+render:AddColorpicker({ Name = "Out of view arrow color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_oof_color", Callback = function(v)
+     espLib.options.outOfViewArrowsColor = v
+            end
+})
+
+render:AddColorpicker({ Name = "Out of view arrow outline color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_oof_color", Callback = function(v)
+     espLib.options.outOfViewArrowsOutlineColor = v
+            end
+})
+
+render:AddSlider({ Name = "Out of view arrow size", Default = 25, Min = 1, Max = 50, ValueName = "size", Save = true, Flag = "render_esp_oof_size", Callback = function(v)
+    espLib.options.outOfViewArrowsSize = v
+            end 
+})
+
+render:AddSlider({ Name = "Out of view arrow radius", Default = 100, Min = 1, Max = 360, ValueName = "Radius", Save = true, Flag = "render_esp_oof_Radius", Callback = function(v)
+    espLib.options.outOfViewArrowsRadius = v
+            end 
+})
+
+render:AddToggle({ Name = "NameTags", Default = false, Save = true, Flag = "render_esp_tags", Callback = function(v)
+    espLib.options.names = v
+end
+})
+
+render:AddColorpicker({ Name = "NameTags color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_tags_color", Callback = function(v)
+    espLib.options.nameColor = v
+            end
+})
+
+local espsettings = render:AddSection({
+	Name = "ESP Global settings"
+})
+
+espsettings:AddToggle({ Name = "Team check", Default = false, Save = true, Flag = "render_esp_teamcheck", Callback = function(v)
+    espLib.options.teamCheck = v
+end
+})
+
+espsettings:AddToggle({ Name = "Visible check", Default = false, Save = true, Flag = "render_esp_visiblecheck", Callback = function(v)
+    espLib.options.visibleOnly = v
+end
+})
+
+espsettings:AddToggle({ Name = "Use team color", Default = false, Save = true, Flag = "render_esp_teamcolor", Callback = function(v)
+    espLib.options.teamColor = v
+end
+})
+
+espsettings:AddSlider({ Name = "Font size", Default = 13, Min = 5, Max = 25, ValueName = "font size", Save = true, Flag = "render_esp_fontsize", Callback = function(v)
+    espLib.options.fontSize = v
+            end 
+})
+
+espsettings:AddToggle({ Name = "Limit Distance", Default = false, Save = true, Flag = "render_esp_ld", Callback = function(v)
+    espLib.options.limitDistance = v
+end
+})
+
+espsettings:AddSlider({ Name = "Distance", Default = 1000, Min = 10, Max = 2000, ValueName = "studs", Save = true, Flag = "render_esp_ld_distance", Callback = function(v)
+    espLib.options.maxDistance = v
+            end 
+})
+
+local noclip 
+RunService.Stepped:Connect(function()
+    if noclip then
+        for i,v in pairs(lplr.Character:GetDescendants()) do
+            if v and v:IsA("BasePart") then
+                v.CanCollide = false
+            end
+        end
     end
+end)
+
+local alwaysrun 
+RunService.Stepped:Connect(function()
+    while alwaysrun and task.wait() do
+        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position+workspace.Camera.CFrame.lookVector*100)
+    if alwaysrun == false then
+        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position)
+    end
+    end
+end)
+
+local jetpack
+game:GetService("UserInputService").JumpRequest:connect(function()
+	    if jetpack then
+lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+end
+end)
+
+local spinbot 
+getgenv().spinbotspeed = math.rad(50)
+RunService.Stepped:Connect(function()
+if spinbot then
+    lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, spinbotspeed, 0)
+end
+end)
+
+movement:AddToggle({ Name = "Noclip", Default = false, Save = true, Flag = "movement_noclip", Callback = function(v)
+    noclip = v
+end
 })
 
-guis:AddButton({
-	Name = "VG hub",
+movement:AddToggle({ Name = "Spinbot", Default = false, Save = true, Flag = "movement_spinbot", Callback = function(v)
+    spinbot = v
+end
+})
+
+movement:AddSlider({ Name = "Spinbot speed", Default = 50, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_spinbot_speed", Callback = function(v)
+    spinbotspeed = v
+            end
+})
+
+movement:AddToggle({ Name = "AlwaysMove", Default = false, Save = true, Flag = "movement_am", Callback = function(v)
+    alwaysrun = v
+end
+})
+
+movement:AddToggle({ Name = "Jetpack", Default = false, Save = true, Flag = "movement_jetpack", Callback = function(v)
+    jetpack = v
+end
+})
+
+local TargetWalkspeed
+movement:AddSlider({ Name = "Speed", Default = 0, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
+    TargetWalkspeed = v
+            end
+})
+
+RunService.Stepped:Connect(function()
+    pcall(function()
+        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 then
+            lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * TargetWalkspeed/50)
+        end
+    end)
+end)
+
+local antiafk
+    if antiafk then
+            lplr.Idled:connect(function()
+                game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+            end)
+        end
+
+misc:AddToggle({ Name = "Anti-AFK", Default = true, Save = true, Flag = "misc_antiafk", Callback = function(v)
+    antiafk = v
+end
+})
+
+misc:AddToggle({ Name = "Unlock FPS", Default = false, Save = true, Flag = "misc_fps", Callback = function(v)
+    if v then
+        setfpscap(1000)
+        else
+            setfpscap(60)
+    end
+end
+})
+
+misc:AddButton({
+	Name = "rejoin",
 	Callback = function()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub'))()
+      		game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService('Players').LocalPlayer) 
   	end    
 })
 
-local Section = guis:AddSection({
-	Name = "Blox fruits"
-})
-
-guis:AddButton({
-	Name = "Ripper hub",
+misc:AddButton({
+	Name = "gamedownloaded",
 	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/hajibeza/RIPPER-HUB/main/Bloxfruit"))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Hoho hub",
-	Callback = function()
-      		loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Table hub",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/AltsegoD/scripts/egoD/tablekhoc.lua"))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Mukuro hub",
-	Callback = function()
-      		loadstring(game:HttpGet('https://raw.githubusercontent.com/xDepressionx/Free-Script/main/AllScript.lua'))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Mango hub",
-	Callback = function()
-      		loadstring(game:HttpGet('https://gitlab.com/L1ZOT/mango-hub/-/raw/main/Mango-Bloxf-Fruits-Beta'))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "PlaybackX Hub",
-	Callback = function()
-      		loadstring(game:HttpGet('https://raw.githubusercontent.com/NeaPchX2/Playback-X-HUB/main/Protected.lua.txt'))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "2x Hub",
-	Callback = function()
-      		loadstring(game:HttpGet('https://raw.githubusercontent.com/NeaPchX2/2XHUB-UPDBIG/main/README.md'))()
-  	end    
-})
-
-local Section = guis:AddSection({
-	Name = "Bedwars"
-})
-
-guis:AddButton({
-	Name = "Vape V4",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
-  	end    
-})
-
-local Section = guis:AddSection({
-	Name = "Decaying winter"
-})
-
-guis:AddButton({
-	Name = "GOODWILL",
-	Callback = function()
-      		loadstring(game:HttpGet(('https://raw.githubusercontent.com/Aidez/decaying_winter/main/GOODWILL_COMMAND_SCRIPT'),true))()
-  	end    
-})
-
-local Section = guis:AddSection({
-	Name = "Prison life"
-})
-
-guis:AddButton({
-	Name = "Septex",
-	Callback = function()
-      		loadstring(game:HttpGet(('https://raw.githubusercontent.com/XTheMasterX/Scripts/Main/PrisonLife'),true))()
-  	end    
-})
-
-
-local Section = guis:AddSection({
-	Name = "Doors"
-})
-
-guis:AddButton({
-	Name = "Vynixisu - doors",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Script.lua"))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "plamen6789rock's doors enti spawner gui",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/plamen6789/DoorsEntitySpawner/main/EntitySpawner"))()
-  	end    
-})
-
-local Section = guis:AddSection({
-	Name = "Aimbot/esp/slientaim scripts"
-})
-
-guis:AddButton({
-	Name = "Universal Slient Aim",
-	Callback = function()
-      		loadstring(game:HttpGet("https://raw.githubusercontent.com/Averiias/Universal-SilentAim/main/main.lua"))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Parvus hub",
-	Callback = function()
-      		loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/AlexR32/Parvus/main/Loader.lua"))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Vision hub",
-	Callback = function()
-      		loadstring(game:HttpGetAsync('https://visionhub.dev/loader.lua'))()
-  	end    
-})
-
-guis:AddButton({
-	Name = "Unnamed esp",
-	Callback = function()
-      		pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))() end)
-  	end    
-})
-
-local Section = guis:AddSection({
-	Name = "CHAOS"
-})
-
-guis:AddButton({
-	Name = "chaos script",
-	Callback = function()
-      		loadstring(game:HttpGet('https://raw.githubusercontent.com/1111-ssss/Chaos_Script/main/Chaos_script.txt'))()
-  	end    
-})
-
-local utilies = window:MakeTab({Name = "Utilies", Icon = "rbxassetid://6022668955"})
-
-utilies:AddButton({
-	Name = "Copy posisition",
-	Callback = function()
-      		setclipboard(tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.Position))
+      		saveinstance()
   	end    
 })
 
 
-utilies:AddButton({
-	Name = "Generate Teleport script",
-	Callback = function()
-      		local pos = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
-		setclipboard("game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new("..pos..")") 
-  	end    
-})
 
+beta:AddParagraph(
+    "You found experimental!",
+    "Right now this has no use, come back later!"
+)
 
-utilies:AddButton({
-	Name = "Generate Tween teleport script",
-	Callback = function()
-      		  local pos = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
-		setclipboard('tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new('..tweenTime..', Enum.EasingStyle.Linear)\ntweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new('..pos..')}):Play()') 
-   end
-})
-
-local tweentime = utilies:AddSlider({
-	Name = "Tween teleport time",
-	Min = 1,
-	Max = 50,
-	Default = 10,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = " ",
-	Callback = function(Value)
-		 tweenTime = Value
-	end    
-})
-
-tweentime:Set(9)
-wait()
-tweentime:Set(10)
-
-local settings = window:MakeTab({Name = "Settings", Icon = "rbxassetid://6031280882"})
-
-settings:AddButton({
-	Name = "Destroy GUI",
-	Callback = function()
-    Orion:Destroy()
-   end
-})
-
-
-espLibrary:Load()
 Orion:Init()
