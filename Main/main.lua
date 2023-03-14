@@ -239,7 +239,7 @@ end
 local esp = render:AddSection({
 	Name = "ESP"
 })
-local espLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Sirius/request/library/esp/esp.lua'),true))()
+local espLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Utility/ESP'),true))()
 espLib.options.boxes = false
 espLib.options.chams = false
 espLib:Load()
