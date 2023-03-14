@@ -6,13 +6,16 @@ local lighting = game:GetService("Lighting")
 local defaultambient = lighting.Ambient
 local lplr = game:GetService("Players").LocalPlayer
 local maintenance = false
+local tpservice = game:GetService("TeleportService")
 --disables printing
+--[[
 for i,v in pairs(getconnections(logservice.MessageOut)) do
     v:Disable()
 end
 for i,v in pairs(getconnections(scriptcontext.Error)) do
     v:Disable()
 end
+]]
 --fe2
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
@@ -427,7 +430,7 @@ movement:AddToggle({ Name = "Spinbot", Default = false, Save = true, Flag = "mov
 end
 })
 
-movement:AddSlider({ Name = "Spinbot speed", Default = 50, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_spinbot_speed", Callback = function(v)
+movement:AddSlider({ Name = "Spinbot speed", Default = 100, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_spinbot_speed", Callback = function(v)
     spinbotspeed = v
             end
 })
@@ -477,9 +480,15 @@ end
 })
 
 misc:AddButton({
-	Name = "rejoin",
+	Name = "Rejoin",
 	Callback = function()
-      		game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService('Players').LocalPlayer) 
+	    if #game:GetService("Players"):GetPlayers() <= 1 then
+	        kick("Pissware - rejoining...")
+	        task.wait(1.5)
+      		tpservice:Teleport(game.PlaceId)
+      		else
+      		    tpservice:TeleportToPlaceInstance(game.PlaceId,game.JobId)
+	    end
   	end    
 })
 
@@ -493,4 +502,3 @@ Orion:Init()
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
 ]]
-
