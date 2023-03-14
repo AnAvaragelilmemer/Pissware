@@ -133,7 +133,7 @@ combat:AddToggle({Name = "team check", Default = false, Save = true, Flag = "aim
             end
 })
 
-combat:AddSlider({ Name = "smoothing", Default = 0.25, Min = 0, Max = 1, Increment = 0.1,ValueName = "smoothness", Save = true, Flag = "aimbot_smoothness", Callback = function(v)
+combat:AddSlider({ Name = "smoothing", Default = 0.25, Min = 0, Max = 1,  Increment = 0.1 ,ValueName = "smoothness", Save = true, Flag = "aimbot_smoothness", Callback = function(v)
     _G.smoothingslider = v
             end
 })
@@ -147,6 +147,36 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
     _G.fovColorPicker = v
             end
 })
+local FPScounter = Instance.new("ScreenGui")
+local TextLabel = Instance.new("TextLabel")
+local UICorner = Instance.new("UICorner")
+FPScounter.Name = "FPS counter"
+FPScounter.Parent = game.CoreGui
+FPScounter.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+TextLabel.Parent = FPScounter
+TextLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.455756456, 0, 0.802699208, 0)
+TextLabel.Size = UDim2.new(0, 140, 0, 21)
+TextLabel.Visible = false
+TextLabel.Font = Enum.Font.Unknown
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 14.000
+
+UICorner.Parent = TextLabel
+
+local function CHCC_fake_script() -- TextLabel.LocalScript 
+	local script = Instance.new('LocalScript', TextLabel)
+
+	local RunService = game:GetService("RunService")
+	RunService.RenderStepped:Connect(function(frame)
+		script.Parent.Text = ("FPS: "..math.round(1/frame)) 
+	end)
+	
+end
+coroutine.wrap(CHCC_fake_script)()
 local ambient 
 getgenv().ambientcolor = Color3.fromRGB(0,255,0)
 RunService.Stepped:Connect(function()
@@ -199,6 +229,11 @@ render:AddToggle({ Name = "Blur", Default = false, Save = true, Flag = "render_b
 render:AddSlider({ Name = "Blur effect", Default = 0, Min = 0, Max = 100, ValueName = "blur", Save = true, Flag = "render_blur_value", Callback = function(v)
     blur.Size = v
             end 
+})
+
+render:AddToggle({ Name = "FPS counter", Default = false, Save = true, Flag = "render_fps", Callback = function(v)
+    TextLabel.Visible = v
+end
 })
 
 local esp = render:AddSection({
@@ -286,7 +321,7 @@ render:AddColorpicker({ Name = "Out of view arrow color", Default = Color3.new(1
             end
 })
 
-render:AddColorpicker({ Name = "Out of view arrow outline color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_oof_color", Callback = function(v)
+render:AddColorpicker({ Name = "Out of view arrow outline color", Default = Color3.new(1,1,1), Save = true, Flag = "render_esp_oof_outline_color", Callback = function(v)
      espLib.options.outOfViewArrowsOutlineColor = v
             end
 })
@@ -310,6 +345,7 @@ render:AddColorpicker({ Name = "NameTags color", Default = Color3.new(1,1,1), Sa
     espLib.options.nameColor = v
             end
 })
+
 
 local espsettings = render:AddSection({
 	Name = "ESP Global settings"
@@ -426,7 +462,6 @@ local antiafk
                 game:GetService("VirtualUser"):ClickButton2(Vector2.new())
             end)
         end
-
 misc:AddToggle({ Name = "Anti-AFK", Default = true, Save = true, Flag = "misc_antiafk", Callback = function(v)
     antiafk = v
 end
@@ -448,15 +483,6 @@ misc:AddButton({
   	end    
 })
 
-misc:AddButton({
-	Name = "gamedownloaded",
-	Callback = function()
-      		saveinstance()
-  	end    
-})
-
-
-
 beta:AddParagraph(
     "You found experimental!",
     "Right now this has no use, come back later!"
@@ -467,3 +493,4 @@ Orion:Init()
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
 ]]
+
