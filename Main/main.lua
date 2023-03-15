@@ -7,15 +7,14 @@ local defaultambient = lighting.Ambient
 local lplr = game:GetService("Players").LocalPlayer
 local maintenance = false
 local tpservice = game:GetService("TeleportService")
+local lv = Vector3.zero
 --disables printing
---[[
 for i,v in pairs(getconnections(logservice.MessageOut)) do
     v:Disable()
 end
 for i,v in pairs(getconnections(scriptcontext.Error)) do
     v:Disable()
 end
-]]
 --fe2
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
@@ -63,7 +62,7 @@ local random = {
     "whats up, "..lplr.DisplayName.."!"
     }
     local welcome = random[math.random(1,#random)]
-local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = welcome,IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "wareconfig"})
+local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = welcome,IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
 local movement = Window:MakeTab({Name = "movement", Icon = "rbxassetid://7743870731", PremiumOnly = false})
@@ -179,6 +178,8 @@ local function CHCC_fake_script() -- TextLabel.LocalScript
 	end)
 	
 end
+
+
 coroutine.wrap(CHCC_fake_script)()
 local ambient 
 getgenv().ambientcolor = Color3.fromRGB(0,255,0)
@@ -223,7 +224,6 @@ render:AddSlider({ Name = "Time value", Default = 14, Min = 0, Max = 24, ValueNa
             end 
 })
 
-
 render:AddToggle({ Name = "Blur", Default = false, Save = true, Flag = "render_blur", Callback = function(v)
    blur.Enabled = v   
             end
@@ -239,14 +239,20 @@ render:AddToggle({ Name = "FPS counter", Default = false, Save = true, Flag = "r
 end
 })
 
+
 local esp = render:AddSection({
 	Name = "ESP"
 })
 local espLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Utility/ESP'),true))()
+--settings
 espLib.options.boxes = false
 espLib.options.chams = false
 espLib:Load()
---settings
+--credits for sirius for font getter
+local fonts = {}
+for i,v in pairs(Drawing.Fonts) do
+    fonts[v] = i
+end
 render:AddToggle({ Name = "Enable ESP", Default = false, Save = true, Flag = "render_esp_enabled", Callback = function(v)
     espLib.options.enabled = v
             end
@@ -369,7 +375,7 @@ espsettings:AddToggle({ Name = "Use team color", Default = false, Save = true, F
 end
 })
 
-espsettings:AddSlider({ Name = "Font size", Default = 13, Min = 5, Max = 25, ValueName = "font size", Save = true, Flag = "render_esp_fontsize", Callback = function(v)
+espsettings:AddSlider({ Name = "Font size", Default = 17, Min = 5, Max = 25, ValueName = "font size", Save = true, Flag = "render_esp_fontsize", Callback = function(v)
     espLib.options.fontSize = v
             end 
 })
@@ -381,6 +387,11 @@ end
 
 espsettings:AddSlider({ Name = "Distance", Default = 1000, Min = 10, Max = 2000, ValueName = "studs", Save = true, Flag = "render_esp_ld_distance", Callback = function(v)
     espLib.options.maxDistance = v
+            end 
+})
+
+espsettings:AddDropdown({Name = "Font", Default = fonts[1], Options = fonts, Save = true, Flag = "render_esp_font", Callback = function(v)
+                espLib.options.font = Drawing.Fonts[v]
             end 
 })
 
