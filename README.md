@@ -1,27 +1,60 @@
 
-# Pissware, a actual decent script
+# Pissware, designed to be trash
+
 Features:
-+ Aimbot (no wallcheck)
-+ Ambient changer
-+ Blur changer
-+ FPS counter 
-+ Time changer
-+ ESP (Tracer, boxes, Out of view arrows etc)
-+ NoRender
-+ Speed (changable)
-+ AlwaysMove
-+ Jetpack
-+ Spinbot (Doesn't work in first person)
-+ Noclip
-+ Anti-AFK
-+ Unlock Fps
-+ Disabled printing/error (unchangable)
-+ Bypassed some anti-cheats that detect orion 
-+ Auto-load configuration
-+ Rejoin
+```js
+//Aimbot:
+Aimbot master switch
+Field of view ring size
+Field of view ring color
+Smoothness
+Teamcheck
+//Render:
+Blur
+Blur size
+Ambient color
+TimeChanger
+NoRender
+//ESP:
+Enable ESP
+Boxes
+Boxes color
+Tracer
+Tracer color 
+Tracer origin (mouse, bottom or top.)
+Out of view arrows
+Out of view outline color
+Out of view color
+Out of view radius
+Out of view Size
+Distance
+Distance suffix (studs, distance.)
+HealthBar
+HealthBar color
+HealthText 
+HealthText color
+HealthText Suffix (HP, Health, %)
+NameTags
+NameTags color
+//Esp settings:
+Team check
+Visible check
+Distance check
+Fonts (UI, Plex, System, Monospace)
+//Movement:
+Noclip
+AlwaysMove
+Jetpack
+Spinbot (doesnt work on first person)
+Speed
+//Utility
+UnlockFps
+Anti-AFK
+Rejoin (improved!)
+```
 ## Preview:
-![This is an image](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/Screenshot_20230314-220222_Roblox.jpg)
-## Pissware : Remade loadstring
+![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/Screenshot_20230314-220222_Roblox.jpg)
+## Pissware V2.9 loadstring
 ```lua
 local github = "https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/"
 local file = "Main/"
