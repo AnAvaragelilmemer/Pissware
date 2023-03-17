@@ -10,7 +10,7 @@ local function notif(msg)
     Orion:MakeNotification({
 	Name = "Pissware",
 	Content = msg,
-	Image = "rbxassetid://4483345998",
+	Image = "rbxassetid://7733658271",
 	Time = 5
 }) 
 end
@@ -70,12 +70,24 @@ if maintenance then
     kick("Maintenance is enabled, please wait!")
     return
 end
-local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+if isfile("loadedmorethanone.lua") then
+local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome back to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+else
+    local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+end
+
+local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
 local movement = Window:MakeTab({Name = "movement", Icon = "rbxassetid://7743870731", PremiumOnly = false})
 local misc = Window:MakeTab({Name = "utility", Icon = "rbxassetid://7743878358", PremiumOnly = false})
+local misc = Window:MakeTab({Name = "scripts", Icon = "rbxassetid://7733749837", PremiumOnly = false})
 local beta = Window:MakeTab({Name = " ", Icon = " ",PremiumOnly = false})
+if isfile("loadedmorethanone.lua") then
+home:AddLabel("Welcome back, "..lplr.DisplayName.."! are you enjoying the script?")
+else
+    home:AddLabel("Welcome "..lplr.DisplayName..", hope you'll enjoy this script!")
+end
 combat:AddButton({
 	Name = "Aimbot",
 	Callback = function()
@@ -433,7 +445,7 @@ end)
 local jetpack
 game:GetService("UserInputService").JumpRequest:connect(function()
 	    if jetpack then
-lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+lplr.Character.Humanoid:ChangeState("Jumping")
 end
 end)
 
@@ -444,6 +456,14 @@ if spinbot then
     lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, spinbotspeed, 0)
 end
 end)
+
+local bhopnewmethod
+RunService.Stepped:Connect(function()
+    if lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and bhopnewmethod then
+        lplr.Character.Humanoid:ChangeState("Jumping")
+       end
+    end)
+
 
 movement:AddToggle({ Name = "Noclip", Default = false, Save = true, Flag = "movement_noclip", Callback = function(v)
     noclip = v
@@ -470,19 +490,26 @@ movement:AddToggle({ Name = "Jetpack", Default = false, Save = true, Flag = "mov
 end
 })
 
-local TargetWalkspeed
+local Walkspeed
 movement:AddSlider({ Name = "Speed", Default = 0, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
-    TargetWalkspeed = v
+    Walkspeed = v
             end
 })
 
 RunService.Stepped:Connect(function()
     pcall(function()
         if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 then
-            lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * TargetWalkspeed/50)
+            lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * Walkspeed/50)
         end
     end)
 end)
+
+movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "movement_bhop", Callback = function(v)
+    bhopnewmethod = v
+end
+})
+
+
 
 local antiafk
 lplr.Idled:connect(function()
@@ -517,12 +544,70 @@ misc:AddButton({
   	end    
 })
 
+
+scripts:AddButton({
+	Name = "Parvus hub",
+	Callback = function()
+        local IsDevelopmentBranch,NotificationTime = false,5
+        local Branch = IsDevelopmentBranch and "development" or "main"
+        local Source = "https://raw.githubusercontent.com/AlexR32/Parvus/" .. Branch .. "/"
+        loadstring(game:HttpGet(Source .. "Loader.lua"),"Loader")(Branch,NotificationTime)        
+  	end    
+})
+
+scripts:AddButton({
+	Name = "Parvus hub",
+	Callback = function()
+        local IsDevelopmentBranch,NotificationTime = false,5
+        local Branch = IsDevelopmentBranch and "development" or "main"
+        local Source = "https://raw.githubusercontent.com/AlexR32/Parvus/" .. Branch .. "/"
+        loadstring(game:HttpGet(Source .. "Loader.lua"),"Loader")(Branch,NotificationTime)        
+  	end    
+})
+
+scripts:AddButton({
+	Name = "Vape V4",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()     
+  	end    
+})
+
+scripts:AddButton({
+	Name = "Hitbox expander",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/roburox/s1mple/main/scripts/hitboxexpand"))()     
+  	end    
+})
+
+scripts:AddButton({
+	Name = "VG hub",
+	Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub'))()    
+  	end    
+})
+
+scripts:AddButton({
+	Name = "Dex V4",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/peyton2465/Dex/master/out.lua"))()   
+  	end    
+})
+
+scripts:AddButton({
+	Name = "Infinite yield",
+	Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/peyton2465/Dex/master/out.lua"))()   
+  	end    
+})
+
+
 beta:AddParagraph(
     "You found experimental!",
     "Right now this has no use, come back later!"
 )
 
 Orion:Init()
+writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
 ]]
