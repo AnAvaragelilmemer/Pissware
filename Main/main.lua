@@ -1,13 +1,45 @@
-repeat task.wait() until game:IsLoaded() and game.ContentProvider.RequestQueueSize == 0;
+
+repeat task.wait() until game:IsLoaded() and game.ContentProvider.RequestQueueSize == 0
+local maintenance = false
+if maintenance then
+    kick("Maintenance is enabled, please wait!")
+    return
+end
+if getgenv().isloaded then
+    return
+end
+getgenv().isloaded = true
+local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local function notif(msg)
+    Orion:MakeNotification({
+	Name = "Pissware",
+	Content = msg,
+	Image = "rbxassetid://7733658271",
+	Time = 5
+}) 
+end
+if not game.Players.LocalPlayer.Character then
+    repeat notif("Waiting for "..game.Players.LocalPlayer.DisplayName.."'s character...") task.wait(6) until game.Players.LocalPlayer.Character
+end
 local logservice = game:GetService("LogService")
 local scriptcontext = game:GetService("ScriptContext")
 local RunService = game:GetService("RunService")
 local lighting = game:GetService("Lighting")
 local defaultambient = lighting.Ambient
 local lplr = game:GetService("Players").LocalPlayer
-local maintenance = false
 local tpservice = game:GetService("TeleportService")
-local lv = Vector3.zero
+local version = "V2.9"
+local fonts = {}
+local camera = workspace.CurrentCamera
+local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport 
+local expectedversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/version.lua"))()
+if not game.Players.LocalPlayer.Character then
+    repeat notif("waiting for LocalPlayer") task.wait(5) until game.Players.LocalPlayer.Character
+end
+if expectedversion ~= version then
+    notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
+    return
+end
 --disables printing
 for i,v in pairs(getconnections(logservice.MessageOut)) do
     v:Disable()
@@ -15,13 +47,12 @@ end
 for i,v in pairs(getconnections(scriptcontext.Error)) do
     v:Disable()
 end
---fe2
+--fe2 anti cheat somehow detects orion so...
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
 	return {}
 end
 end)
-local version = "V2.9"
 local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
 local function chat(msg)
     game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
@@ -45,29 +76,19 @@ if maintenance then
     kick("Maintenance is enabled, please wait!")
     return
 end
-local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local function notif(msg)
-    Orion:MakeNotification({
-	Name = "Pissware",
-	Content = msg,
-	Image = "rbxassetid://4483345998",
-	Time = 5
-}) 	
-end
-local random = {
-    "hello, "..lplr.DisplayName.."!",
-    "Welcome to pissware V2.9, "..lplr.DisplayName..".",
-    "hi there, "..lplr.DisplayName..".",
-    "Thanks for using pissware V2.9, "..lplr.DisplayName.."!",
-    "whats up, "..lplr.DisplayName.."!"
-    }
-    local welcome = random[math.random(1,#random)]
-local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = welcome,IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+    local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
 local movement = Window:MakeTab({Name = "movement", Icon = "rbxassetid://7743870731", PremiumOnly = false})
 local misc = Window:MakeTab({Name = "utility", Icon = "rbxassetid://7743878358", PremiumOnly = false})
 local beta = Window:MakeTab({Name = " ", Icon = " ",PremiumOnly = false})
+if isfile("loadedmorethanone.lua") then
+home:AddLabel("Welcome back, "..lplr.DisplayName.."! are you enjoying the script?")
+else
+    home:AddLabel("Welcome "..lplr.DisplayName..", hope you'll enjoy this script!")
+end
+
 combat:AddButton({
 	Name = "Aimbot",
 	Callback = function()
@@ -178,9 +199,8 @@ local function CHCC_fake_script() -- TextLabel.LocalScript
 	end)
 	
 end
-
-
 coroutine.wrap(CHCC_fake_script)()
+
 local ambient 
 getgenv().ambientcolor = Color3.fromRGB(0,255,0)
 RunService.Stepped:Connect(function()
@@ -239,6 +259,15 @@ render:AddToggle({ Name = "FPS counter", Default = false, Save = true, Flag = "r
 end
 })
 
+render:AddColorpicker({ Name = "FPS counter color", Default = Color3.new(80,80,80), Save = true, Flag = "render_fps_color", Callback = function(v)
+    TextLabel.TextColor3 = v
+            end
+})
+
+render:AddSlider({ Name = "Field of view", Default = 70, Min = 30, Max = 120, ValueName = "FOV", Save = true, Flag = "render_fov", Callback = function(v)
+    camera.FieldOfView = v
+            end 
+})
 
 local esp = render:AddSection({
 	Name = "ESP"
@@ -248,8 +277,6 @@ local espLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/AnAva
 espLib.options.boxes = false
 espLib.options.chams = false
 espLib:Load()
---credits for sirius for font getter
-local fonts = {}
 for i,v in pairs(Drawing.Fonts) do
     fonts[v] = i
 end
@@ -415,11 +442,14 @@ RunService.Stepped:Connect(function()
     end
     end
 end)
-
+local function teleportTo(player)    
+    lplr.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame  
+    wait()        
+end
 local jetpack
 game:GetService("UserInputService").JumpRequest:connect(function()
 	    if jetpack then
-lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+lplr.Character.Humanoid:ChangeState("Jumping")
 end
 end)
 
@@ -431,6 +461,27 @@ if spinbot then
 end
 end)
 
+local bhopnewmethod
+RunService.Stepped:Connect(function()
+    if lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and bhopnewmethod and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 then
+        lplr.Character.Humanoid:ChangeState("Jumping")
+       end
+    end)
+local Walkspeed
+RunService.Stepped:Connect(function()
+    pcall(function()
+        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 then
+            lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * Walkspeed/50)
+        end
+    end)
+end)
+local cframespeedtoggle
+getgenv().cframespeed = 0
+RunService.Stepped:Connect(function()
+    if cframespeedtoggle then
+        lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.Humanoid.MoveDirection * cframespeed
+    end
+end)
 movement:AddToggle({ Name = "Noclip", Default = false, Save = true, Flag = "movement_noclip", Callback = function(v)
     noclip = v
 end
@@ -455,27 +506,38 @@ movement:AddToggle({ Name = "Jetpack", Default = false, Save = true, Flag = "mov
     jetpack = v
 end
 })
-
-local TargetWalkspeed
-movement:AddSlider({ Name = "Speed", Default = 0, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
-    TargetWalkspeed = v
+movement:AddSlider({ Name = "OldSpeed", Default = 0, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
+    Walkspeed = v
             end
 })
 
-RunService.Stepped:Connect(function()
-    pcall(function()
-        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 then
-            lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * TargetWalkspeed/50)
-        end
-    end)
-end)
+--cframe speed
+movement:AddToggle({ Name = "NewSpeed toggle", Default = false, Save = true, Flag = "movement_newspeedtoggle", Callback = function(v)
+    cframespeedtoggle = v
+end
+})
+
+movement:AddSlider({ Name = "NewSpeed", Default = 0.5, Min = 0, Max = 500, Increment = 0.1,ValueName = "speed", Save = true, Flag = "movement_newspeed", Callback = function(v)
+    cframespeed = v
+            end
+})
+
+movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "movement_bhop", Callback = function(v)
+    bhopnewmethod = v
+end
+})
+
+
+
+
+
 
 local antiafk
+lplr.Idled:connect(function()
     if antiafk then
-            lplr.Idled:connect(function()
                 game:GetService("VirtualUser"):ClickButton2(Vector2.new())
-            end)
-        end
+    end
+end)
 misc:AddToggle({ Name = "Anti-AFK", Default = true, Save = true, Flag = "misc_antiafk", Callback = function(v)
     antiafk = v
 end
@@ -493,7 +555,7 @@ end
 misc:AddButton({
 	Name = "Rejoin",
 	Callback = function()
-	    if #game:GetService("Players"):GetPlayers() <= 1 then
+	    if #game:GetService("Players"):GetPlayers() == 1 then
 	        kick("Pissware - rejoining...")
 	        task.wait(1.5)
       		tpservice:Teleport(game.PlaceId)
@@ -508,8 +570,9 @@ beta:AddParagraph(
     "Right now this has no use, come back later!"
 )
 
-Orion:Init()
 
+Orion:Init()
+writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
 ]]
