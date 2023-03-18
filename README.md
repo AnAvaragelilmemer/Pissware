@@ -15,6 +15,8 @@ Blur size
 Ambient color
 TimeChanger
 NoRender
+FPS counter
+FPS counter color
 //ESP:
 Enable ESP
 Boxes
@@ -46,10 +48,13 @@ Noclip
 AlwaysMove
 Jetpack
 Spinbot (doesnt work on first person)
-Speed
+OldSpeed 
+NewSpeed (CFrame speed)
+AlwaysJump (New method!)
+
 //Utility
 UnlockFps
-Anti-AFK
+Anti-AFK (improved!)
 Rejoin (improved!)
 ```
 ## Preview:
