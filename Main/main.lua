@@ -89,6 +89,55 @@ else
     home:AddLabel("Welcome "..lplr.DisplayName..", hope you'll enjoy this script!")
 end
 
+home:AddParagraph("Info for your roblox account"," Name: "..lplr.Name.."\n DisplayName: "..lplr.DisplayName.."\n UserId: "..lplr.UserId)
+home:AddButton({
+	Name = "Copy Name",
+	Callback = function()
+      		setclipboard(lplr.Name)
+  	end    
+})
+home:AddButton({
+	Name = "Copy DisplayName",
+	Callback = function()
+      		setclipboard(lplr.DisplayName)
+  	end    
+})
+
+home:AddButton({
+	Name = "Copy UserId",
+	Callback = function()
+      		setclipboard(lplr.UserId)
+  	end    
+})
+
+home:AddParagraph("Game info"," Name: "..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name.."\n ID: "..game.PlaceId.."\n JobId: "..game.JobId)
+
+home:AddButton({
+	Name = "Copy Name",
+	Callback = function()
+      		setclipboard(game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name)
+  	end    
+})
+home:AddButton({
+	Name = "Copy Id",
+	Callback = function()
+      		setclipboard(game.PlaceId)
+  	end    
+})
+
+home:AddButton({
+	Name = "Copy JobId",
+	Callback = function()
+      		setclipboard(game.JobId)
+  	end    
+})
+
+local Section = home:AddSection({
+	Name = "Update Logs"
+})
+
+home:AddParagraph("Replication Update","Time released: Sun, 16 of march.\n [+]Added a toggle to OldSpeed\n [+]Added ReplicationLag in render section\n [+]Added LowOutgoingKBPS in render section\n [+]Improved AlwaysJump.\n [+]Fixed rejoin\n [+]Added infos on home section\n will add more soon!")
+
 combat:AddButton({
 	Name = "Aimbot",
 	Callback = function()
@@ -269,6 +318,23 @@ render:AddSlider({ Name = "Field of view", Default = 70, Min = 30, Max = 120, Va
             end 
 })
 
+render:AddToggle({ Name = "ReplicationLag", Default = false, Save = true, Flag = "render_replilag", Callback = function(v)
+    if v then
+    settings().Network.IncomingReplicationLag = 10000
+        else
+            settings().Network.IncomingReplicationLag = 0
+    end
+end
+})
+
+render:AddToggle({ Name = "LowOutgoingKBPS", Default = false, Save = true, Flag = "render_kbps", Callback = function(v)
+    if v then
+     game:GetService("NetworkClient"):SetOutgoingKBPSLimit(1)        
+     else
+        game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
+    end
+end
+})
 local esp = render:AddSection({
 	Name = "ESP"
 })
@@ -463,14 +529,16 @@ end)
 
 local bhopnewmethod
 RunService.Stepped:Connect(function()
-    if lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and bhopnewmethod and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 then
+    if lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and bhopnewmethod and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and lplr.Character.Humanoid.Health > 0.01 then
         lplr.Character.Humanoid:ChangeState("Jumping")
        end
-    end)
+end)
+
 local Walkspeed
+local ostog 
 RunService.Stepped:Connect(function()
     pcall(function()
-        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 then
+        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and ostog then
             lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * Walkspeed/50)
         end
     end)
@@ -506,6 +574,11 @@ movement:AddToggle({ Name = "Jetpack", Default = false, Save = true, Flag = "mov
     jetpack = v
 end
 })
+
+movement:AddToggle({ Name = "OldSpeed toggle", Default = false, Save = true, Flag = "movement_ostog", Callback = function(v)
+    ostog = v
+end
+})
 movement:AddSlider({ Name = "OldSpeed", Default = 0, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
     Walkspeed = v
             end
@@ -517,7 +590,7 @@ movement:AddToggle({ Name = "NewSpeed toggle", Default = false, Save = true, Fla
 end
 })
 
-movement:AddSlider({ Name = "NewSpeed", Default = 0.5, Min = 0, Max = 500, Increment = 0.1,ValueName = "speed", Save = true, Flag = "movement_newspeed", Callback = function(v)
+movement:AddSlider({ Name = "NewSpeed", Default = 5, Min = 0, Max = 500, Increment = 0.1,ValueName = "speed", Save = true, Flag = "movement_newspeed", Callback = function(v)
     cframespeed = v
             end
 })
@@ -526,11 +599,6 @@ movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "
     bhopnewmethod = v
 end
 })
-
-
-
-
-
 
 local antiafk
 lplr.Idled:connect(function()
