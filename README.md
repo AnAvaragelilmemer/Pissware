@@ -67,10 +67,8 @@ Rejoin
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/Screenshot_20230319-153339_Roblox.jpg)
 ## Pissware V2.9 loadstring
 ```lua
-local github = "https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/"
-local file = "Main/"
-local main = "main.lua" 
-loadstring(game:HttpGet(github..file..main))()
+local github = "https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"
+loadstring(game:HttpGet(github))()
 ```
 #
 more soon!
