@@ -3,6 +3,11 @@
 
 Features:
 ```js
+//Home:
+A very cool welcome message 
+Info for your rbx account (name displayname etc)
+game info (name jobid id)
+Update logs
 //Aimbot:
 Aimbot master switch
 Field of view ring size
@@ -17,6 +22,8 @@ TimeChanger
 NoRender
 FPS counter
 FPS counter color
+ReplicationLag
+LowOutgoingKBPS
 //ESP:
 Enable ESP
 Boxes
@@ -48,14 +55,13 @@ Noclip
 AlwaysMove
 Jetpack
 Spinbot (doesnt work on first person)
-OldSpeed 
+OldSpeed
 NewSpeed (CFrame speed)
-AlwaysJump (New method!)
-
-//Utility
+AlwaysJump (Improved!)
+//Utility:
 UnlockFps
-Anti-AFK (improved!)
-Rejoin (improved!)
+Anti-AFK 
+Rejoin 
 ```
 ## Preview:
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/Screenshot_20230314-220222_Roblox.jpg)
