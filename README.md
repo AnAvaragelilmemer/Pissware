@@ -64,7 +64,7 @@ Anti-AFK
 Rejoin 
 ```
 ## Preview:
-![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/Screenshot_20230314-220222_Roblox.jpg)
+![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/Screenshot_20230319-153339_Roblox.jpg)
 ## Pissware V2.9 loadstring
 ```lua
 local github = "https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/"
