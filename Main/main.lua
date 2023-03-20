@@ -221,7 +221,7 @@ for i,v in pairs(game:GetService("Players"):GetPlayers()) do
 end
 else
 	for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name and (v.Team ~= lplr.Team or (not getgenv().teamcheck)) then
+	if v.Name ~= lplr.Name then
 	v.Character.HumanoidRootPart.Transparency = 1
 	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
 	v.Character.HumanoidRootPart.Size = Vector3.new(2,2,2)
