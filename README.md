@@ -1,19 +1,20 @@
 
-# Pissware, designed to be trash
+#                               Pissware, designed to be trash
 
 Features:
 ```js
 //Home:
 A very cool welcome message 
 Info for your rbx account (name displayname etc)
-game info (name jobid id)
+game info (name jobid)
 Update logs
-//Aimbot:
+//Combat:
 Aimbot master switch
 Field of view ring size
 Field of view ring color
 Smoothness
 Teamcheck
+Hitbox expander (BETA)
 //Render:
 Blur
 Blur size
@@ -62,6 +63,9 @@ AlwaysJump (Improved!)
 UnlockFps
 Anti-AFK 
 Rejoin 
+Spam
+Spam message
+Join code generator
 ```
 ## Preview:
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/Screenshot_20230319-153339_Roblox.jpg)
