@@ -40,7 +40,6 @@ if expectedversion ~= version then
     notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
     return
 end
---disables printing
 for i,v in pairs(getconnections(logservice.MessageOut)) do
     v:Disable()
 end
@@ -103,25 +102,12 @@ home:AddButton({
   	end    
 })
 
-home:AddButton({
-	Name = "Copy UserId",
-	Callback = function()
-      		setclipboard(lplr.UserId)
-  	end    
-})
-
 home:AddParagraph("Game info"," Name: "..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name.."\n ID: "..game.PlaceId.."\n JobId: "..game.JobId)
 
 home:AddButton({
 	Name = "Copy Name",
 	Callback = function()
       		setclipboard(game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name)
-  	end    
-})
-home:AddButton({
-	Name = "Copy Id",
-	Callback = function()
-      		setclipboard(game.PlaceId)
   	end    
 })
 
@@ -219,6 +205,44 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
     _G.fovColorPicker = v
             end
 })
+
+local hitbox 
+getgenv().hitboxsize = 12
+RunService.Stepped:Connect(function()
+if hitbox then
+for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+	if v.Name ~= lplr.Name then
+	v.Character.HumanoidRootPart.Transparency = 0.5
+	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
+	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
+	v.Character.HumanoidRootPart.Material = "Plastic"
+	v.Character.HumanoidRootPart.CanCollide = false
+		end
+end
+else
+	for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+	if v.Name ~= lplr.Name and (v.Team ~= lplr.Team or (not getgenv().teamcheck)) then
+	v.Character.HumanoidRootPart.Transparency = 0.5
+	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
+	v.Character.HumanoidRootPart.Size = Vector3.new(2,2,2)
+	v.Character.HumanoidRootPart.Material = "Plastic"
+	v.Character.HumanoidRootPart.CanCollide = false
+		end
+end
+end
+end)
+
+combat:AddToggle({Name = "Hitbox toggle (BETA)", Default = false, Save = true, Flag = "combat_hitbox", Callback = function(v)
+    hitbox = v
+            end
+})
+
+combat:AddSlider({ Name = "Hitbox size", Default = 10, Min = 2, Max = 50, ValueName = "Size", Save = true, Flag = "combat_hitbox_size", Callback = function(v)
+    hitboxsize = v
+            end 
+})
+
+
 local FPScounter = Instance.new("ScreenGui")
 local TextLabel = Instance.new("TextLabel")
 local UICorner = Instance.new("UICorner")
@@ -590,9 +614,18 @@ movement:AddToggle({ Name = "NewSpeed toggle", Default = false, Save = true, Fla
 end
 })
 
-movement:AddSlider({ Name = "NewSpeed", Default = 5, Min = 0, Max = 500, Increment = 0.1,ValueName = "speed", Save = true, Flag = "movement_newspeed", Callback = function(v)
+local changer = movement:AddSlider({ Name = "NewSpeed", Default = 5, Min = 0, Max = 500, Increment = 0.1,ValueName = "speed", Save = true, Flag = "movement_newspeed", Callback = function(v)
     cframespeed = v
             end
+})
+
+movement:AddTextbox({
+	Name = "Change speed",
+	Default = "5",
+	TextDisappear = true,
+	Callback = function(v)
+		changer:Set(v)
+	end	  
 })
 
 movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "movement_bhop", Callback = function(v)
@@ -606,6 +639,14 @@ lplr.Idled:connect(function()
                 game:GetService("VirtualUser"):ClickButton2(Vector2.new())
     end
 end)
+local spam 
+getgenv().message = "pɪssware on top"
+function spamm()
+while spam do
+	wait(2)
+	chat(message) 
+end
+end
 misc:AddToggle({ Name = "Anti-AFK", Default = true, Save = true, Flag = "misc_antiafk", Callback = function(v)
     antiafk = v
 end
@@ -628,16 +669,40 @@ misc:AddButton({
 	        task.wait(1.5)
       		tpservice:Teleport(game.PlaceId)
       		else
-      		    tpservice:TeleportToPlaceInstance(game.PlaceId,game.JobId)
+            tpservice:TeleportToPlaceInstance(game.PlaceId,game.JobId)
 	    end
   	end    
 })
+
+misc:AddToggle({ Name = "Spam", Default = false, Save = true, Flag = "misc_spam", Callback = function(v)
+    spam = v
+	spamm()
+end
+})
+
+misc:AddTextbox({
+	Name = "spam text",
+	Default = "pɪssware on top",
+	TextDisappear = true,
+	Callback = function(v)
+		message = v
+	end	  
+})
+
+
 
 beta:AddParagraph(
     "You found experimental!",
     "Right now this has no use, come back later!"
 )
 
+misc:AddButton({
+	Name = "Generate join code",
+	Callback = function()
+	   setclipboard('game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..',"'..game.JobId..'")')
+	   notif("Sucessfully generated a Join code for your session.")
+  	end    
+})
 
 Orion:Init()
 writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
