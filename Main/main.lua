@@ -33,14 +33,12 @@ if expectedversion ~= version then
     notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
     return
 end
---[[
 for i,v in pairs(getconnections(logservice.MessageOut)) do
     v:Disable()
 end
 for i,v in pairs(getconnections(scriptcontext.Error)) do
     v:Disable()
 end
-]]
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
 	return {}
@@ -675,7 +673,7 @@ misc:AddButton({
   	end    
 })
 
---Orion:Init()
+Orion:Init()
 writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
