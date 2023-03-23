@@ -56,8 +56,8 @@ Noclip
 AlwaysMove
 Jetpack
 Spinbot (doesnt work on first person)
-OldSpeed
-NewSpeed (CFrame speed)
+Speed
+SpeedMethod (TranslateBy, CFrame)
 AlwaysJump (Improved!)
 //Utility:
 UnlockFps
