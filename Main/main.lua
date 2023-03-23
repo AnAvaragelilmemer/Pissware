@@ -1,25 +1,21 @@
 
 repeat task.wait() until game:IsLoaded() and game.ContentProvider.RequestQueueSize == 0
-local maintenance = false
-if maintenance then
-    kick("Maintenance is enabled, please wait!")
-    return
-end
 if getgenv().isloaded then
     return
 end
 getgenv().isloaded = true
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+Orion.Draggable = true
 local function notif(msg)
     Orion:MakeNotification({
 	Name = "Pissware",
 	Content = msg,
 	Image = "rbxassetid://7733658271",
-	Time = 5
+	Time = 6.5
 }) 
 end
 if not game.Players.LocalPlayer.Character then
-    repeat notif("Waiting for "..game.Players.LocalPlayer.DisplayName.."'s character...") task.wait(6) until game.Players.LocalPlayer.Character
+    repeat notif("Waiting for "..game.Players.LocalPlayer.DisplayName.."'s character...") task.wait(7) until game.Players.LocalPlayer.Character
 end
 local logservice = game:GetService("LogService")
 local scriptcontext = game:GetService("ScriptContext")
@@ -33,20 +29,18 @@ local fonts = {}
 local camera = workspace.CurrentCamera
 local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport 
 local expectedversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/version.lua"))()
-if not game.Players.LocalPlayer.Character then
-    repeat notif("waiting for LocalPlayer") task.wait(5) until game.Players.LocalPlayer.Character
-end
 if expectedversion ~= version then
     notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
     return
 end
+--[[
 for i,v in pairs(getconnections(logservice.MessageOut)) do
     v:Disable()
 end
 for i,v in pairs(getconnections(scriptcontext.Error)) do
     v:Disable()
 end
---fe2 anti cheat somehow detects orion so...
+]]
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
 	return {}
@@ -71,11 +65,7 @@ end
 local function copy(msg)
     setclipboard(msg)
 end
-if maintenance then
-    kick("Maintenance is enabled, please wait!")
-    return
-end
-    local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
@@ -243,6 +233,7 @@ combat:AddSlider({ Name = "Hitbox size", Default = 10, Min = 2, Max = 50, ValueN
 })
 
 
+
 local FPScounter = Instance.new("ScreenGui")
 local TextLabel = Instance.new("TextLabel")
 local UICorner = Instance.new("UICorner")
@@ -260,7 +251,6 @@ TextLabel.Visible = false
 TextLabel.Font = Enum.Font.Unknown
 TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextLabel.TextSize = 14.000
-
 UICorner.Parent = TextLabel
 
 local function CHCC_fake_script() -- TextLabel.LocalScript 
@@ -532,10 +522,6 @@ RunService.Stepped:Connect(function()
     end
     end
 end)
-local function teleportTo(player)    
-    lplr.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame  
-    wait()        
-end
 local jetpack
 game:GetService("UserInputService").JumpRequest:connect(function()
 	    if jetpack then
@@ -557,23 +543,22 @@ RunService.Stepped:Connect(function()
         lplr.Character.Humanoid:ChangeState("Jumping")
        end
 end)
-
+getgenv().speedmethod = "TranslateBy"
 local Walkspeed
-local ostog 
+local walkspeedtog
 RunService.Stepped:Connect(function()
     pcall(function()
-        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and ostog then
+        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and walkspeedtog and speedmethod == "TranslateBy" then
             lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * Walkspeed/50)
         end
     end)
 end)
-local cframespeedtoggle
-getgenv().cframespeed = 0
 RunService.Stepped:Connect(function()
-    if cframespeedtoggle then
-        lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.Humanoid.MoveDirection * cframespeed
+    if walkspeedtog and speedmethod == "CFrame" then
+        lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.Humanoid.MoveDirection * Walkspeed/20
     end
 end)
+
 movement:AddToggle({ Name = "Noclip", Default = false, Save = true, Flag = "movement_noclip", Callback = function(v)
     noclip = v
 end
@@ -599,33 +584,19 @@ movement:AddToggle({ Name = "Jetpack", Default = false, Save = true, Flag = "mov
 end
 })
 
-movement:AddToggle({ Name = "OldSpeed toggle", Default = false, Save = true, Flag = "movement_ostog", Callback = function(v)
-    ostog = v
+movement:AddToggle({ Name = "Speed toggle", Default = false, Save = true, Flag = "movement_speed_toggle", Callback = function(v)
+    walkspeedtog = v
 end
 })
-movement:AddSlider({ Name = "OldSpeed", Default = 0, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
+
+movement:AddDropdown({Name = "Speed method", Default = "TranslateBy", Options = {"TranslateBy","CFrame"}, Save = true, Flag = "movement_speed_method", Callback = function(v)
+    speedmethod = v
+            end 
+})
+
+movement:AddSlider({ Name = "Speed", Default = 20, Min = 0, Max = 150, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
     Walkspeed = v
             end
-})
-
---cframe speed
-movement:AddToggle({ Name = "NewSpeed toggle", Default = false, Save = true, Flag = "movement_newspeedtoggle", Callback = function(v)
-    cframespeedtoggle = v
-end
-})
-
-local changer = movement:AddSlider({ Name = "NewSpeed", Default = 5, Min = 0, Max = 500, Increment = 0.1,ValueName = "speed", Save = true, Flag = "movement_newspeed", Callback = function(v)
-    cframespeed = v
-            end
-})
-
-movement:AddTextbox({
-	Name = "Change speed",
-	Default = "5",
-	TextDisappear = true,
-	Callback = function(v)
-		changer:Set(v)
-	end	  
 })
 
 movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "movement_bhop", Callback = function(v)
@@ -683,7 +654,7 @@ end
 misc:AddTextbox({
 	Name = "spam text",
 	Default = "pɪssware on top",
-	TextDisappear = true,
+	TextDisappear = false,
 	Callback = function(v)
 		message = v
 	end	  
@@ -704,7 +675,7 @@ misc:AddButton({
   	end    
 })
 
-Orion:Init()
+--Orion:Init()
 writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
