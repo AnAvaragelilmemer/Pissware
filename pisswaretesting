@@ -5,7 +5,6 @@ if getgenv().isloaded then
 end
 getgenv().isloaded = true
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-Orion.Draggable = true
 local function notif(msg)
     Orion:MakeNotification({
 	Name = "Pissware",
@@ -33,14 +32,12 @@ if expectedversion ~= version then
     notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
     return
 end
---[[
 for i,v in pairs(getconnections(logservice.MessageOut)) do
     v:Disable()
 end
 for i,v in pairs(getconnections(scriptcontext.Error)) do
     v:Disable()
 end
-]]
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
 	return {}
@@ -198,12 +195,14 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
 
 local hitbox 
 getgenv().hitboxsize = 12
+getgenv().hitboxcolor = Color3.new(255,255,255)
+getgenv().teamcheck = false
 RunService.Stepped:Connect(function()
 if hitbox then
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name then
+	if v.Name ~= lplr.Name and not (lplr.Team ~= lplr.Team or getgenv().teamcheck) then
 	v.Character.HumanoidRootPart.Transparency = 0.5
-	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
+	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
 	v.Character.HumanoidRootPart.Material = "Plastic"
 	v.Character.HumanoidRootPart.CanCollide = false
@@ -214,7 +213,7 @@ else
 	if v.Name ~= lplr.Name then
 	v.Character.HumanoidRootPart.Transparency = 1
 	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
-	v.Character.HumanoidRootPart.Size = Vector3.new(2,2,2)
+	v.Character.HumanoidRootPart.Size = Vector3.new(2,2,1)
 	v.Character.HumanoidRootPart.Material = "Plastic"
 	v.Character.HumanoidRootPart.CanCollide = false
 		end
@@ -230,6 +229,16 @@ combat:AddToggle({Name = "Hitbox toggle (BETA)", Default = false, Save = true, F
 combat:AddSlider({ Name = "Hitbox size", Default = 10, Min = 2, Max = 50, ValueName = "Size", Save = true, Flag = "combat_hitbox_size", Callback = function(v)
     hitboxsize = v
             end 
+})
+
+combat:AddColorpicker({ Name = "Hitbox color", Default = Color3.new(1,1,1), Save = true, Flag = "combat_hitbox_color", Callback = function(v)
+    hitboxcolor = v
+            end
+})
+
+combat:AddToggle({Name = "Hitbox team check", Default = false, Save = true, Flag = "combat_hitbox_tc", Callback = function(v)
+    getgenv().teamcheck = v
+            end
 })
 
 
