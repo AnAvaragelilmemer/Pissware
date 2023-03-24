@@ -5,7 +5,6 @@ if getgenv().isloaded then
 end
 getgenv().isloaded = true
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-Orion.Draggable = true
 local function notif(msg)
     Orion:MakeNotification({
 	Name = "Pissware",
@@ -60,9 +59,6 @@ local function exit()
     game:Shutdown()
 end
 
-local function copy(msg)
-    setclipboard(msg)
-end
 local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
@@ -196,12 +192,13 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
 
 local hitbox 
 getgenv().hitboxsize = 12
+getgenv().hitboxcolor = Color3.new(255,255,255)
 RunService.Stepped:Connect(function()
 if hitbox then
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name then
+	if v.Name ~= lplr.Name and not (lplr.Team ~= lplr.Team or getgenv().teamcheck) then
 	v.Character.HumanoidRootPart.Transparency = 0.5
-	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
+	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
 	v.Character.HumanoidRootPart.Material = "Plastic"
 	v.Character.HumanoidRootPart.CanCollide = false
@@ -212,7 +209,7 @@ else
 	if v.Name ~= lplr.Name then
 	v.Character.HumanoidRootPart.Transparency = 1
 	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
-	v.Character.HumanoidRootPart.Size = Vector3.new(2,2,2)
+	v.Character.HumanoidRootPart.Size = Vector3.new(2,2,1)
 	v.Character.HumanoidRootPart.Material = "Plastic"
 	v.Character.HumanoidRootPart.CanCollide = false
 		end
@@ -230,7 +227,10 @@ combat:AddSlider({ Name = "Hitbox size", Default = 10, Min = 2, Max = 50, ValueN
             end 
 })
 
-
+combat:AddColorpicker({ Name = "Hitbox color", Default = Color3.new(1,1,1), Save = true, Flag = "combat_hitbox_color", Callback = function(v)
+    hitboxcolor = v
+            end
+})
 
 local FPScounter = Instance.new("ScreenGui")
 local TextLabel = Instance.new("TextLabel")
@@ -662,7 +662,7 @@ misc:AddTextbox({
 
 beta:AddParagraph(
     "You found experimental!",
-    "Right now this has no use, come back later!"
+    "lol"
 )
 
 misc:AddButton({
