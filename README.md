@@ -14,7 +14,8 @@ Field of view ring size
 Field of view ring color
 Smoothness
 Teamcheck
-Hitbox expander (BETA)
+Hitbox expander
+Hitbox expander color
 //Render:
 Blur
 Blur size
