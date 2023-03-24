@@ -4,42 +4,19 @@ if getgenv().isloaded then
     return
 end
 getgenv().isloaded = true
---disables printing when getgenv().disableprinting is true
-if getgenv().disableprinting then
-for i,v in pairs(getconnections(logservice.MessageOut)) do
-    v:Disable()
-end
-for i,v in pairs(getconnections(scriptcontext.Error)) do
-    v:Disable()
-end
-end
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+Orion.Draggable = true
 local function notif(msg)
     Orion:MakeNotification({
-	Name = "Polaris",
+	Name = "Pissware",
 	Content = msg,
 	Image = "rbxassetid://7733658271",
-	Time = 5
+	Time = 6.5
 }) 
 end
-if not syn and syn.queue_on_teleport or queue_on_teleport then
-    notif("Your executor doesn't support queue_on_teleport! (Executor: "..identifyexecutor()..".)")
-    getgenv().isloaded = false
-    return
-end
-
---checks if lplr's character is not loaded yet
 if not game.Players.LocalPlayer.Character then
-    repeat notif("Waiting for "..game.Players.LocalPlayer.DisplayName.."'s character...") task.wait(6) until game.Players.LocalPlayer.Character
+    repeat notif("Waiting for "..game.Players.LocalPlayer.DisplayName.."'s character...") task.wait(7) until game.Players.LocalPlayer.Character
 end
-local expectedversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/version.lua"))()
-local version = "V2.9"
-if expectedversion ~= version then
-    notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
-    getgenv().isloaded = false
-    return
-end
---variables
 local logservice = game:GetService("LogService")
 local scriptcontext = game:GetService("ScriptContext")
 local RunService = game:GetService("RunService")
@@ -47,16 +24,29 @@ local lighting = game:GetService("Lighting")
 local defaultambient = lighting.Ambient
 local lplr = game:GetService("Players").LocalPlayer
 local tpservice = game:GetService("TeleportService")
+local version = "V2.9"
 local fonts = {}
 local camera = workspace.CurrentCamera
-local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
---fe2 anti cheat somehow detects orion so...
+local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport 
+local expectedversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/version.lua"))()
+if expectedversion ~= version then
+    notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
+    return
+end
+--[[
+for i,v in pairs(getconnections(logservice.MessageOut)) do
+    v:Disable()
+end
+for i,v in pairs(getconnections(scriptcontext.Error)) do
+    v:Disable()
+end
+]]
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
 	return {}
 end
 end)
---functions
+local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
 local function chat(msg)
     game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
@@ -75,155 +65,7 @@ end
 local function copy(msg)
     setclipboard(msg)
 end
---GUI
-local FPScounter = Instance.new("ScreenGui")
-local TextLabel = Instance.new("TextLabel")
-local UICorner = Instance.new("UICorner")
-FPScounter.Name = "FPS counter"
-FPScounter.Parent = game.CoreGui
-FPScounter.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-TextLabel.Parent = FPScounter
-TextLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-TextLabel.BackgroundTransparency = 1.000
-TextLabel.BorderSizePixel = 0
-TextLabel.Position = UDim2.new(0.455756456, 0, 0.802699208, 0)
-TextLabel.Size = UDim2.new(0, 140, 0, 21)
-TextLabel.Visible = false
-TextLabel.Font = Enum.Font.Unknown
-TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.TextSize = 14.000
-
-UICorner.Parent = TextLabel
-
-local function CHCC_fake_script() -- TextLabel.LocalScript 
-	local script = Instance.new('LocalScript', TextLabel)
-	RunService.RenderStepped:Connect(function(frame)
-		script.Parent.Text = ("FPS: "..math.round(1/frame)) 
-	end)
-	
-end
-coroutine.wrap(CHCC_fake_script)()
---protects the fps counter
-if gethui then
-    FPScounter.Parent = gethui()
-elseif syn and syn.protect_gui then
-    syn.protect_gui(FPScounter)
-    FPScounter.Parent = game.CoreGui
-    else
-    FPScounter.Parent = game.CoreGui
-end
---getgenv()'s
-getgenv().hitboxsize = 12
---instances
-local blur = Instance.new("BlurEffect")
-blur.Parent = lighting
---settings
-local polaris = {
-    combat = {
-    hitbox = false
-    render = {
-        ambient = false
-        ambientcolor = Color3.fromRGB(255,255,255)
-        time = false
-        timevalue = 14
-        blur = false
-        blursize = 0 
-    movement = {
-        noclip = false
-        speedtoggle = false
-        speed = 0
-        speedmethod = "TranslateBy"
-        alwaysjump = false
-        spinbot = false
-        spinbotx = 0
-        spinboty = 50 
-        spinbotz = 0
-        jetpack = false
-        alwaysmove = false
-    misc = {
-        antiafk = false
-        spam = false
-    }
-    }
-    }
-  }
-}
-RunService.RenderStepped:Connect(function()
-    --combat
-    if polaris.comabt.hitbox then
-        for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name then
-	v.Character.HumanoidRootPart.Transparency = 0.5
-	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
-	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
-	v.Character.HumanoidRootPart.Material = "Plastic"
-	v.Character.HumanoidRootPart.CanCollide = false
-		end
-end
-else
-	for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name then
-	v.Character.HumanoidRootPart.Transparency = 1
-	v.Character.HumanoidRootPart.Color = Color3.new(255,255,255)
-	v.Character.HumanoidRootPart.Size = Vector3.new(2,2,2)
-	v.Character.HumanoidRootPart.Material = "Plastic"
-	v.Character.HumanoidRootPart.CanCollide = false
-		end
-end
-end
---render
-if polaris.render.ambient then
-    lighting.Ambient = polaris.render.ambientcolor
-    else
-        lighting.Ambient = defaultambient
-end
---movement
-if polaris.movement.noclip then
-      for i,v in pairs(lplr.Character:GetDescendants()) do
-            if v and v:IsA("BasePart") then
-                v.CanCollide = false
-            end
-        end
-  end
-
-if polaris.movement.alwaysjump and lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and lplr.Character.Humanoid.Health > 0.01 then
-    lplr.Character.Humanoid:ChangeState("Jumping")
-end
-
-if polaris.movement.alwaysmove then
-    while pissware.movement.alwaysrun and task.wait() do
-        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position+workspace.Camera.CFrame.lookVector*100)
-    if pissware.movement.alwaysrun == false then
-        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position)
-    end
-    end
-    
-if polaris.movement.spinbot then
-    lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame * CFrame.Angles(pissware.movement.spinbotx, pissware.movement.spinboty, pissware.movement.spinbotz)
-end
-
-pcall(function()
-if polaris.movement.speedtoggle and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and polaris.movement.speedmethod == "TranslateBy" then
-            lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * pissware.movement.speed/50)
-        end
-end)
-
-if polaris.movement.speedtoggle and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and polaris.movement.speedmethod == "CFrame" then
-    lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.Humanoid.MoveDirection * pissware.movement.speed
-end
-
-if polaris.movement.speedtoggle and polaris.movement.speedmethod == "WalkSpeed" then
-    lplr.Character.Humanoid.Walkspeed = pissware.movement.speed
-end
-
-
-
-end)
-
-
-
-    local Window = Orion:MakeWindow({Name = "Polaris "..version, IntroText = "Welcome to polaris, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
@@ -389,6 +231,38 @@ combat:AddSlider({ Name = "Hitbox size", Default = 10, Min = 2, Max = 50, ValueN
     hitboxsize = v
             end 
 })
+
+
+
+local FPScounter = Instance.new("ScreenGui")
+local TextLabel = Instance.new("TextLabel")
+local UICorner = Instance.new("UICorner")
+FPScounter.Name = "FPS counter"
+FPScounter.Parent = game.CoreGui
+FPScounter.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+TextLabel.Parent = FPScounter
+TextLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.455756456, 0, 0.802699208, 0)
+TextLabel.Size = UDim2.new(0, 140, 0, 21)
+TextLabel.Visible = false
+TextLabel.Font = Enum.Font.Unknown
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 14.000
+UICorner.Parent = TextLabel
+
+local function CHCC_fake_script() -- TextLabel.LocalScript 
+	local script = Instance.new('LocalScript', TextLabel)
+
+	local RunService = game:GetService("RunService")
+	RunService.RenderStepped:Connect(function(frame)
+		script.Parent.Text = ("FPS: "..math.round(1/frame)) 
+	end)
+	
+end
+coroutine.wrap(CHCC_fake_script)()
 
 local ambient 
 getgenv().ambientcolor = Color3.fromRGB(0,255,0)
@@ -669,23 +543,22 @@ RunService.Stepped:Connect(function()
         lplr.Character.Humanoid:ChangeState("Jumping")
        end
 end)
-
+getgenv().speedmethod = "TranslateBy"
 local Walkspeed
-local ostog 
+local walkspeedtog
 RunService.Stepped:Connect(function()
     pcall(function()
-        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and ostog then
+        if lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and walkspeedtog and speedmethod == "TranslateBy" then
             lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection * Walkspeed/50)
         end
     end)
 end)
-local cframespeedtoggle
-getgenv().cframespeed = 0
 RunService.Stepped:Connect(function()
-    if cframespeedtoggle then
-        lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.Humanoid.MoveDirection * cframespeed
+    if walkspeedtog and speedmethod == "CFrame" then
+        lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.Humanoid.MoveDirection * Walkspeed/20
     end
 end)
+
 movement:AddToggle({ Name = "Noclip", Default = false, Save = true, Flag = "movement_noclip", Callback = function(v)
     noclip = v
 end
@@ -711,27 +584,20 @@ movement:AddToggle({ Name = "Jetpack", Default = false, Save = true, Flag = "mov
 end
 })
 
-movement:AddToggle({ Name = "OldSpeed toggle", Default = false, Save = true, Flag = "movement_ostog", Callback = function(v)
-    ostog = v
+movement:AddToggle({ Name = "Speed toggle", Default = false, Save = true, Flag = "movement_speed_toggle", Callback = function(v)
+    walkspeedtog = v
 end
 })
-movement:AddSlider({ Name = "OldSpeed", Default = 0, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
+
+movement:AddDropdown({Name = "Speed method", Default = "TranslateBy", Options = {"TranslateBy","CFrame"}, Save = true, Flag = "movement_speed_method", Callback = function(v)
+    speedmethod = v
+            end 
+})
+
+movement:AddSlider({ Name = "Speed", Default = 20, Min = 0, Max = 150, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
     Walkspeed = v
             end
 })
-
---cframe speed
-movement:AddToggle({ Name = "Speed Toggle", Default = false, Save = true, Flag = "movement_speedtoggle", Callback = function(v)
-    cframespeedtoggle = v
-end
-})
-
-local changer = movement:AddSlider({ Name = "Speed", Default = 5, Min = 0, Max = 100, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speedslider", Callback = function(v)
-    cframespeed = v
-            end
-})
-
-
 
 movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "movement_bhop", Callback = function(v)
     bhopnewmethod = v
@@ -745,7 +611,7 @@ lplr.Idled:connect(function()
     end
 end)
 local spam 
-getgenv().message = "polaris on top"
+getgenv().message = "pɪssware on top"
 function spamm()
 while spam do
 	wait(2)
@@ -787,7 +653,7 @@ end
 
 misc:AddTextbox({
 	Name = "spam text",
-	Default = "polaris on top",
+	Default = "pɪssware on top",
 	TextDisappear = false,
 	Callback = function(v)
 		message = v
@@ -804,13 +670,13 @@ beta:AddParagraph(
 misc:AddButton({
 	Name = "Generate join code",
 	Callback = function()
-	   copy('game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..',"'..game.JobId..'")')
+	   setclipboard('game:GetService("TeleportService"):TeleportToPlaceInstance('..game.PlaceId..',"'..game.JobId..'")')
 	   notif("Sucessfully generated a Join code for your session.")
   	end    
 })
 
-Orion:Init()
-writefile("loadedmorethanone.lua", "--This is used to detect if you use Polaris more than once.")
+--Orion:Init()
+writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
 ]]
