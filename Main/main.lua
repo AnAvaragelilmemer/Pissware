@@ -30,6 +30,7 @@ local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
 local expectedversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/version.lua"))()
 if expectedversion ~= version then
     notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
+    getgenv().isloaded = false
     return
 end
 for i,v in pairs(getconnections(logservice.MessageOut)) do
@@ -59,7 +60,7 @@ local function exit()
     game:Shutdown()
 end
 
-local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = "rbxassetid://6031084743", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
@@ -105,6 +106,9 @@ home:AddButton({
 local Section = home:AddSection({
 	Name = "Update Logs"
 })
+
+home:AddParagraph("Hitbox Update","Time released: Sat, 25 of march.\n [+]Replaced OldSpeed and NewSpeed to Speed\n [+]Finished hitbox expander\n [+]Added Auto rejoin when kicked on utility section\n [!]I will not add a team check on hitbox")
+
 
 home:AddParagraph("Replication Update","Time released: Sun, 16 of march.\n [+]Added a toggle to OldSpeed\n [+]Added ReplicationLag in render section\n [+]Added LowOutgoingKBPS in render section\n [+]Improved AlwaysJump.\n [+]Fixed rejoin\n [+]Added infos on home section\n will add more soon!")
 
@@ -193,15 +197,17 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
 local hitbox 
 getgenv().hitboxsize = 12
 getgenv().hitboxcolor = Color3.new(255,255,255)
+getgenv().CanCollide = nil
+--no team check cause its impossible
 RunService.Stepped:Connect(function()
 if hitbox then
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name and not (lplr.Team ~= lplr.Team or getgenv().teamcheck) then
+	if v.Name ~= lplr.Name then
 	v.Character.HumanoidRootPart.Transparency = 0.5
 	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
 	v.Character.HumanoidRootPart.Material = "Plastic"
-	v.Character.HumanoidRootPart.CanCollide = false
+	v.Character.HumanoidRootPart.CanCollide = CanCollide
 		end
 end
 else
@@ -217,7 +223,7 @@ end
 end
 end)
 
-combat:AddToggle({Name = "Hitbox toggle (BETA)", Default = false, Save = true, Flag = "combat_hitbox", Callback = function(v)
+combat:AddToggle({Name = "Hitbox toggle", Default = false, Save = true, Flag = "combat_hitbox", Callback = function(v)
     hitbox = v
             end
 })
@@ -347,6 +353,9 @@ render:AddToggle({ Name = "LowOutgoingKBPS", Default = false, Save = true, Flag 
     end
 end
 })
+
+
+
 local esp = render:AddSection({
 	Name = "ESP"
 })
@@ -608,6 +617,21 @@ lplr.Idled:connect(function()
                 game:GetService("VirtualUser"):ClickButton2(Vector2.new())
     end
 end)
+local autorejoin
+game:GetService("CoreGui").RobloxPromptGui.promptOverlay.DescendantAdded:Connect(function()
+      local errprompt = game.CoreGui.RobloxPromptGui.promptOverlay:FindFirstChild("ErrorPrompt")
+      if errprompt and autorejoin then
+          if errprompt.TitleFrame.ErrorTitle.Text:lower():match("disconnected") then
+               if #game:GetService("Players"):GetPlayers() == 1 then
+	        task.wait(1.5)
+      		tpservice:Teleport(game.PlaceId)
+      		else
+            tpservice:TeleportToPlaceInstance(game.PlaceId,game.JobId)
+               end
+          end
+      end
+end)
+            
 local spam 
 getgenv().message = "pɪssware on top"
 function spamm()
@@ -656,6 +680,11 @@ misc:AddTextbox({
 	Callback = function(v)
 		message = v
 	end	  
+})
+
+misc:AddToggle({ Name = "Auto rejoin when kicked", Default = false, Save = true, Flag = "misc_autorejoin", Callback = function(v)
+    autorejoin = v
+end
 })
 
 
