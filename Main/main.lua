@@ -682,7 +682,7 @@ misc:AddTextbox({
 	end	  
 })
 
-misc:AddToggle({ Name = "Auto rejoin when kicked", Default = false, Save = true, Flag = "misc_autorejoin", Callback = function(v)
+misc:AddToggle({ Name = "rejoin if kicked", Default = false, Save = true, Flag = "misc_autorejoin", Callback = function(v)
     autorejoin = v
 end
 })
