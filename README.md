@@ -15,6 +15,7 @@ Field of view ring color
 Smoothness
 Teamcheck
 Hitbox expander
+Hitbox expander size
 Hitbox expander color
 //Render:
 Blur
@@ -59,11 +60,12 @@ Jetpack
 Spinbot (doesnt work on first person)
 Speed
 SpeedMethod (TranslateBy, CFrame)
-AlwaysJump (Improved!)
+AlwaysJump
 //Utility:
 UnlockFps
 Anti-AFK 
 Rejoin 
+Auto rejoin when kicked
 Spam
 Spam message
 Join code generator
