@@ -5,14 +5,12 @@ if getgenv().isloaded then
     return
 end
 getgenv().isloaded = true
---[[
 for i,v in pairs(getconnections(game:GetService("LogService").MessageOut)) do
     v:Disable()
 end
 for i,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
     v:Disable()
 end
-]]
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local function notif(msg)
     Orion:MakeNotification({
