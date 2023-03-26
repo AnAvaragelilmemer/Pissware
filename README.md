@@ -61,6 +61,9 @@ Spinbot (doesnt work on first person)
 Speed
 SpeedMethod (TranslateBy, CFrame)
 AlwaysJump
+Fly
+Fly speed
+Teleport to player
 //Utility:
 UnlockFps
 Anti-AFK 
