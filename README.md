@@ -57,6 +57,7 @@ Fonts (UI, Plex, System, Monospace)
 Noclip
 AlwaysMove
 Jetpack
+Jetpack method
 Spinbot (doesnt work on first person)
 Speed
 SpeedMethod (TranslateBy, CFrame)
