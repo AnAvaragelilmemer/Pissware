@@ -776,4 +776,4 @@ writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
 ]]
-game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE] pissware in "..os.time()-loadedin.." seconds",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
+game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE] pissware loaded in "..os.time()-loadedin.." seconds.",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
