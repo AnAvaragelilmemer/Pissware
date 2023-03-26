@@ -39,6 +39,13 @@ if expectedversion ~= version then
     getgenv().isloaded = false
     return
 end
+if userinputservice.TouchEnabled and not userinputservice.KeyboardEnabled and not userinputservice.MouseEnabled then
+    game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE]: Current device : Mobile, expect certain features to not work.",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
+elseif not userinputservice.TouchEnabled and userinputservice.KeyboardEnabled and userinputservice.MouseEnabled then
+    game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE]: Current device : PC ",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
+end
+
+
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
 	return {}
@@ -776,4 +783,4 @@ writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
 ]]
-game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE] pissware loaded in "..os.time()-loadedin.." seconds.",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
+game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE]: Pissware loaded in "..os.time()-loadedin.." seconds, Enjoy!",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
