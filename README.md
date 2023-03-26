@@ -75,7 +75,7 @@ Spam message
 Join code generator
 ```
 ## Preview:
-![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/Screenshot_20230319-153339_Roblox.jpg)
+![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/image.png)
 ## Pissware V2.9 loadstring
 ```lua
 local github = "https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"
