@@ -4,6 +4,14 @@ if getgenv().isloaded then
     return
 end
 getgenv().isloaded = true
+--[[
+for i,v in pairs(getconnections(game:GetService("LogService").MessageOut)) do
+    v:Disable()
+end
+for i,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
+    v:Disable()
+end
+]]
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local function notif(msg)
     Orion:MakeNotification({
@@ -16,13 +24,12 @@ end
 if not game.Players.LocalPlayer.Character then
     repeat notif("Waiting for "..game.Players.LocalPlayer.DisplayName.."'s character...") task.wait(7) until game.Players.LocalPlayer.Character
 end
-local logservice = game:GetService("LogService")
-local scriptcontext = game:GetService("ScriptContext")
 local RunService = game:GetService("RunService")
 local lighting = game:GetService("Lighting")
 local defaultambient = lighting.Ambient
 local lplr = game:GetService("Players").LocalPlayer
 local tpservice = game:GetService("TeleportService")
+local userinputservice = game:GetService("UserInputService")
 local version = "V2.9"
 local fonts = {}
 local camera = workspace.CurrentCamera
@@ -30,13 +37,8 @@ local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
 local expectedversion = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/version.lua"))()
 if expectedversion ~= version then
     notif("Your current version of pissware is outdated! (expected version "..expectedversion.." got "..version..")")
+    getgenv().isloaded = false
     return
-end
-for i,v in pairs(getconnections(logservice.MessageOut)) do
-    v:Disable()
-end
-for i,v in pairs(getconnections(scriptcontext.Error)) do
-    v:Disable()
 end
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
@@ -59,10 +61,7 @@ local function exit()
     game:Shutdown()
 end
 
-local function copy(msg)
-    setclipboard(msg)
-end
-local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = " ", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
+local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = "rbxassetid://6031084743", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
@@ -108,6 +107,9 @@ home:AddButton({
 local Section = home:AddSection({
 	Name = "Update Logs"
 })
+
+home:AddParagraph("Hitbox Update","Time released: Sat, 25 of march.\n [+]Replaced OldSpeed and NewSpeed to Speed\n [+]Finished hitbox expander\n [+]Added Auto rejoin when kicked on utility section\n [!]I will not add a team check on hitbox")
+
 
 home:AddParagraph("Replication Update","Time released: Sun, 16 of march.\n [+]Added a toggle to OldSpeed\n [+]Added ReplicationLag in render section\n [+]Added LowOutgoingKBPS in render section\n [+]Improved AlwaysJump.\n [+]Fixed rejoin\n [+]Added infos on home section\n will add more soon!")
 
@@ -196,16 +198,17 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
 local hitbox 
 getgenv().hitboxsize = 12
 getgenv().hitboxcolor = Color3.new(255,255,255)
-getgenv().teamcheck = false
+getgenv().CanCollide = nil
+--no team check cause its impossible
 RunService.Stepped:Connect(function()
 if hitbox then
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name and not (lplr.Team ~= lplr.Team or getgenv().teamcheck) then
+	if v.Name ~= lplr.Name then
 	v.Character.HumanoidRootPart.Transparency = 0.5
 	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
 	v.Character.HumanoidRootPart.Material = "Plastic"
-	v.Character.HumanoidRootPart.CanCollide = false
+	v.Character.HumanoidRootPart.CanCollide = CanCollide
 		end
 end
 else
@@ -220,8 +223,7 @@ else
 end
 end
 end)
-
-combat:AddToggle({Name = "Hitbox toggle (BETA)", Default = false, Save = true, Flag = "combat_hitbox", Callback = function(v)
+combat:AddToggle({Name = "Hitbox toggle", Default = false, Save = true, Flag = "combat_hitbox", Callback = function(v)
     hitbox = v
             end
 })
@@ -235,12 +237,6 @@ combat:AddColorpicker({ Name = "Hitbox color", Default = Color3.new(1,1,1), Save
     hitboxcolor = v
             end
 })
-
-combat:AddToggle({Name = "Hitbox team check", Default = false, Save = true, Flag = "combat_hitbox_tc", Callback = function(v)
-    getgenv().teamcheck = v
-            end
-})
-
 
 
 local FPScounter = Instance.new("ScreenGui")
@@ -358,6 +354,9 @@ render:AddToggle({ Name = "LowOutgoingKBPS", Default = false, Save = true, Flag 
     end
 end
 })
+
+
+
 local esp = render:AddSection({
 	Name = "ESP"
 })
@@ -532,14 +531,20 @@ RunService.Stepped:Connect(function()
     end
 end)
 local jetpack
+local jetpackmethod = "Hold"
+game:GetService("UserInputService").InputBegan:Connect(function(inp,process)
+if jetpack and jetpackmethod == "Press" and inp.KeyCode.Name == "Space" and not process then
+	lplr.Character.Humanoid:ChangeState("Jumping")
+end
+end)
 game:GetService("UserInputService").JumpRequest:connect(function()
-	    if jetpack then
-lplr.Character.Humanoid:ChangeState("Jumping")
+if jetpack and jetpackmethod == "Hold" then
+	lplr.Character.Humanoid:ChangeState("Jumping")
 end
 end)
 
 local spinbot 
-getgenv().spinbotspeed = math.rad(50)
+local spinbotspeed = math.rad(50)
 RunService.Stepped:Connect(function()
 if spinbot then
     lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, spinbotspeed, 0)
@@ -552,7 +557,37 @@ RunService.Stepped:Connect(function()
         lplr.Character.Humanoid:ChangeState("Jumping")
        end
 end)
-getgenv().speedmethod = "TranslateBy"
+--credits for sirius for their fly, i had a bad time coding a fly script
+getgenv().flyspeed = 50
+local fly
+getgenv().
+RunService.Stepped:Connect(function()
+ local RootPart = lplr.Character.Humanoid.RootPart
+ local vector3 = Vector3.zero
+if fly then
+            if userinputservice:IsKeyDown(Enum.KeyCode.W) then
+                vector3 += camera.CFrame.LookVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.S) then
+                vector3 += -camera.CFrame.LookVector
+            end
+			if userinputservice:IsKeyDown(Enum.KeyCode.A) then
+                vector3 += -camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.D) then
+                vector3 += camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.Space) then
+                vector3 += RootPart.CFrame.UpVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.LeftControl) then
+                vector3 += -RootPart.CFrame.UpVector
+            end
+            RootPart.Velocity = vector3 * flyspeed
+end
+end)
+
+local speedmethod = "TranslateBy"
 local Walkspeed
 local walkspeedtog
 RunService.Stepped:Connect(function()
@@ -593,6 +628,11 @@ movement:AddToggle({ Name = "Jetpack", Default = false, Save = true, Flag = "mov
 end
 })
 
+movement:AddDropdown({Name = "Jetpack method", Default = "Hold", Options = {"Hold","Press"}, Save = true, Flag = "movement_jetpack_method", Callback = function(v)
+    jetpackmethod = v
+            end 
+})
+
 movement:AddToggle({ Name = "Speed toggle", Default = false, Save = true, Flag = "movement_speed_toggle", Callback = function(v)
     walkspeedtog = v
 end
@@ -613,12 +653,43 @@ movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "
 end
 })
 
+movement:AddToggle({ Name = "Fly", Default = false, Save = true, Flag = "movement_fly", Callback = function(v)
+    fly = v
+end
+})
+
+movement:AddSlider({ Name = "Fly speed", Default = 50, Min = 1, Max = 300, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_fly_speed", Callback = function(v)
+    flyspeed = v
+            end
+})
+
+movement:AddDropdown({Name = "Up key", Default = "Space", Options = {"E","Space","Space/Q"}, Save = true, Flag = "movement_fly_keys", Callback = function(v)
+    speedmethod = v
+            end 
+})
+
+
 local antiafk
 lplr.Idled:connect(function()
     if antiafk then
                 game:GetService("VirtualUser"):ClickButton2(Vector2.new())
     end
 end)
+local autorejoin
+game:GetService("CoreGui").RobloxPromptGui.promptOverlay.DescendantAdded:Connect(function()
+      local errprompt = game.CoreGui.RobloxPromptGui.promptOverlay:FindFirstChild("ErrorPrompt")
+      if errprompt and autorejoin then
+          if errprompt.TitleFrame.ErrorTitle.Text:lower():match("disconnected") then
+               if #game:GetService("Players"):GetPlayers() == 1 then
+	        task.wait(1.5)
+      		tpservice:Teleport(game.PlaceId)
+      		else
+            tpservice:TeleportToPlaceInstance(game.PlaceId,game.JobId)
+               end
+          end
+      end
+end)
+            
 local spam 
 getgenv().message = "pɪssware on top"
 function spamm()
@@ -669,11 +740,16 @@ misc:AddTextbox({
 	end	  
 })
 
+misc:AddToggle({ Name = "rejoin if kicked", Default = false, Save = true, Flag = "misc_autorejoin", Callback = function(v)
+    autorejoin = v
+end
+})
+
 
 
 beta:AddParagraph(
     "You found experimental!",
-    "Right now this has no use, come back later!"
+    "lol"
 )
 
 misc:AddButton({
@@ -684,7 +760,7 @@ misc:AddButton({
   	end    
 })
 
---Orion:Init()
+Orion:Init()
 writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
