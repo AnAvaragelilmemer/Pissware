@@ -203,7 +203,7 @@ getgenv().CanCollide = nil
 RunService.Stepped:Connect(function()
 if hitbox then
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name then
+	if v.Name ~= lplr.Name and v:FindFirstChild("Humanoid") then
 	v.Character.HumanoidRootPart.Transparency = 0.5
 	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
