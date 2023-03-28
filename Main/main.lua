@@ -29,7 +29,7 @@ local defaultambient = lighting.Ambient
 local lplr = game:GetService("Players").LocalPlayer
 local tpservice = game:GetService("TeleportService")
 local userinputservice = game:GetService("UserInputService")
-local version = "V2.9"
+local version = "V2.9.1"
 local fonts = {}
 local camera = workspace.CurrentCamera
 local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport 
@@ -80,6 +80,15 @@ else
     home:AddLabel("Welcome "..lplr.DisplayName..", hope you'll enjoy this script!")
 end
 
+local Section = home:AddSection({
+	Name = "Update Logs"
+})
+
+home:AddParagraph("Version V2.9.1","Time released: Tues, 28 of march\n [+]Added Strafe jump on movement section\n [+]Added Strafe jump slowness on movement section\n [-]Patched Hitbox not loading properly\n [!]Moved update logs\n [!]Version 2.9.1 is now released, enjoy!")
+home:AddParagraph("Movement Update","Time released: Sun, 26 of march\n [+]Added Fly on movement\n [+]Added Fly speed on movement\n [+]Added Jetpack method on movement\n [+]Added Teleport to player on movement\n [!]Player list refreshes every 2 seconds.")
+home:AddParagraph("Hitbox Update","Time released: Sat, 25 of march.\n [+]Replaced OldSpeed and NewSpeed to Speed\n [+]Finished hitbox expander\n [+]Added Auto rejoin when kicked on utility section\n [!]I will not add a team check on hitbox")
+home:AddParagraph("Replication Update","Time released: Sun, 16 of march.\n [+]Added a toggle to OldSpeed\n [+]Added ReplicationLag in render section\n [+]Added LowOutgoingKBPS in render section\n [+]Improved AlwaysJump.\n [+]Fixed rejoin\n [+]Added infos on home section\n will add more soon!")
+
 home:AddParagraph("Info for your roblox account"," Name: "..lplr.Name.."\n DisplayName: "..lplr.DisplayName.."\n UserId: "..lplr.UserId)
 home:AddButton({
 	Name = "Copy Name",
@@ -109,14 +118,6 @@ home:AddButton({
       		setclipboard(game.JobId)
   	end    
 })
-
-local Section = home:AddSection({
-	Name = "Update Logs"
-})
-
-home:AddParagraph("Movement Update","Time released: Sun, 26 of march\n [+]Added Fly on movement\n [+]Added Fly speed on movement\n [+]Added Jetpack method on movement\n [+]Added Teleport to player on movement\n [!]Player list refreshes every 2 seconds.")
-home:AddParagraph("Hitbox Update","Time released: Sat, 25 of march.\n [+]Replaced OldSpeed and NewSpeed to Speed\n [+]Finished hitbox expander\n [+]Added Auto rejoin when kicked on utility section\n [!]I will not add a team check on hitbox")
-home:AddParagraph("Replication Update","Time released: Sun, 16 of march.\n [+]Added a toggle to OldSpeed\n [+]Added ReplicationLag in render section\n [+]Added LowOutgoingKBPS in render section\n [+]Improved AlwaysJump.\n [+]Fixed rejoin\n [+]Added infos on home section\n will add more soon!")
 
 combat:AddButton({
 	Name = "Aimbot",
@@ -208,7 +209,7 @@ getgenv().CanCollide = nil
 RunService.Stepped:Connect(function()
 if hitbox then
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name then
+	if v.Name ~= lplr.Name and v.Character:FindFirstChild("HumanoidRootPart") then
 	v.Character.HumanoidRootPart.Transparency = 0.5
 	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
@@ -396,7 +397,7 @@ render:AddColorpicker({ Name = "Tracer color", Default = Color3.new(1,1,1), Save
             end
 })
 
-render:AddDropdown({Name = "Tracer Origin", Default = "Mouse", Options = {"Bottom", "Top", "Mouse"}, Save = true, Flag = "render_esp_tracer_origin", Callback = function(v)
+render:AddDropdown({Name = "Tracer Origin", Default = "Top", Options = {"Bottom", "Top", "Mouse"}, Save = true, Flag = "render_esp_tracer_origin", Callback = function(v)
                 espLib.options.tracerOrigin = v
             end 
 })
@@ -527,7 +528,7 @@ end)
 local alwaysrun 
 RunService.Stepped:Connect(function()
     while alwaysrun and task.wait() do
-        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position+workspace.Camera.CFrame.lookVector*100)
+        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position+game.Workspace.Camera.CFrame.lookVector*100)
     if alwaysrun == false then
         lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position)
     end
@@ -554,12 +555,20 @@ if spinbot then
 end
 end)
 
-local bhopnewmethod
+local bhoptoggle
 RunService.Stepped:Connect(function()
-    if lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and bhopnewmethod and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and lplr.Character.Humanoid.Health > 0.01 then
+    if lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and bhoptoggle and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and lplr.Character.Humanoid.Health > 0.01 then
         lplr.Character.Humanoid:ChangeState("Jumping")
        end
 end)
+local strafetoggle
+local strafeslowness = 3.2
+RunService.Stepped:Connect(function()
+    if lplr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Freefall and strafetoggle and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and lplr.Character.Humanoid.Health > 0.01 then
+   lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection/strafeslowness)
+  end
+end)
+
 --credits for sirius for their fly, i had a bad time coding a fly script
 getgenv().flyspeed = 50
 local fly
@@ -608,6 +617,7 @@ local function tptoplr(Player)
 lplr.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame
 end
 
+
 movement:AddToggle({ Name = "Noclip", Default = false, Save = true, Flag = "movement_noclip", Callback = function(v)
     noclip = v
 end
@@ -622,6 +632,7 @@ movement:AddSlider({ Name = "Spinbot speed", Default = 100, Min = 0, Max = 500, 
     spinbotspeed = v
             end
 })
+
 
 movement:AddToggle({ Name = "AlwaysMove", Default = false, Save = true, Flag = "movement_am", Callback = function(v)
     alwaysrun = v
@@ -654,8 +665,18 @@ movement:AddSlider({ Name = "Speed", Default = 20, Min = 0, Max = 150, Increment
 })
 
 movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "movement_bhop", Callback = function(v)
-    bhopnewmethod = v
+    bhoptoggle = v
 end
+})
+
+movement:AddToggle({ Name = "StrafeJump", Default = false, Save = true, Flag = "movement_strafe", Callback = function(v)
+    strafetoggle = v
+end
+})
+
+movement:AddSlider({ Name = "StrafeJump slowness", Default = 1, Min = 0, Max = 5, Increment = 0.1,ValueName = "slowness", Save = true, Flag = "movement_strafe_slowness", Callback = function(v)
+    strafeslowness = v
+            end
 })
 
 movement:AddToggle({ Name = "Fly", Default = false, Save = true, Flag = "movement_fly", Callback = function(v)
@@ -667,6 +688,7 @@ movement:AddSlider({ Name = "Fly speed", Default = 50, Min = 1, Max = 300, Incre
     flyspeed = v
             end
 })
+
 local players = {}
 local refreshlist = movement:AddDropdown({
 	Name = "Teleport to player",
@@ -723,7 +745,7 @@ misc:AddToggle({ Name = "Anti-AFK", Default = true, Save = true, Flag = "misc_an
 end
 })
 
-misc:AddToggle({ Name = "Unlock FPS", Default = false, Save = true, Flag = "misc_fps", Callback = function(v)
+misc:AddToggle({ Name = "UnlockFPS", Default = false, Save = true, Flag = "misc_fps", Callback = function(v)
     if v then
         setfpscap(1000)
         else
@@ -752,7 +774,7 @@ end
 })
 
 misc:AddTextbox({
-	Name = "spam text",
+	Name = "Spam message",
 	Default = "pɪssware on top",
 	TextDisappear = false,
 	Callback = function(v)
@@ -760,7 +782,7 @@ misc:AddTextbox({
 	end	  
 })
 
-misc:AddToggle({ Name = "rejoin if kicked", Default = false, Save = true, Flag = "misc_autorejoin", Callback = function(v)
+misc:AddToggle({ Name = "AutoReconnect", Default = false, Save = true, Flag = "misc_autorejoin", Callback = function(v)
     autorejoin = v
 end
 })
