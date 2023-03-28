@@ -4,9 +4,8 @@ Here are basically known issues.
 for some odd reason, distance color just wont work,
 and it somehow got in the nametags esp color...
 ```
-+ (HITBOX ISSUE) Attempt to index nil with HumanoidRootPart
++ (PATCHED) Attempt to index nil with HumanoidRootPart
 ```
-i think i got it, basically it tries to find the HumanoidRootPart 
-on a player that has hasnt been loaded yet or has no HumanoidRootPart or Humanoid
-CURRENTLY GETTING FIXED (never lol!!)
+basically it tries to find the HumanoidRootPart on a player that has no character.
+This was fixed by using v.Character:FindFirstChild("HumanoidRootPart"), i can sleep now.
 ```
