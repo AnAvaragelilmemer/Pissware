@@ -11,7 +11,7 @@ end
 for i,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
     v:Disable()
 end
-local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/AnAvaragelilmemer/Orion-mobile/main/source.lua')))()
 local function notif(msg)
     Orion:MakeNotification({
 	Name = "Pissware",
