@@ -84,6 +84,7 @@ local Section = home:AddSection({
 	Name = "Update Logs"
 })
 
+home:AddParagraph("Bug fixes","time released: weds, 29 of march\n [+]Actually fixed Hitbox, forgot waitforchild exists\n [-] reduced strafe jump slowness (mininum is now 0.1)\n [+] incresed strafe jump slowness [maxium is now 7]")
 home:AddParagraph("Version V2.9.1","Time released: Tues, 28 of march\n [+]Added Strafe jump on movement section\n [+]Added Strafe jump slowness on movement section\n [-]Patched Hitbox not loading properly\n [!]Moved update logs\n [!]Version 2.9.1 is now released, enjoy!")
 home:AddParagraph("Movement Update","Time released: Sun, 26 of march\n [+]Added Fly on movement\n [+]Added Fly speed on movement\n [+]Added Jetpack method on movement\n [+]Added Teleport to player on movement\n [!]Player list refreshes every 2 seconds.")
 home:AddParagraph("Hitbox Update","Time released: Sat, 25 of march.\n [+]Replaced OldSpeed and NewSpeed to Speed\n [+]Finished hitbox expander\n [+]Added Auto rejoin when kicked on utility section\n [!]I will not add a team check on hitbox")
@@ -204,17 +205,18 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
 local hitbox 
 getgenv().hitboxsize = 12
 getgenv().hitboxcolor = Color3.new(255,255,255)
-getgenv().CanCollide = nil
 --no team check cause its impossible
-RunService.Stepped:Connect(function()
+RunService.Heartbeat:Connect(function()
 if hitbox then
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name and v.Character:FindFirstChild("HumanoidRootPart") then
+	local char = v.Character or v.CharacterAdded:Wait()
+	local charhumanoid = char:WaitForChild("HumanoidRootPart")
+	if v.Name ~= lplr.Name and charhumanoid then
 	v.Character.HumanoidRootPart.Transparency = 0.5
 	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
 	v.Character.HumanoidRootPart.Material = "Plastic"
-	v.Character.HumanoidRootPart.CanCollide = CanCollide
+	v.Character.HumanoidRootPart.CanCollide = false
 		end
 end
 else
@@ -674,7 +676,7 @@ movement:AddToggle({ Name = "StrafeJump", Default = false, Save = true, Flag = "
 end
 })
 
-movement:AddSlider({ Name = "StrafeJump slowness", Default = 1, Min = 0, Max = 5, Increment = 0.1,ValueName = "slowness", Save = true, Flag = "movement_strafe_slowness", Callback = function(v)
+movement:AddSlider({ Name = "StrafeJump slowness", Default = 1, Min = 0.1, Max = 7, Increment = 0.1,ValueName = "slowness", Save = true, Flag = "movement_strafe_slowness", Callback = function(v)
     strafeslowness = v
             end
 })
