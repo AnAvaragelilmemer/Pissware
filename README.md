@@ -62,6 +62,8 @@ Spinbot (doesnt work on first person)
 Speed
 SpeedMethod (TranslateBy, CFrame)
 AlwaysJump
+Strafe Jump
+Strafe jump slowness
 Fly
 Fly speed
 Teleport to player
