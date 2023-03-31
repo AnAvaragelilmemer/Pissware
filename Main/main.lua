@@ -841,7 +841,7 @@ misc:AddButton({
 })
 
 
---Orion:Init()
+Orion:Init()
 writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
