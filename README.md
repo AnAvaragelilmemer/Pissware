@@ -55,7 +55,6 @@ Distance check
 Fonts (UI, Plex, System, Monospace)
 //Movement:
 Noclip
-AlwaysMove
 Jetpack
 Jetpack method
 Spinbot (doesnt work on first person)
@@ -66,6 +65,7 @@ Strafe Jump
 Strafe jump slowness
 Fly
 Fly speed
+Fly key
 Teleport to player
 //Utility:
 UnlockFps
