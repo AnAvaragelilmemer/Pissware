@@ -1,18 +1,19 @@
 
 repeat task.wait() until game:IsLoaded() and game.ContentProvider.RequestQueueSize == 0
+local loadedin = os.time()
 if getgenv().isloaded then
     return
 end
 getgenv().isloaded = true
---[[
 for i,v in pairs(getconnections(game:GetService("LogService").MessageOut)) do
     v:Disable()
 end
 for i,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
     v:Disable()
 end
-]]
-local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/AnAvaragelilmemer/Orion-mobile/main/source.lua')))()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/tUUGAeaH",true))() --makes spoofing VERY easy
 local function notif(msg)
     Orion:MakeNotification({
 	Name = "Pissware",
@@ -30,7 +31,7 @@ local defaultambient = lighting.Ambient
 local lplr = game:GetService("Players").LocalPlayer
 local tpservice = game:GetService("TeleportService")
 local userinputservice = game:GetService("UserInputService")
-local version = "V2.9"
+local version = "V2.9.1"
 local fonts = {}
 local camera = workspace.CurrentCamera
 local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport 
@@ -40,6 +41,13 @@ if expectedversion ~= version then
     getgenv().isloaded = false
     return
 end
+if userinputservice.TouchEnabled and not userinputservice.KeyboardEnabled and not userinputservice.MouseEnabled then
+    game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE]: Current device : Mobile, expect certain features to not work.",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
+elseif not userinputservice.TouchEnabled and userinputservice.KeyboardEnabled and userinputservice.MouseEnabled then
+    game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE]: Current device : PC ",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
+end
+
+
 pcall(function()
     game.ReplicatedStorage.Remote.ReqCharVars.OnClientInvoke = function()
 	return {}
@@ -60,10 +68,10 @@ end
 local function exit()
     game:Shutdown()
 end
-
+spoof(lplr.Character.Humanoid,"WalkSpeed",16)
 local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = "rbxassetid://6031084743", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
-local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://7734056608", PremiumOnly = false})
 local render = Window:MakeTab({Name = "render", Icon = "rbxassetid://6031075931", PremiumOnly = false})
 local movement = Window:MakeTab({Name = "movement", Icon = "rbxassetid://7743870731", PremiumOnly = false})
 local misc = Window:MakeTab({Name = "utility", Icon = "rbxassetid://7743878358", PremiumOnly = false})
@@ -73,6 +81,16 @@ home:AddLabel("Welcome back, "..lplr.DisplayName.."! are you enjoying the script
 else
     home:AddLabel("Welcome "..lplr.DisplayName..", hope you'll enjoy this script!")
 end
+
+local Section = home:AddSection({
+	Name = "Update Logs"
+})
+
+home:AddParagraph("Bug fixes","time released: weds, 29 of march\n [+]Actually fixed Hitbox, forgot waitforchild exists\n [-] reduced strafe jump slowness (mininum is now 0.1)\n [+] incresed strafe jump slowness [maxium is now 7]")
+home:AddParagraph("Version V2.9.1","Time released: Tues, 28 of march\n [+]Added Strafe jump on movement section\n [+]Added Strafe jump slowness on movement section\n [-]Patched Hitbox not loading properly\n [!]Moved update logs\n [!]Version 2.9.1 is now released, enjoy!")
+home:AddParagraph("Movement Update","Time released: Sun, 26 of march\n [+]Added Fly on movement\n [+]Added Fly speed on movement\n [+]Added Jetpack method on movement\n [+]Added Teleport to player on movement\n [!]Player list refreshes every 2 seconds.")
+home:AddParagraph("Hitbox Update","Time released: Sat, 25 of march.\n [+]Replaced OldSpeed and NewSpeed to Speed\n [+]Finished hitbox expander\n [+]Added Auto rejoin when kicked on utility section\n [!]I will not add a team check on hitbox")
+home:AddParagraph("Replication Update","Time released: Sun, 16 of march.\n [+]Added a toggle to OldSpeed\n [+]Added ReplicationLag in render section\n [+]Added LowOutgoingKBPS in render section\n [+]Improved AlwaysJump.\n [+]Fixed rejoin\n [+]Added infos on home section\n will add more soon!")
 
 home:AddParagraph("Info for your roblox account"," Name: "..lplr.Name.."\n DisplayName: "..lplr.DisplayName.."\n UserId: "..lplr.UserId)
 home:AddButton({
@@ -103,15 +121,6 @@ home:AddButton({
       		setclipboard(game.JobId)
   	end    
 })
-
-local Section = home:AddSection({
-	Name = "Update Logs"
-})
-
-home:AddParagraph("Hitbox Update","Time released: Sat, 25 of march.\n [+]Replaced OldSpeed and NewSpeed to Speed\n [+]Finished hitbox expander\n [+]Added Auto rejoin when kicked on utility section\n [!]I will not add a team check on hitbox")
-
-
-home:AddParagraph("Replication Update","Time released: Sun, 16 of march.\n [+]Added a toggle to OldSpeed\n [+]Added ReplicationLag in render section\n [+]Added LowOutgoingKBPS in render section\n [+]Improved AlwaysJump.\n [+]Fixed rejoin\n [+]Added infos on home section\n will add more soon!")
 
 combat:AddButton({
 	Name = "Aimbot",
@@ -198,17 +207,18 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
 local hitbox 
 getgenv().hitboxsize = 12
 getgenv().hitboxcolor = Color3.new(255,255,255)
-getgenv().CanCollide = nil
 --no team check cause its impossible
-RunService.Stepped:Connect(function()
+RunService.Heartbeat:Connect(function()
 if hitbox then
 for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-	if v.Name ~= lplr.Name and v:FindFirstChild("Humanoid") then
+	local char = v.Character or v.CharacterAdded:Wait()
+	local charhumanoid = char:WaitForChild("HumanoidRootPart")
+	if v.Name ~= lplr.Name and charhumanoid then
 	v.Character.HumanoidRootPart.Transparency = 0.5
 	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
 	v.Character.HumanoidRootPart.Material = "Plastic"
-	v.Character.HumanoidRootPart.CanCollide = CanCollide
+	v.Character.HumanoidRootPart.CanCollide = false
 		end
 end
 else
@@ -355,7 +365,22 @@ render:AddToggle({ Name = "LowOutgoingKBPS", Default = false, Save = true, Flag 
 end
 })
 
-
+render:AddToggle({ Name = "X-Ray", Default = false, Save = true, Flag = "render_xray", Callback = function(value)
+    if value then
+        for i,v in pairs(workspace:GetDescendants()) do
+            if v:IsA("BasePart") and not v.Parent.Parent:FindFirstChild("Humanoid") then
+                v.Transparency = v.Transparency + 0.5
+            end
+        end
+        else
+        for i,v in pairs(workspace:GetDescendants()) do
+            if v:IsA("BasePart") and not v.Parent.Parent:FindFirstChild("Humanoid") then
+                v.Transparency = v.Transparency - 0.5
+            end
+        end
+    end
+end
+})
 
 local esp = render:AddSection({
 	Name = "ESP"
@@ -393,7 +418,7 @@ render:AddColorpicker({ Name = "Tracer color", Default = Color3.new(1,1,1), Save
             end
 })
 
-render:AddDropdown({Name = "Tracer Origin", Default = "Mouse", Options = {"Bottom", "Top", "Mouse"}, Save = true, Flag = "render_esp_tracer_origin", Callback = function(v)
+render:AddDropdown({Name = "Tracer Origin", Default = "Top", Options = {"Bottom", "Top", "Mouse"}, Save = true, Flag = "render_esp_tracer_origin", Callback = function(v)
                 espLib.options.tracerOrigin = v
             end 
 })
@@ -524,7 +549,7 @@ end)
 local alwaysrun 
 RunService.Stepped:Connect(function()
     while alwaysrun and task.wait() do
-        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position+workspace.Camera.CFrame.lookVector*100)
+        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position+game.Workspace.Camera.CFrame.lookVector*50)
     if alwaysrun == false then
         lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position)
     end
@@ -551,20 +576,28 @@ if spinbot then
 end
 end)
 
-local bhopnewmethod
+local bhoptoggle
 RunService.Stepped:Connect(function()
-    if lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and bhopnewmethod and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and lplr.Character.Humanoid.Health > 0.01 then
+    if lplr.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall and bhoptoggle and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and lplr.Character.Humanoid.Health > 0.01 then
         lplr.Character.Humanoid:ChangeState("Jumping")
        end
 end)
+local strafetoggle
+local strafeslowness = 3.2
+RunService.Stepped:Connect(function()
+    if lplr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Freefall and strafetoggle and lplr.Character.Humanoid.MoveDirection.Magnitude > 0 and lplr.Character.Humanoid.Health > 0.01 then
+   lplr.Character:TranslateBy(lplr.Character.Humanoid.MoveDirection/strafeslowness)
+  end
+end)
+
 --credits for sirius for their fly, i had a bad time coding a fly script
 getgenv().flyspeed = 50
+getgenv().flykeys = "Space/LeftControl"
 local fly
-getgenv().
 RunService.Stepped:Connect(function()
  local RootPart = lplr.Character.Humanoid.RootPart
  local vector3 = Vector3.zero
-if fly then
+if fly and flykeys == "Space/LeftControl" then
             if userinputservice:IsKeyDown(Enum.KeyCode.W) then
                 vector3 += camera.CFrame.LookVector
             end
@@ -581,6 +614,48 @@ if fly then
                 vector3 += RootPart.CFrame.UpVector
             end
             if userinputservice:IsKeyDown(Enum.KeyCode.LeftControl) then
+                vector3 += -RootPart.CFrame.UpVector
+            end
+            RootPart.Velocity = vector3 * flyspeed
+end
+if fly and flykeys == "E/Q" then
+    if userinputservice:IsKeyDown(Enum.KeyCode.W) then
+                vector3 += camera.CFrame.LookVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.S) then
+                vector3 += -camera.CFrame.LookVector
+            end
+			if userinputservice:IsKeyDown(Enum.KeyCode.A) then
+                vector3 += -camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.D) then
+                vector3 += camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.E) then
+                vector3 += RootPart.CFrame.UpVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.Q) then
+                vector3 += -RootPart.CFrame.UpVector
+            end
+            RootPart.Velocity = vector3 * flyspeed
+end
+if fly and flykeys == "Space/LeftShift" then
+    if userinputservice:IsKeyDown(Enum.KeyCode.W) then
+                vector3 += camera.CFrame.LookVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.S) then
+                vector3 += -camera.CFrame.LookVector
+            end
+			if userinputservice:IsKeyDown(Enum.KeyCode.A) then
+                vector3 += -camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.D) then
+                vector3 += camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.Space) then
+                vector3 += RootPart.CFrame.UpVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.LeftShift) then
                 vector3 += -RootPart.CFrame.UpVector
             end
             RootPart.Velocity = vector3 * flyspeed
@@ -603,6 +678,18 @@ RunService.Stepped:Connect(function()
     end
 end)
 
+RunService.Stepped:Connect(function()
+    if walkspeedtog and speedmethod == "WalkSpeed" then
+        lplr.Character.Humanoid.WalkSpeed = Walkspeed
+    elseif not walkspeedtog or speedmethod == "CFrame" or speedmethod == "TranslateBy" then
+        lplr.Character.Humanoid.WalkSpeed = 16
+    end
+end)
+local function tptoplr(Player)
+lplr.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame
+end
+
+
 movement:AddToggle({ Name = "Noclip", Default = false, Save = true, Flag = "movement_noclip", Callback = function(v)
     noclip = v
 end
@@ -617,6 +704,7 @@ movement:AddSlider({ Name = "Spinbot speed", Default = 100, Min = 0, Max = 500, 
     spinbotspeed = v
             end
 })
+
 
 movement:AddToggle({ Name = "AlwaysMove", Default = false, Save = true, Flag = "movement_am", Callback = function(v)
     alwaysrun = v
@@ -638,19 +726,29 @@ movement:AddToggle({ Name = "Speed toggle", Default = false, Save = true, Flag =
 end
 })
 
-movement:AddDropdown({Name = "Speed method", Default = "TranslateBy", Options = {"TranslateBy","CFrame"}, Save = true, Flag = "movement_speed_method", Callback = function(v)
+movement:AddDropdown({Name = "Speed method", Default = "TranslateBy", Options = {"TranslateBy","CFrame","WalkSpeed"}, Save = true, Flag = "movement_speed_method", Callback = function(v)
     speedmethod = v
             end 
 })
 
-movement:AddSlider({ Name = "Speed", Default = 20, Min = 0, Max = 150, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
+movement:AddSlider({ Name = "Speed", Default = 100, Min = 0, Max = 150, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
     Walkspeed = v
             end
 })
 
 movement:AddToggle({ Name = "AlwaysJump", Default = false, Save = true, Flag = "movement_bhop", Callback = function(v)
-    bhopnewmethod = v
+    bhoptoggle = v
 end
+})
+
+movement:AddToggle({ Name = "StrafeJump", Default = false, Save = true, Flag = "movement_strafe", Callback = function(v)
+    strafetoggle = v
+end
+})
+
+movement:AddSlider({ Name = "StrafeJump slowness", Default = 1, Min = 0.1, Max = 7, Increment = 0.1,ValueName = "slowness", Save = true, Flag = "movement_strafe_slowness", Callback = function(v)
+    strafeslowness = v
+            end
 })
 
 movement:AddToggle({ Name = "Fly", Default = false, Save = true, Flag = "movement_fly", Callback = function(v)
@@ -663,14 +761,35 @@ movement:AddSlider({ Name = "Fly speed", Default = 50, Min = 1, Max = 300, Incre
             end
 })
 
-movement:AddDropdown({Name = "Up key", Default = "Space", Options = {"E","Space","Space/Q"}, Save = true, Flag = "movement_fly_keys", Callback = function(v)
-    speedmethod = v
+movement:AddDropdown({Name = "Fly keys", Default = "Space/LeftControl", Options = {"E/Q","Space/LeftControl","Space/LeftShift"}, Save = true, Flag = "movement_speed_keys", Callback = function(v)
+    flykeys = v
             end 
 })
 
-
+local players = {}
+local refreshlist = movement:AddDropdown({
+	Name = "Teleport to player",
+	Options = {},
+	Callback = function(v)
+		local selecteduser = players[v]
+		if selecteduser then
+			tptoplr(selecteduser)
+		end
+	end    
+})
+spawn(function()
+while task.wait(2) do
+      	players = {}
+		  local playeroptions = {}
+         for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+			 table.insert(playeroptions,v.DisplayName)
+			 players[v.DisplayName] = v
+		 end
+		 refreshlist:Refresh(playeroptions,true)
+end
+end)
 local antiafk
-lplr.Idled:connect(function()
+lplr.Idled:Connect(function()
     if antiafk then
                 game:GetService("VirtualUser"):ClickButton2(Vector2.new())
     end
@@ -698,12 +817,13 @@ while spam do
 	chat(message) 
 end
 end
+
 misc:AddToggle({ Name = "Anti-AFK", Default = true, Save = true, Flag = "misc_antiafk", Callback = function(v)
     antiafk = v
 end
 })
 
-misc:AddToggle({ Name = "Unlock FPS", Default = false, Save = true, Flag = "misc_fps", Callback = function(v)
+misc:AddToggle({ Name = "UnlockFPS", Default = false, Save = true, Flag = "misc_fps", Callback = function(v)
     if v then
         setfpscap(1000)
         else
@@ -732,7 +852,7 @@ end
 })
 
 misc:AddTextbox({
-	Name = "spam text",
+	Name = "Spam message",
 	Default = "pɪssware on top",
 	TextDisappear = false,
 	Callback = function(v)
@@ -740,12 +860,10 @@ misc:AddTextbox({
 	end	  
 })
 
-misc:AddToggle({ Name = "rejoin if kicked", Default = false, Save = true, Flag = "misc_autorejoin", Callback = function(v)
+misc:AddToggle({ Name = "AutoReconnect", Default = false, Save = true, Flag = "misc_autorejoin", Callback = function(v)
     autorejoin = v
 end
 })
-
-
 
 beta:AddParagraph(
     "You found experimental!",
@@ -760,8 +878,10 @@ misc:AddButton({
   	end    
 })
 
-Orion:Init()
+
+--Orion:Init()
 writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
 ]]
+game.StarterGui:SetCore("ChatMakeSystemMessage",{Text = "[PISSWARE]: Pissware loaded in "..os.time()-loadedin.." seconds, Enjoy!",Color = Color3.fromRGB(255,255,255),Font = Enum.Font.SourceSansSemibold,FontSize = Enum.FontSize.Size24})
