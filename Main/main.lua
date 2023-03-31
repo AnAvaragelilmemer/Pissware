@@ -12,6 +12,8 @@ for i,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
     v:Disable()
 end
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/AnAvaragelilmemer/Orion-mobile/main/source.lua')))()
+
+loadstring(game:HttpGet("https://pastebin.com/raw/tUUGAeaH",true))() --makes spoofing VERY easy
 local function notif(msg)
     Orion:MakeNotification({
 	Name = "Pissware",
@@ -66,7 +68,7 @@ end
 local function exit()
     game:Shutdown()
 end
-
+spoof(lplr.Character.Humanoid,"WalkSpeed",lplr.Character.Humanoid.WalkSpeed)
 local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = "rbxassetid://6031084743", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://7734056608", PremiumOnly = false})
@@ -83,7 +85,7 @@ end
 local Section = home:AddSection({
 	Name = "Update Logs"
 })
-
+home:AddParagraph("fixes/additons","[+]added fly keys\n [-] removed fov and alwaysmove (performance issues)")
 home:AddParagraph("Bug fixes","time released: weds, 29 of march\n [+]Actually fixed Hitbox, forgot waitforchild exists\n [-] reduced strafe jump slowness (mininum is now 0.1)\n [+] incresed strafe jump slowness [maxium is now 7]")
 home:AddParagraph("Version V2.9.1","Time released: Tues, 28 of march\n [+]Added Strafe jump on movement section\n [+]Added Strafe jump slowness on movement section\n [-]Patched Hitbox not loading properly\n [!]Moved update logs\n [!]Version 2.9.1 is now released, enjoy!")
 home:AddParagraph("Movement Update","Time released: Sun, 26 of march\n [+]Added Fly on movement\n [+]Added Fly speed on movement\n [+]Added Jetpack method on movement\n [+]Added Teleport to player on movement\n [!]Player list refreshes every 2 seconds.")
@@ -205,6 +207,7 @@ combat:AddColorpicker({ Name = "fov ring color", Default = Color3.new(1,1,1), Sa
 local hitbox 
 getgenv().hitboxsize = 12
 getgenv().hitboxcolor = Color3.new(255,255,255)
+getgenv().trans = 0.5
 --no team check cause its impossible
 RunService.Heartbeat:Connect(function()
 if hitbox then
@@ -212,7 +215,7 @@ for i,v in pairs(game:GetService("Players"):GetPlayers()) do
 	local char = v.Character or v.CharacterAdded:Wait()
 	local charhumanoid = char:WaitForChild("HumanoidRootPart")
 	if v.Name ~= lplr.Name and charhumanoid then
-	v.Character.HumanoidRootPart.Transparency = 0.5
+	v.Character.HumanoidRootPart.Transparency = trans
 	v.Character.HumanoidRootPart.Color = hitboxcolor
 	v.Character.HumanoidRootPart.Size = Vector3.new(hitboxsize,hitboxsize,hitboxsize)
 	v.Character.HumanoidRootPart.Material = "Plastic"
@@ -244,6 +247,11 @@ combat:AddSlider({ Name = "Hitbox size", Default = 10, Min = 2, Max = 50, ValueN
 combat:AddColorpicker({ Name = "Hitbox color", Default = Color3.new(1,1,1), Save = true, Flag = "combat_hitbox_color", Callback = function(v)
     hitboxcolor = v
             end
+})
+
+combat:AddSlider({ Name = "Hitbox transparency", Default = 0.5, Min = 0, Max = 1, Increment = 0.1,ValueName = "Size", Save = true, Flag = "combat_hitbox_transparency", Callback = function(v)
+    trans = v
+            end 
 })
 
 
@@ -338,11 +346,6 @@ end
 render:AddColorpicker({ Name = "FPS counter color", Default = Color3.new(80,80,80), Save = true, Flag = "render_fps_color", Callback = function(v)
     TextLabel.TextColor3 = v
             end
-})
-
-render:AddSlider({ Name = "Field of view", Default = 70, Min = 30, Max = 120, ValueName = "FOV", Save = true, Flag = "render_fov", Callback = function(v)
-    camera.FieldOfView = v
-            end 
 })
 
 render:AddToggle({ Name = "ReplicationLag", Default = false, Save = true, Flag = "render_replilag", Callback = function(v)
@@ -527,15 +530,6 @@ RunService.Stepped:Connect(function()
     end
 end)
 
-local alwaysrun 
-RunService.Stepped:Connect(function()
-    while alwaysrun and task.wait() do
-        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position+game.Workspace.Camera.CFrame.lookVector*100)
-    if alwaysrun == false then
-        lplr.Character.Humanoid:MoveTo(lplr.Character.HumanoidRootPart.Position)
-    end
-    end
-end)
 local jetpack
 local jetpackmethod = "Hold"
 game:GetService("UserInputService").InputBegan:Connect(function(inp,process)
@@ -573,11 +567,12 @@ end)
 
 --credits for sirius for their fly, i had a bad time coding a fly script
 getgenv().flyspeed = 50
+getgenv().flykeys = "Space/LeftControl"
 local fly
 RunService.Stepped:Connect(function()
  local RootPart = lplr.Character.Humanoid.RootPart
  local vector3 = Vector3.zero
-if fly then
+if fly and flykeys == "Space/LeftControl" then
             if userinputservice:IsKeyDown(Enum.KeyCode.W) then
                 vector3 += camera.CFrame.LookVector
             end
@@ -594,6 +589,48 @@ if fly then
                 vector3 += RootPart.CFrame.UpVector
             end
             if userinputservice:IsKeyDown(Enum.KeyCode.LeftControl) then
+                vector3 += -RootPart.CFrame.UpVector
+            end
+            RootPart.Velocity = vector3 * flyspeed
+end
+if fly and flykeys == "E/Q" then
+    if userinputservice:IsKeyDown(Enum.KeyCode.W) then
+                vector3 += camera.CFrame.LookVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.S) then
+                vector3 += -camera.CFrame.LookVector
+            end
+			if userinputservice:IsKeyDown(Enum.KeyCode.A) then
+                vector3 += -camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.D) then
+                vector3 += camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.E) then
+                vector3 += RootPart.CFrame.UpVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.Q) then
+                vector3 += -RootPart.CFrame.UpVector
+            end
+            RootPart.Velocity = vector3 * flyspeed
+end
+if fly and flykeys == "Space/LeftShift" then
+    if userinputservice:IsKeyDown(Enum.KeyCode.W) then
+                vector3 += camera.CFrame.LookVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.S) then
+                vector3 += -camera.CFrame.LookVector
+            end
+			if userinputservice:IsKeyDown(Enum.KeyCode.A) then
+                vector3 += -camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.D) then
+                vector3 += camera.CFrame.RightVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.Space) then
+                vector3 += RootPart.CFrame.UpVector
+            end
+            if userinputservice:IsKeyDown(Enum.KeyCode.LeftShift) then
                 vector3 += -RootPart.CFrame.UpVector
             end
             RootPart.Velocity = vector3 * flyspeed
@@ -615,6 +652,7 @@ RunService.Stepped:Connect(function()
         lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + lplr.Character.Humanoid.MoveDirection * Walkspeed/20
     end
 end)
+
 local function tptoplr(Player)
 lplr.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame
 end
@@ -633,12 +671,6 @@ end
 movement:AddSlider({ Name = "Spinbot speed", Default = 100, Min = 0, Max = 500, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_spinbot_speed", Callback = function(v)
     spinbotspeed = v
             end
-})
-
-
-movement:AddToggle({ Name = "AlwaysMove", Default = false, Save = true, Flag = "movement_am", Callback = function(v)
-    alwaysrun = v
-end
 })
 
 movement:AddToggle({ Name = "Jetpack", Default = false, Save = true, Flag = "movement_jetpack", Callback = function(v)
@@ -661,7 +693,7 @@ movement:AddDropdown({Name = "Speed method", Default = "TranslateBy", Options = 
             end 
 })
 
-movement:AddSlider({ Name = "Speed", Default = 20, Min = 0, Max = 150, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
+movement:AddSlider({ Name = "Speed", Default = 100, Min = 0, Max = 150, Increment = 1,ValueName = "speed", Save = true, Flag = "movement_speed", Callback = function(v)
     Walkspeed = v
             end
 })
@@ -691,6 +723,11 @@ movement:AddSlider({ Name = "Fly speed", Default = 50, Min = 1, Max = 300, Incre
             end
 })
 
+movement:AddDropdown({Name = "Fly keys", Default = "Space/LeftControl", Options = {"E/Q","Space/LeftControl","Space/LeftShift"}, Save = true, Flag = "movement_speed_keys", Callback = function(v)
+    flykeys = v
+            end 
+})
+
 local players = {}
 local refreshlist = movement:AddDropdown({
 	Name = "Teleport to player",
@@ -714,7 +751,7 @@ while task.wait(2) do
 end
 end)
 local antiafk
-lplr.Idled:connect(function()
+lplr.Idled:Connect(function()
     if antiafk then
                 game:GetService("VirtualUser"):ClickButton2(Vector2.new())
     end
@@ -742,6 +779,7 @@ while spam do
 	chat(message) 
 end
 end
+
 misc:AddToggle({ Name = "Anti-AFK", Default = true, Save = true, Flag = "misc_antiafk", Callback = function(v)
     antiafk = v
 end
@@ -802,7 +840,8 @@ misc:AddButton({
   	end    
 })
 
-Orion:Init()
+
+--Orion:Init()
 writefile("loadedmorethanone.lua", "--This is used to detect if you use pissware more than once.")
 queuetp[[
 loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))()
