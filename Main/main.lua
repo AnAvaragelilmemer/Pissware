@@ -85,7 +85,7 @@ end
 local Section = home:AddSection({
 	Name = "Update Logs"
 })
-home:AddParagraph("fixes/additons","[+]added fly keys\n [-] removed fov and alwaysmove (performance issues)")
+home:AddParagraph("fixes/additons","[+]added fly keys\n [-] removed fov and alwaysmove (performance issues)\n [+]added hitbox transparency")
 home:AddParagraph("Bug fixes","time released: weds, 29 of march\n [+]Actually fixed Hitbox, forgot waitforchild exists\n [-] reduced strafe jump slowness (mininum is now 0.1)\n [+] incresed strafe jump slowness [maxium is now 7]")
 home:AddParagraph("Version V2.9.1","Time released: Tues, 28 of march\n [+]Added Strafe jump on movement section\n [+]Added Strafe jump slowness on movement section\n [-]Patched Hitbox not loading properly\n [!]Moved update logs\n [!]Version 2.9.1 is now released, enjoy!")
 home:AddParagraph("Movement Update","Time released: Sun, 26 of march\n [+]Added Fly on movement\n [+]Added Fly speed on movement\n [+]Added Jetpack method on movement\n [+]Added Teleport to player on movement\n [!]Player list refreshes every 2 seconds.")
