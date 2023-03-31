@@ -17,6 +17,7 @@ Teamcheck
 Hitbox expander
 Hitbox expander size
 Hitbox expander color
+Hitbox expander transparency 
 //Render:
 Blur
 Blur size
