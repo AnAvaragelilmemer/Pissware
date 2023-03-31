@@ -23,7 +23,7 @@ lplr.Idled:Connect(function()
 end)
 task.spawn(function()
     while true do
-        task.wait(equipbestdelay)
+        task.wait()
         if equipbest then
           ReplicatedStorage.Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.NukeService.RE.EquipBest:FireServer()
           else
@@ -41,92 +41,6 @@ end)
 automatic:Toggle("Anti-AFK",false,function(v)
 antiafk = v
 end)
-
-automatic:Label(" ")
-
 automatic:Toggle("Auto equip best pet",false,function(v)
 equipbest = v 
 end)
-automatic:Slider("Delay",1,5,3, function(v)
-equipbestdelay = v
-end)
-
-local teleports = win:Tab("Teleports")
---thanks for acquise for the teleports, i cant really make teleport scripts, but later i will update this.
-teleports:Button("City", function()
-    lplrcframe = CFrame.new(3882,636,-3726)
-end)
-teleports:Button("Jungle", function()
-    lplrcframe = CFrame.new(3958, 635, -3376)
-end)
-teleports:Button("Desert", function()
-    lplrcframe = CFrame.new(4354, 635, -3115)
-end)
-teleports:Button("Beach", function()
-    lplrcframe = CFrame.new(4897, 635, -2856)
-end)
-teleports:Button("Site Deep Blue", function()
-    lplrcframe = CFrame.new(11293, 105, -3086)
-end)
-teleports:Button("Test Lab 33", function()
-    lplrcframe = CFrame.new(4342, 637, -2181)
-end)
-teleports:Button("Volcano HQ", function()
-    lplrcframe = CFrame.new(4006, 637, -2041)
-end)
-teleports:Button("Moon Base", function()
-    lplrcframe = CFrame.new(3767, 855, 3335)
-end)
-teleports:Button("Excavation site 42", function()
-    lplrcframe = CFrame.new(3773, 857, 3169)
-end)
-teleports:Button("Dark site station", function()
-    lplrcframe = CFrame.new(1346, 837, 3400)
-end)
-teleports:Button("Dark lab 33", function()
-    lplrcframe = CFrame.new(-1747, 837, 3343)
-end)
-teleports:Button("CyberTopia", function()
-    lplrcframe = CFrame.new(8316, 1581, 1542)
-end)
-teleports:Button("Vapor valley", function()
-    lplrcframe = CFrame.new(8354, 1580, 1077)
-end)
-teleports:Button("Cyber bridge", function()
-    lplrcframe = CFrame.new(8323, 1579, 683)
-end)
-teleports:Button("Nuclear lab", function()
-    lplrcframe = CFrame.new(13144, -357, 1151)
-end)
-teleports:Button("Arcade", function()
-    lplrcframe = CFrame.new(12853, -357, 298)
-end)
-
-automatic:Label("Utility")
-
-teleports:Button("Player upgrades", function()
-    lplrcframe = CFrame.new(3851, 639, -3677)
-end)
-teleports:Button("Rainbow machine", function()
-    lplrcframe = CFrame.new(4876, 635, -2819)
-end)
-teleports:Button("Enchanter", function()
-    lplrcframe = CFrame.new(3832, 854, 3265)
-end)
-teleports:Button("Shiny machine", function()
-    lplrcframe = CFrame.new(4100, 635, -4142)
-end)
-teleports:Button("Nuke shop", function()
-    lplrcframe = CFrame.new(3989, 638, -4247)
-end)
-local teleports = win:Tab("Teleports")
-
-
-
-
-
-
-
-
-
-
