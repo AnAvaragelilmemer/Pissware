@@ -21,13 +21,9 @@ lplr.Idled:Connect(function()
       VirtualUser:ClickButton2(Vector2.new())
    end
 end)
-task.spawn(function()
-    while true do
-        task.wait()
+RunService.Stepped:Connect(function()
         if equipbest then
           ReplicatedStorage.Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.NukeService.RE.EquipBest:FireServer()
-          else
-              break
         end
     end
 end)
