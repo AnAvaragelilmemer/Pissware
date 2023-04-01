@@ -1,10 +1,14 @@
---this is lite, expect lesser features.
+--this is lite, expect lesser features and less blatant features
+--also
 repeat task.wait() until game:IsLoaded() 
 local RunService = game:GetService("RunService")
 local VirtualUser = game:GetService("VirtualUser")
 local lplr = game:GetService("Players").LocalPlayer
-local lplrcframe = lplr.Character.HumanoidRootPart.CFrame
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+--remotes
+local equippets = ReplicatedStorage.Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.NukeService.RE.EquipBest
+local collectchest = ReplicatedStorage._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ChestService.RE.Claim
+local tp = ReplicatedStorage.Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.TeleporterService.RF.TeleportTo
 getgenv().autocollect = nil
 getgenv().antiafk = nil
 getgenv().equipbest = nil
@@ -21,12 +25,13 @@ lplr.Idled:Connect(function()
       VirtualUser:ClickButton2(Vector2.new())
    end
 end)
-RunService.Stepped:Connect(function()
-        if equipbest then
-          ReplicatedStorage.Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.NukeService.RE.EquipBest:FireServer()
-        end
+function equipbestpets()
+    while equipbest and task.wait() do
+        equippets:FireServer()
+        task.wait(equipbestdelay)
     end
-end)
+end
+
 local vape = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/Vape.txt")()
 local win = vape:Window("PISSWARE LITE",Color3.fromRGB(138,43,226), Enum.KeyCode.RightControl)
 
@@ -37,6 +42,79 @@ end)
 automatic:Toggle("Anti-AFK",false,function(v)
 antiafk = v
 end)
-automatic:Toggle("Auto equip best pet",false,function(v)
+automatic:Toggle("BestPets",false,function(v)
 equipbest = v 
+equipbestpets()
 end)
+automatic:Slider("BestPets delay",0.1,10,3, function(t)
+equipbestdelay = v
+end)
+automatic:Toggle("AutoChest",false,function(v)
+while v and task.wait() do
+    collectchest:FireServer("NormalChest")
+end
+end)
+local teleports = win:Tab("Teleports")
+teleports:Label("Note: you can teleport to it once you the place")
+teleports:Button("Nuke Shop", function()
+    tp:InvokeServer("Nuke Shop")
+end)
+teleports:Button("City", function()
+    tp:InvokeServer("City")
+end)
+teleports:Button("Jungle", function()
+    tp:InvokeServer("Jungle")
+end)
+teleports:Button("Desert", function()
+    tp:InvokeServer("Desert")
+end)
+teleports:Button("Beach", function()
+    tp:InvokeServer("Beach")
+end)
+teleports:Button("Site Deep Blue", function()
+    tp:InvokeServer("Site Deep Blue")
+end)
+teleports:Button("Test Lab 33", function()
+    tp:InvokeServer("Test Lab 33")
+end)
+teleports:Button("Volcano HQ", function()
+    tp:InvokeServer("Volcano HQ")
+end)
+teleports:Button("Moon Base", function()
+    tp:InvokeServer("Moon Base")
+end)
+teleports:Button("Excavation Site 42", function()
+    tp:InvokeServer("Excavation Site 42")
+end)
+teleports:Button("Dark Side Station", function()
+    tp:InvokeServer("Dark Side Station")
+end)
+teleports:Button("Dark Lab 33", function()
+    tp:InvokeServer("Dark Lab 33")
+end)
+teleports:Button("Cybertopia", function()
+    tp:InvokeServer("Cybertopia")
+end)
+teleports:Button("Vapor Valley", function()
+    tp:InvokeServer("Vapor Valley")
+end)
+teleports:Button("Nuclear Lab", function()
+    tp:InvokeServer("Nuclear Lab")
+end)
+teleports:Button("Arcade", function()
+    tp:InvokeServer("Arcade")
+end)
+teleports:Button("Ramek", function()
+    tp:InvokeServer("Ramek")
+end)
+teleports:Button("Dragon City", function()
+    tp:InvokeServer("Dragon City")
+end)
+teleports:Button("Naru Valley", function()
+    tp:InvokeServer("Naru Valley")
+end)
+
+local render = win:Tab("Render")
+local misc = win:Tab("Misc")
+
+
