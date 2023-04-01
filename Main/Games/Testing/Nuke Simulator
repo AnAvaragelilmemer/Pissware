@@ -7,7 +7,7 @@ local lplr = game:GetService("Players").LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 --remotes
 local equippets = ReplicatedStorage.Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.NukeService.RE.EquipBest
-local collectchest = ReplicatedStorage._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ChestService.RE.Claim
+local collectchest = ReplicatedStorage.Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ChestService.RE.Claim
 local tp = ReplicatedStorage.Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.TeleporterService.RF.TeleportTo
 getgenv().autocollect = nil
 getgenv().antiafk = nil
