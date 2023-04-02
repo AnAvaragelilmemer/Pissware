@@ -53,7 +53,6 @@ pcall(function()
 	return {}
 end
 end)
-local queuetp = (syn and syn.queue_on_teleport) or queue_on_teleport
 local function chat(msg)
     game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
