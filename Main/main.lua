@@ -26,6 +26,9 @@ end
 local RunService = game:GetService("RunService")
 local lighting = game:GetService("Lighting")
 local defaultambient = lighting.Ambient
+local defaultbrightness = lighting.Brightness
+local defaultshadows = lighting.GlobalShadows
+local defaulttime = lighting.ClockTime
 local lplr = game:GetService("Players").LocalPlayer
 local tpservice = game:GetService("TeleportService")
 local userinputservice = game:GetService("UserInputService")
@@ -82,6 +85,8 @@ end
 local Section = home:AddSection({
 	Name = "Update Logs"
 })
+
+home:AddParagraph("Render Update","time released: sun, 9 of april\n [+]Added Motion blur\n [+]Added FullBright, This may not work\n [+]Bug Fixes")
 home:AddParagraph("fixes/additons","[+]added fly keys\n [-] removed fov and alwaysmove (performance issues)\n [+]added hitbox transparency")
 home:AddParagraph("Bug fixes","time released: weds, 29 of march\n [+]Actually fixed Hitbox, forgot waitforchild exists\n [-] reduced strafe jump slowness (mininum is now 0.1)\n [+] incresed strafe jump slowness [maxium is now 7]")
 home:AddParagraph("Version V2.9.1","Time released: Tues, 28 of march\n [+]Added Strafe jump on movement section\n [+]Added Strafe jump slowness on movement section\n [-]Patched Hitbox not loading properly\n [!]Moved update logs\n [!]Version 2.9.1 is now released, enjoy!")
@@ -293,11 +298,33 @@ end
 end)
 local time 
 getgenv().timesilder = 14
-RunService.Stepped:Connect(function()
-if time then lighting.ClockTime = timesilder end
+RunService.RenderStepped:Connect(function()
+if time then lighting.ClockTime = timesilder else lighting.ClockTime = defaulttime end
 end)
 local blur = Instance.new("BlurEffect")
 blur.Parent = lighting
+local motionblur = Instance.new("BlurEffect")
+motionblur.Parent = lighting
+motionblur.Name = "motionblur"
+motionblur.Enabled = false
+--found this while looking at roblox devforum, so i said to myself "why not add a motion blur to pissware?"
+local lv = Vector3.zero
+RunService.RenderStepped:Connect(function()
+	local x,y,z = game.Workspace.CurrentCamera.CFrame:ToEulerAnglesXYZ()
+	x,y,z = math.deg(x),math.deg(y),math.deg(z)
+	motionblur.Size = math.clamp((Vector3.new(x,y,z)-lv).Magnitude/2,2,10)
+	lv = Vector3.new(x,y,z)
+end)
+local fullbright 
+RunService.RenderStepped:Connect(function()
+    if fullbright then
+        lighting.Brightness = 2
+        lighting.GlobalShadows = false
+        else
+            lighting.Brightness = defaultbrightness
+            lighting.GlobalShadows = defaultshadows
+    end
+    end)
 
 render:AddToggle({ Name = "Ambient", Default = false, Save = true, Flag = "render_ambientcheck", Callback = function(v)
     ambient = v
@@ -320,7 +347,7 @@ render:AddToggle({ Name = "Time", Default = false, Save = true, Flag = "render_t
     time = v
             end
 })
-render:AddSlider({ Name = "Time value", Default = 14, Min = 0, Max = 24, ValueName = "time", Save = true, Flag = "render_time_value", Callback = function(v)
+render:AddSlider({ Name = "Time value", Default = 1, Min = 0, Max = 24, ValueName = "time", Save = true, Flag = "render_time_value", Callback = function(v)
     timesilder = v
             end 
 })
@@ -363,6 +390,16 @@ render:AddToggle({ Name = "LowOutgoingKBPS", Default = false, Save = true, Flag 
 end
 })
 
+render:AddToggle({ Name = "Motion Blur", Default = false, Save = true, Flag = "render_motionblur", Callback = function(v)
+    motionblur.Enabled = v
+end
+})
+
+render:AddToggle({ Name = "FullBright (may not work)", Default = false, Save = true, Flag = "render_FullBright", Callback = function(v)
+    fullbright = v
+end
+})
+
 local esp = render:AddSection({
 	Name = "ESP"
 })
@@ -379,7 +416,7 @@ render:AddToggle({ Name = "Enable ESP", Default = false, Save = true, Flag = "re
             end
 })
 
-render:AddToggle({ Name = "box", Default = false, Save = true, Flag = "render_esp_box", Callback = function(v)
+render:AddToggle({ Name = "Box", Default = false, Save = true, Flag = "render_esp_box", Callback = function(v)
     espLib.options.boxFill = v
 end
 })
