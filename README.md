@@ -72,14 +72,14 @@ Teleport to player
 UnlockFps
 Anti-AFK 
 Rejoin 
-Auto rejoin when kicked
+AutoReconnect
 Spam
 Spam message
 Join code generator
 ```
 ## Preview:
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/image.png)
-## Pissware V2.9 loadstring
+## Pissware V2.9.1 loadstring
 ```lua
 local github = "https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"
 loadstring(game:HttpGet(github))()
