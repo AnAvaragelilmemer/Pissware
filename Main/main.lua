@@ -12,8 +12,6 @@ for i,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
     v:Disable()
 end
 local Orion = loadstring(game:HttpGet(('https://raw.githubusercontent.com/AnAvaragelilmemer/Orion-mobile/main/source.lua')))()
-
-loadstring(game:HttpGet("https://pastebin.com/raw/tUUGAeaH",true))() --makes spoofing VERY easy
 local function notif(msg)
     Orion:MakeNotification({
 	Name = "Pissware",
@@ -67,7 +65,7 @@ end
 local function exit()
     game:Shutdown()
 end
-spoof(lplr.Character.Humanoid,"WalkSpeed",lplr.Character.Humanoid.WalkSpeed)
+
 local Window = Orion:MakeWindow({Name = "Pissware "..version, IntroText = "Welcome to pissware, "..lplr.DisplayName..".",IntroIcon = "rbxassetid://6031084743", HidePremium = true, SaveConfig = true, ConfigFolder = "pissware"})
 local home = Window:MakeTab({Name = "home", Icon = "rbxassetid://7733960981", PremiumOnly = false})
 local combat = Window:MakeTab({Name = "combat", Icon = "rbxassetid://7734056608", PremiumOnly = false})
