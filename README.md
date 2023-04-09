@@ -81,8 +81,7 @@ Join code generator
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/image.png)
 ## Pissware V2.9.1 loadstring
 ```lua
-local github = "https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"
-loadstring(game:HttpGet(github))()
+pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))() end)
 ```
 #
 more soon!
