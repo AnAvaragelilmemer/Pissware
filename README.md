@@ -28,6 +28,8 @@ FPS counter
 FPS counter color
 ReplicationLag
 LowOutgoingKBPS
+Motion Blur
+FullBright
 //ESP:
 Enable ESP
 Boxes
