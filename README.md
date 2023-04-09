@@ -2,7 +2,7 @@
   <h3 align="center">Pissware V2.9.1</h3>
 
   <p align="center">
-    A universal script that has over 60 features
+    A universal script that has over 60 features...
     <a href="https://github.com/AnAvaragelilmemer/Pissware/issues">Report a bug</a>
     -
     <a href="https://github.com/AnAvaragelilmemer/Pissware/issues">Request a feature</a>
