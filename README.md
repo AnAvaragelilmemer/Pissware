@@ -1,7 +1,16 @@
 
-#                               Pissware, designed to be trash
+  <h3 align="center">Pissware V2.9.1</h3>
 
-Features:
+  <p align="center">
+    A universal script that has over 66 features
+    <a href="https://github.com/AnAvaragelilmemer/Pissware/issues">Report a bug</a>
+    -
+    <a href="https://github.com/AnAvaragelilmemer/Pissware/issues">Request a feature</a>
+  </p>
+</div>
+
+<h3 align="center">Features:</h3>
+
 ```js
 //Home:
 A very cool welcome message 
@@ -79,13 +88,14 @@ Spam
 Spam message
 Join code generator
 ```
-## Preview:
+<h3 align="center">Preview:</h3>
+
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/image.png)
-## Pissware V2.9.1 loadstring
+<h3 align="center">Pissware V2.9.1 Loadstring</h3>
+
 ```lua
 pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))() end)
 ```
-#
-more soon!
+
 
 
