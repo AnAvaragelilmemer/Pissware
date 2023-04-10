@@ -600,6 +600,7 @@ RunService.Stepped:Connect(function()
 end)
 
 --credits for sirius for their fly, i had a bad time coding a fly script
+--no my ass DOES NOT steal sirius fly if your coming from lunarhub
 getgenv().flyspeed = 50
 getgenv().flykeys = "Space/LeftControl"
 local fly
