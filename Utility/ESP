@@ -486,7 +486,7 @@ function espLibrary:Load(renderValue)
                 objects.top.Size = self.options.fontSize;
                 objects.top.Transparency = self.options.nameTransparency;
                 objects.top.Color = color or self.options.nameColor;
-                objects.top.Text = player.Name;
+                objects.top.Text = player.DisplayName;
                 objects.top.Position = round(position + vector2New(size.X * 0.5, -(objects.top.TextBounds.Y + 2)));
 
                 objects.side.Visible = show and self.options.healthText;
@@ -561,11 +561,11 @@ function espLibrary:Load(renderValue)
                     color = self.options.fillColor;
                 end
 
-                if (find(self.whitelist, player.Name)) then
+                if (find(self.whitelist, player.DisplayName)) then
                     color = self.options.whitelistColor;
                 end
 
-                if (find(self.blacklist, player.Name)) then
+                if (find(self.blacklist, player.DisplayName)) then
                     canShow = false;
                 end
 
