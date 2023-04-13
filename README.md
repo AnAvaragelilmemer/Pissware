@@ -87,6 +87,11 @@ AutoReconnect
 Spam
 Spam message
 Join code generator
+Copy Position 
+Generate Teleport script
+TweenTeleport time
+TweenTeleport Style
+Generate TweenTeleport script
 ```
 <h3 align="center">Preview:</h3>
 
