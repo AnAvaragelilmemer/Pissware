@@ -1,5 +1,5 @@
 
-  <h3 align="center">Pissware V2.9.3</h3>
+  <h3 align="center">Pissware V2.9.4</h3>
 
   <p align="center">
     An universal script that has over 60 features....
@@ -91,9 +91,10 @@ Join code generator
 <h3 align="center">Preview:</h3>
 
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/image.png)
-<h3 align="center">Pissware V2.9.3 Loadstring</h3>
+<h3 align="center">Pissware V2.9.4 Loadstring</h3>
 
 ```lua
+QueueOnTeleport = true --this will make pissware reload if you server hop or rj
 pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))() end)
 ```
 
