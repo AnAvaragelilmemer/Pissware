@@ -77,6 +77,7 @@ Fly speed
 Fly key
 Teleport to player
 //Utility:
+InstantProximityInteract
 UnlockFps
 Anti-AFK 
 Rejoin 
