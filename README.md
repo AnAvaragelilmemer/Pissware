@@ -3,9 +3,6 @@
 
   <p align="center">
     An universal script that has over 60 features....
-    <a href="https://github.com/AnAvaragelilmemer/Pissware/issues">Report a bug</a>
-    -
-    <a href="https://github.com/AnAvaragelilmemer/Pissware/issues">Request a feature</a>
   </p>
 </div>
 
