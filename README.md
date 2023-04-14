@@ -50,6 +50,7 @@ Out of view radius
 Out of view Size
 Distance
 Distance suffix (studs, distance.)
+Distance color
 HealthBar
 HealthBar color
 HealthText 
