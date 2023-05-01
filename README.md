@@ -1,5 +1,5 @@
 
-  <h3 align="center">Pissware V2.9.4</h3>
+  <h3 align="center">Pissware V2.9.6</h3>
 
   <p align="center">
     An universal script that has over 70 features....
@@ -30,8 +30,9 @@ Blur size
 Ambient color
 TimeChanger
 NoRender
-FPS counter
-FPS counter color
+Ping/FPS tracker
+Ping/FPS color
+Ping/FPS transparency
 ReplicationLag
 LowOutgoingKBPS
 Motion Blur
@@ -42,7 +43,7 @@ Boxes
 Boxes color
 Tracer
 Tracer color 
-Tracer origin (mouse, bottom or top.)
+Tracer origin (mouse, bottom, center or top)
 Out of view arrows
 Out of view outline color
 Out of view color
@@ -66,7 +67,7 @@ Fonts (UI, Plex, System, Monospace)
 //Movement:
 Noclip
 Jetpack
-Jetpack method
+Jetpack method (Hold, Press, Velocity)
 Spinbot (doesnt work on first person)
 Speed
 SpeedMethod (TranslateBy, CFrame)
@@ -77,11 +78,19 @@ Fly
 Fly speed
 Fly key
 Teleport to player
+HighJump
+HighJump power
 //Utility:
+--tower of hell
+InstantFinish
+AutoFinish
+Jesus
+--universal
 InstantProximityInteract
 UnlockFps
 Anti-AFK 
 Rejoin 
+ServerHop
 AutoReconnect
 Spam
 Spam message
@@ -95,7 +104,7 @@ Generate TweenTeleport script
 <h3 align="center">Preview:</h3>
 
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/image.png)
-<h3 align="center">Pissware V2.9.4 Loadstring</h3>
+<h3 align="center">Pissware V2.9.5 Loadstring</h3>
 
 ```lua
 QueueOnTeleport = true --this will make pissware reload if you server hop or rj
