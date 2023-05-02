@@ -37,6 +37,8 @@ ReplicationLag
 LowOutgoingKBPS
 Motion Blur
 FullBright
+FirstPerson
+ThirdPerson
 //ESP:
 Enable ESP
 Boxes
