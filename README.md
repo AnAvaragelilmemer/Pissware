@@ -109,6 +109,7 @@ Generate TweenTeleport script
 <h3 align="center">Pissware V2.9.5 Loadstring</h3>
 
 ```lua
+--note, i dont recommend using this right now due to byfron
 QueueOnTeleport = true --this will make pissware reload if you server hop or rj
 pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))() end)
 ```
