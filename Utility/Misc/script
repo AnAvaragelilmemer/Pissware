@@ -1,0 +1,3 @@
+
+QueueOnTeleport = true --this will make pissware reload if you server hop or rj
+pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/AnAvaragelilmemer/Pissware/main/Main/main.lua"))() end)
