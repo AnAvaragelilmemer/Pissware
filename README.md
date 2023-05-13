@@ -39,6 +39,8 @@ Motion Blur
 FullBright
 FirstPerson
 ThirdPerson
+FakeChatLag
+Earrape
 //ESP:
 Enable ESP
 Boxes
@@ -87,6 +89,10 @@ HighJump power
 InstantFinish
 AutoFinish
 Jesus
+--mm2
+Notify Sheriff
+Notify Murderer
+idk (dont use it...)
 --universal
 InstantProximityInteract
 UnlockFps
