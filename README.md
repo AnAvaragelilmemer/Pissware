@@ -1,5 +1,5 @@
 
-  <h3 align="center">Pissware V2.9.6</h3>
+  <h3 align="center">Pissware V2.9.7</h3>
 
   <p align="center">
     An universal script that has over 70 features....
@@ -41,6 +41,8 @@ FirstPerson
 ThirdPerson
 FakeChatLag
 Earrape
+FOV Changer
+FOV value
 //ESP:
 Enable ESP
 Boxes
@@ -75,12 +77,14 @@ Jetpack method (Hold, Press, Velocity)
 Spinbot (doesnt work on first person)
 Speed
 SpeedMethod (TranslateBy, CFrame)
+Set Speed Value
 AlwaysJump
 Strafe Jump
 Strafe jump slowness
 Fly
 Fly speed
 Fly key
+Respawn
 Teleport to player
 HighJump
 HighJump power
@@ -93,6 +97,16 @@ Jesus
 Notify Sheriff
 Notify Murderer
 idk (dont use it...)
+--Stands Awakening
+AutoItems
+GetItems
+ServerLag
+time before unequip
+ServerLag Keybind
+--Mega Easy Obby
+Get Double jump Gamepass
+Get Easy Mode Gamepass
+AutoComplete
 --universal
 InstantProximityInteract
 UnlockFps
@@ -102,6 +116,7 @@ ServerHop
 AutoReconnect
 Spam
 Spam message
+Executor
 Join code generator
 Copy Position 
 Generate Teleport script
@@ -112,7 +127,7 @@ Generate TweenTeleport script
 <h3 align="center">Preview:</h3>
 
 ![](https://github.com/AnAvaragelilmemer/Pissware/blob/main/Utility/image.png)
-<h3 align="center">Pissware V2.9.5 Loadstring</h3>
+<h3 align="center">Pissware V2.9.7 Loadstring</h3>
 
 ```lua
 --note, i dont recommend using this right now due to byfron
