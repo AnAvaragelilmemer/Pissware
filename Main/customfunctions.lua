@@ -1,21 +1,20 @@
-local p = {}
 
-local function p.chat(msg)
-    ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
+
+local function chat(msg)
+    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg,"All")
 end
-local function p.kick(msg)
+local function kick(msg)
     if msg then
-        lplr:Kick(msg)
+        game.Players.LocalPlayer:Kick(msg)
         else
-            lplr:Kick()
+            game.Players.LocalPlayer:Kick()
     end
 end
 
-local function p.exit()
+local function exit()
     game:Shutdown()
 end
-local function p.executor()
+local function executor()
 local executor = identifyexecutor() or "P"
   return executor
 end
-return p
