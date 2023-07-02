@@ -20,7 +20,7 @@ Field of view ring size
 Field of view ring color
 Smoothness
 Teamcheck
-Hitbox expander
+Hitbox expander < finally fixed now lmao
 Hitbox expander size
 Hitbox expander color
 Hitbox expander transparency 
