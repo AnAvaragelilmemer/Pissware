@@ -43,6 +43,7 @@ FakeChatLag
 Earrape
 FOV Changer
 FOV value
+PauseAnimation
 //ESP:
 Enable ESP
 Boxes
