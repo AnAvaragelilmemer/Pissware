@@ -6,25 +6,25 @@
   </p>
 </div>
 
-<h3 align="center">Features:</h3>
+## Features
 
-```js
-//Home:
+```diff
+@@ Home: @@
 A very cool welcome message 
 Info for your rbx account (name displayname etc)
 game info (name jobid)
 Update logs
-//Combat:
+@@ Combat: @@
 Aimbot master switch
 Field of view ring size
 Field of view ring color
 Smoothness
 Teamcheck
-Hitbox expander < finally fixed now lmao
+Hitbox expander 
 Hitbox expander size
 Hitbox expander color
 Hitbox expander transparency 
-//Render:
+@@ Render: @@
 Blur
 Blur size
 Ambient color
@@ -44,7 +44,7 @@ Earrape
 FOV Changer
 FOV value
 PauseAnimation
-//ESP:
+@@ ESP: @@
 Enable ESP
 Boxes
 Boxes color
@@ -66,12 +66,12 @@ HealthText color
 HealthText Suffix (HP, Health, %)
 NameTags
 NameTags color
-//Esp settings:
++Esp settings:
 Team check
 Visible check
 Distance check
 Fonts (UI, Plex, System, Monospace)
-//Movement:
+@@ Movement: @@
 Noclip
 Jetpack
 Jetpack method (Hold, Press, Velocity)
@@ -89,26 +89,26 @@ Respawn
 Teleport to player
 HighJump
 HighJump power
-//Utility:
---tower of hell
+@@ Utility: @@
++tower of hell
 InstantFinish
 AutoFinish
 Jesus
---mm2
++mm2
 Notify Sheriff
 Notify Murderer
 idk (dont use it...)
---Stands Awakening
++Stands Awakening
 AutoItems
 GetItems
 ServerLag
 time before unequip
 ServerLag Keybind
---Mega Easy Obby
++Mega Easy Obby
 Get Double jump Gamepass
 Get Easy Mode Gamepass
 AutoComplete
---universal
++Universal
 InstantProximityInteract
 UnlockFps
 Anti-AFK 
