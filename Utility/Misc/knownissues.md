@@ -8,8 +8,3 @@ patched by doing some tweaking
 basically it tries to find the HumanoidRootPart on a player that has no character.
 This was fixed by using v.Character:WaitForChild("HumanoidRootPart"), i can sleep now.
 ```
-+ Low FPS when used at Arsenal
-```
-idk how it happend but yeah... i might get this done later
-Stability update soon???
-```
