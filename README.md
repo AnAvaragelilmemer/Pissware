@@ -2,7 +2,7 @@
   <h3 align="center">Pissware V2.9.7</h3>
 
   <p align="center">
-    An universal script that has over 70 features....
+    An universal script that has over 90 features....
   </p>
 </div>
 
