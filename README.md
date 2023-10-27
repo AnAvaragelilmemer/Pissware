@@ -1,8 +1,8 @@
 
-  <h3 align="center">Pissware V2.9.7</h3>
+  <h3 align="center">Pissware </h3>
 
   <p align="center">
-    An universal script that has over 90 features....
+   pissware has been temporary discontinued due to byfron x synapse x ship, no am not releasing source since the mobile community loves to skid, see you next time! <3
   </p>
 </div>
 
